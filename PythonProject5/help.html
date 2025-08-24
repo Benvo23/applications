@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center | 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-blue: #0A2463;
+            --secondary-blue: #3E5F8A;
+            --accent-yellow: #FFC300;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --dark-text: #343a40;
+            --gray-text: #6c757d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--white); color: var(--dark-text); line-height: 1.7; }
+        .container { width: 90%; max-width: 1000px; margin: 0 auto; }
+        .section { padding: 80px 0; }
+
+        /* --- Navigation Bar (Corrected to match your example) --- */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; background-color: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        .nav-logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-blue); text-decoration: none; }
+        .nav-logo span { color: var(--accent-yellow); }
+        .nav-links { list-style: none; display: flex; gap: 2.5rem; }
+        .nav-links a { text-decoration: none; color: var(--dark-text); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
+        .nav-right a { text-decoration: none; font-weight: 500; padding: 0.6rem 1.2rem; border-radius: 5px; transition: all 0.3s ease; }
+        .login-btn { color: var(--primary-blue); background-color: transparent; }
+        .signup-btn { color: var(--white); background-color: var(--primary-blue); }
+
+
+        /* --- Hero Section for Help Page --- */
+        .help-hero {
+            padding: 100px 0;
+            color: var(--white);
+            text-align: center;
+            background-image: linear-gradient(rgba(10, 36, 99, 0.85), rgba(10, 36, 99, 0.85)), url('https://www.outlooktravelmag.com/media/vietnam-1-1611926800.profileImage.2x-jpg-webp.webp');
+            background-size: cover;
+            background-position: center;
+        }
+        .help-hero .section-title {
+            color: var(--white);
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+        }
+        .help-hero .section-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* --- FAQ Accordion --- */
+        .section-title-main { text-align: center; font-size: 2.8rem; margin-bottom: 50px; color: var(--primary-blue); }
+        .faq-accordion { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid #e0e0e0; }
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            padding: 1.5rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question::after {
+            content: '+';
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-question::after {
+            content: '−';
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+        /* --- THIS IS THE FIX --- */
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* A height large enough to show the content */
+        }
+        .faq-answer p {
+            padding: 0 0 1.5rem 0;
+            color: var(--gray-text);
+            line-height: 1.8;
+        }
+
+        /* --- Contact Section --- */
+        .contact-section { background-color: var(--light-bg); }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 50px;
+        }
+        .contact-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        .contact-card h4 {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Footer --- */
+        .footer { background-color: var(--primary-blue); color: #a7bce8; padding: 60px 0 20px 0; }
+    </style>
+</head>
+<body>
+    <!-- ======== NAVIGATION BAR (Corrected) ======== -->
+    <header class="container">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="book.html">Book</a></li>
+                <li><a href="routes.html">Our Routes</a></li>
+                <li><a href="fleet.html">Our Fleet</a></li>
+                <li><a href="passes.html">Passes</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="help.html" class="active">Help</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="#" class="login-btn">Log In</a>
+                <a href="#" class="signup-btn">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ======== HERO SECTION ======== -->
+        <section class="help-hero">
+            <div class="container">
+                <h1 class="section-title">Help Center</h1>
+                <p class="section-subtitle">Have a question? Find answers to frequently asked questions below or get in touch with our support team.</p>
+            </div>
+        </section>
+
+        <!-- ======== FAQ SECTION ======== -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title-main">Frequently Asked Questions</h2>
+                <div class="faq-accordion">
+
+                    <div class="faq-item">
+                        <button class="faq-question">What is my checked baggage allowance?</button>
+                        <div class="faq-answer">
+                            <p>For all our international flights, each passenger receives a complimentary allowance of one checked bag, with a maximum weight of 23kg (50 lbs). You can purchase additional baggage either at a discounted rate during the online booking process or at standard rates during check-in. Passengers who hold a Con Chim Đặc Biệt Pass enjoy an enhanced baggage allowance; please refer to your pass benefits for specific details.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">How can I change or cancel my flight?</button>
+                        <div class="faq-answer">
+                            <p>Flight modifications can be easily made through the "Manage My Booking" section on our website. You will need your six-character booking reference and the last name of one of the passengers. The system will show you all available options for changing your flight dates or canceling your trip. Please be aware that any changes are subject to the fare rules of your original ticket, which may include service fees or a difference in fare.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">When and how can I check-in online?</button>
+                        <div class="faq-answer">
+                            <p>To save time at the airport, we highly recommend checking in online. Our online check-in service becomes available 24 hours prior to your flight's scheduled departure and closes 90 minutes before takeoff. Simply visit our website or use our mobile app, enter your booking reference and last name, confirm your details, and receive your mobile boarding pass. This allows you to proceed directly to security if you are traveling with only carry-on baggage.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Is Wi-Fi available on board?</button>
+                        <div class="faq-answer">
+                            <p>Yes, stay connected at 35,000 feet! Our entire fleet of modern Airbus A350-1000 aircraft is equipped with high-speed satellite Wi-Fi. You can choose from several data plans once you are on board and connected to the "ConChim_WiFi" network. For the best value, we recommend purchasing a full-flight Wi-Fi pass at a discounted rate when you book your ticket or through the "Manage My Booking" portal before you fly.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">How do I request special assistance?</button>
+                        <div class="faq-answer">
+                            <p>We are committed to providing a safe and comfortable journey for everyone. If you require special assistance, such as wheelchair support, specific seating arrangements, or have special dietary needs, please let us know. You can make a request during the booking process or by contacting our dedicated support team directly. To ensure we can make all necessary arrangements, we kindly ask that you contact us at least 48 hours before your scheduled departure.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ======== CONTACT SECTION ======== -->
+        <section class="section contact-section">
+            <div class="container">
+                <h2 class="section-title-main">Still Need Help?</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h4>Call Us</h4>
+                        <p>Our support team is available 24/7 to assist you.</p>
+                        <p><strong>+84 28 1234 5678</strong></p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Email Us</h4>
+                        <p>Send your questions and we'll get back to you shortly.</p>
+                        <p><strong>support@conchimair.vn</strong></p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Live Chat</h4>
+                        <p>Connect instantly with a support agent.</p>
+                        <p><strong>Available on our website</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ======== FOOTER (Placeholder) ======== -->
+    <footer class="footer">
+        <div class="container">
+            <p style="text-align: center; padding: 2rem 0;">© 2025 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    const currentlyActive = document.querySelector('.faq-item.active');
+                    if (currentlyActive && currentlyActive !== item) {
+                        currentlyActive.classList.remove('active');
+                    }
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
