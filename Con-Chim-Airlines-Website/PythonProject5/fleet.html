@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Fleet: A350-1000 | 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* This is the same CSS as other pages for a consistent look */
+        :root {
+            --primary-blue: #0A2463;
+            --secondary-blue: #3E5F8A;
+            --accent-yellow: #FFC300;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --dark-text: #343a40;
+            --gray-text: #6c757d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--white); color: var(--dark-text); line-height: 1.7; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .section { padding: 80px 0; }
+
+        /* --- Navigation Bar --- */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; background-color: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        .nav-logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-blue); text-decoration: none; }
+        .nav-logo span { color: var(--accent-yellow); }
+        .nav-links { list-style: none; display: flex; gap: 2.5rem; }
+        .nav-links a { text-decoration: none; color: var(--dark-text); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
+        .nav-right a { text-decoration: none; font-weight: 500; padding: 0.6rem 1.2rem; border-radius: 5px; transition: all 0.3s ease; }
+        .login-btn { color: var(--primary-blue); background-color: transparent; }
+        .signup-btn { color: var(--white); background-color: var(--primary-blue); }
+
+        /* --- Section Titles --- */
+        .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; color: var(--primary-blue); }
+        .section-subtitle { text-align: center; max-width: 700px; margin: 0 auto 60px auto; color: var(--gray-text); font-size: 1.1rem; }
+
+        /* --- Fleet Page Specific Styles --- */
+        .fleet-content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            align-items: center;
+        }
+        .fleet-image-column img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            object-fit: cover;
+            height: 100%;
+        }
+        .fleet-text-column h3 {
+            font-size: 2.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+        .fleet-text-column .tagline {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--secondary-blue);
+            margin-bottom: 1.5rem;
+        }
+        .specs-grid {
+            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .spec-item {
+            background-color: var(--light-bg);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-yellow);
+        }
+        .spec-item h4 {
+            margin-bottom: 0.25rem;
+            color: var(--primary-blue);
+        }
+
+        /* --- Footer --- */
+        .footer { background-color: var(--primary-blue); color: #a7bce8; padding: 60px 0 20px 0; margin-top: 80px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 2rem; margin-bottom: 40px; }
+        .footer-column h4 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--white); }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 0.75rem; }
+        .footer-column a { text-decoration: none; color: #a7bce8; transition: color 0.3s ease; }
+        .footer-column a:hover { color: var(--white); }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid var(--secondary-blue); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <!-- ======== NAVIGATION BAR ======== -->
+    <header class="container">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="book.html">Book</a></li>
+                <li><a href="routes.html">Our Routes</a></li>
+                <li><a href="fleet.html" class="active">Our Fleet</a></li>
+                <li><a href="passes.html">Passes</a></li>
+                <li><a href="history.html" class="active">History</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="#" class="login-btn">Log In</a>
+                <a href="#" class="signup-btn">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">Our Modern Fleet</h1>
+                <p class="section-subtitle">We invest in the latest generation of aircraft to provide you with the safest, most comfortable, and most efficient journey across the Pacific.</p>
+
+                <div class="fleet-content-grid">
+                    <div class="fleet-image-column">
+                        <img src="https://i.imgur.com/PSKRu9o.jpg" alt="Con Chim Airlines A350-1000 in flight">
+                    </div>
+                    <div class="fleet-text-column">
+                        <h3>Airbus A350-1000</h3>
+                        <p class="tagline">The New Standard in Long-Haul Travel.</p>
+                        <p>The Airbus A350-1000 is the cornerstone of our international fleet. Its advanced design offers unparalleled levels of operational efficiency and a 25% reduction in fuel burn and CO₂ emissions. For our passengers, this means a quieter, more spacious cabin with higher ceilings, larger windows, and optimized cabin pressure and humidity for a more refreshing journey.</p>
+
+                        <div class="specs-grid">
+                            <div class="spec-item">
+                                <h4>Passenger Capacity</h4>
+                                <p>~360 seats</p>
+                            </div>
+                            <div class="spec-item">
+                                <h4>Number in Fleet</h4>
+                                <p>12 Aircraft</p>
+                            </div>
+                            <div class="spec-item">
+                                <h4>Max Range</h4>
+                                <p>16,100 km / 8,700 nm</p>
+                            </div>
+                            <div class="spec-item">
+                                <h4>Cabin Features</h4>
+                                <p>Airspace™ Cabin, LED mood lighting, In-flight Wi-Fi</p>
+                            </div>
+                            <div class="spec-item">
+                                <h4>Why We Chose It</h4>
+                                <p>Unmatched passenger comfort and superior fuel efficiency.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ======== FOOTER (Same as homepage) ======== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <!-- LOGO DOT COLOR IS NOW FIXED -->
+                    <a href="index.html" class="nav-logo" style="color: var(--white);">𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈<span style="color: var(--accent-yellow);">.</span></a>
+                    <p style="margin-top: 1rem;">Your Bridge Across the Pacific.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="fleet.html">Our Fleet</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>For Travelers</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="routes.html">Our Routes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

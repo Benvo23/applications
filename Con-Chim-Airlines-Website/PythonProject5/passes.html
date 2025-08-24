@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Passes | 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-blue: #0A2463;
+            --secondary-blue: #3E5F8A;
+            --accent-yellow: #FFC300;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --dark-text: #343a40;
+            --gray-text: #6c757d;
+            --success-green: #28a745;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); color: var(--dark-text); line-height: 1.7; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .section { padding: 80px 0; }
+
+        /* --- NEW: Notification Bar --- */
+        .notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--success-green);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transition: top 0.5s ease-in-out;
+            font-weight: 500;
+        }
+        .notification.show {
+            top: 20px;
+        }
+
+        /* --- Navigation Bar --- */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; background-color: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        .nav-logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-blue); text-decoration: none; }
+        .nav-logo span { color: var(--accent-yellow); }
+        .nav-links { list-style: none; display: flex; gap: 2.5rem; }
+        .nav-links a { text-decoration: none; color: var(--dark-text); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
+        .nav-right a { text-decoration: none; font-weight: 500; padding: 0.6rem 1.2rem; border-radius: 5px; transition: all 0.3s ease; }
+        .login-btn { color: var(--primary-blue); background-color: transparent; }
+        .signup-btn { color: var(--white); background-color: var(--primary-blue); }
+
+        /* --- Hero Section with Background Image --- */
+        .passes-hero {
+            padding: 100px 0;
+            color: var(--white);
+            text-align: center;
+            /* --- YOU CAN CHANGE THE BACKGROUND IMAGE URL HERE --- */
+            background-image: linear-gradient(rgba(10, 36, 99, 0.8), rgba(10, 36, 99, 0.8)), url('https://www.outlooktravelmag.com/media/vietnam-1-1611926800.profileImage.2x-jpg-webp.webp');
+            background-size: cover;
+            background-position: center;
+        }
+        .passes-hero .section-title {
+            color: var(--white);
+            font-size: 3.2rem;
+        }
+        .passes-hero .section-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+        }
+
+        /* --- Passes Grid --- */
+        .passes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+        .pass-card {
+            background-color: var(--white);
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .pass-card.best-value {
+            border-color: var(--primary-blue);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .pass-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-blue);
+            color: var(--accent-yellow);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .pass-card-header h3 {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+        }
+        .pass-card-header p {
+            font-weight: 500;
+            color: var(--gray-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .pass-card-price {
+            margin-bottom: 2rem;
+        }
+        .pass-card-price .price {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+        .pass-card-price .price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-text);
+        }
+        .pass-card-price .total {
+            color: var(--secondary-blue);
+            font-weight: 500;
+        }
+
+        .pass-card-features {
+            list-style: none;
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+        .pass-card-features li {
+            margin-bottom: 0.8rem;
+            color: var(--gray-text);
+        }
+        .pass-card-features li::before {
+            content: '✔';
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-right: 0.8rem;
+        }
+
+        .purchase-btn {
+            background-color: var(--accent-yellow);
+            color: var(--primary-blue);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: inline-block;
+        }
+        .purchase-btn:hover {
+            background-color: #ffcd33;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* --- Footer --- */
+        .footer { background-color: var(--primary-blue); color: #a7bce8; padding: 60px 0 20px 0; }
+    </style>
+</head>
+<body>
+    <!-- Notification Bar HTML -->
+    <div id="notification-bar" class="notification"></div>
+
+    <!-- ======== NAVIGATION BAR ======== -->
+    <header class="container">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="book.html">Book</a></li>
+                <li><a href="routes.html">Our Routes</a></li>
+                <li><a href="fleet.html">Our Fleet</a></li>
+                <li><a href="passes.html" class="active">Passes</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="#" class="login-btn">Log In</a>
+                <a href="#" class="signup-btn">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ======== HERO SECTION ======== -->
+        <section class="passes-hero">
+            <div class="container">
+                <h1 class="section-title">Con Chim Đặc Biệt Pass</h1>
+                <p class="section-subtitle">Unlock a world of benefits with our exclusive travel pass. Fly more, save more, and experience the best of Con Chim Airlines.</p>
+            </div>
+        </section>
+
+        <!-- ======== PASSES SECTION ======== -->
+        <section class="section">
+            <div class="container">
+                <div class="passes-grid">
+
+                    <!-- Pass Card: 1 Month -->
+                    <div class="pass-card">
+                        <div class="pass-card-header">
+                            <h3>1 Month Pass</h3>
+                            <p>For the frequent flyer</p>
+                        </div>
+                        <div class="pass-card-price">
+                            <div class="price">$199<span>/month</span></div>
+                            <p class="total">Billed monthly</p>
+                        </div>
+                        <ul class="pass-card-features">
+                            <li>Priority Boarding</li>
+                            <li>Free Standard Seat Selection</li>
+                            <li>1 Free Checked Bag (23kg)</li>
+                            <li>Complimentary Wi-Fi</li>
+                        </ul>
+                        <a href="#" class="purchase-btn">Purchase Pass</a>
+                    </div>
+
+                    <!-- Pass Card: 6 Months (Best Value) -->
+                    <div class="pass-card best-value">
+                        <div class="pass-badge">Best Value</div>
+                        <div class="pass-card-header">
+                            <h3>6 Month Pass</h3>
+                            <p>For the dedicated traveler</p>
+                        </div>
+                        <div class="pass-card-price">
+                            <div class="price">$179<span>/month</span></div>
+                            <p class="total">Billed as $1,074 every 6 months</p>
+                        </div>
+                        <ul class="pass-card-features">
+                            <li>Priority Boarding</li>
+                            <li>Free Extra Legroom Seat Selection</li>
+                            <li>2 Free Checked Bags (23kg each)</li>
+                            <li>Complimentary Wi-Fi</li>
+                            <li>Lounge Access (2 per month)</li>
+                        </ul>
+                        <a href="#" class="purchase-btn">Purchase Pass</a>
+                    </div>
+
+                    <!-- Pass Card: 12 Months -->
+                    <div class="pass-card">
+                        <div class="pass-card-header">
+                            <h3>1 Year Pass</h3>
+                            <p>For the ultimate globetrotter</p>
+                        </div>
+                        <div class="pass-card-price">
+                            <div class="price">$159<span>/month</span></div>
+                             <p class="total">Billed as $1,908 annually</p>
+                        </div>
+                        <ul class="pass-card-features">
+                            <li>Priority Boarding</li>
+                            <li>Free Extra Legroom Seat Selection</li>
+                            <li>2 Free Checked Bags (23kg each)</li>
+                            <li>Complimentary Wi-Fi</li>
+                            <li>Unlimited Lounge Access</li>
+                        </ul>
+                        <a href="#" class="purchase-btn">Purchase Pass</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ======== FOOTER (Placeholder) ======== -->
+    <footer class="footer">
+        <div class="container">
+            <p style="text-align: center; padding: 2rem 0;">© 2025 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const purchaseButtons = document.querySelectorAll('.purchase-btn');
+            const notificationBar = document.getElementById('notification-bar');
+
+            // Function to show the notification
+            function showNotification(message) {
+                notificationBar.textContent = message;
+                notificationBar.classList.add('show');
+                // Hide the notification after 4 seconds
+                setTimeout(() => {
+                    notificationBar.classList.remove('show');
+                }, 4000);
+            }
+
+            // Add a click listener to each purchase button
+            purchaseButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    // Prevent the link from navigating away
+                    event.preventDefault();
+
+                    // Show the success message
+                    showNotification('Purchase successful, thanks for buying the pass!');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
