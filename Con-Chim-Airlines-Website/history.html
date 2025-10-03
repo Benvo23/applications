@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our History | 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family/Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-blue: #0A2463;
+            --secondary-blue: #3E5F8A;
+            --accent-yellow: #FFC300;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --dark-text: #343a40;
+            --gray-text: #6c757d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--white); color: var(--dark-text); line-height: 1.7; }
+        .container { width: 90%; max-width: 1000px; margin: 0 auto; }
+        .section { padding: 80px 0; }
+
+        /* --- Navigation Bar (Corrected to match your example) --- */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; background-color: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        .nav-logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-blue); text-decoration: none; }
+        .nav-logo span { color: var(--accent-yellow); }
+        .nav-links { list-style: none; display: flex; gap: 2.5rem; }
+        .nav-links a { text-decoration: none; color: var(--dark-text); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
+        .nav-right a { text-decoration: none; font-weight: 500; padding: 0.6rem 1.2rem; border-radius: 5px; transition: all 0.3s ease; }
+        .login-btn { color: var(--primary-blue); background-color: transparent; }
+        .signup-btn { color: var(--white); background-color: var(--primary-blue); }
+
+        /* --- Hero Section for History Page --- */
+        .history-hero {
+            padding: 100px 0;
+            color: var(--white);
+            text-align: center;
+            background-image: linear-gradient(rgba(10, 36, 99, 0.8), rgba(10, 36, 99, 0.8)), url('https://www.outlooktravelmag.com/media/vietnam-1-1611926800.profileImage.2x-jpg-webp.webp');
+            background-size: cover;
+            background-position: center;
+        }
+        .history-hero .section-title {
+            color: var(--white);
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+        }
+        .history-hero .section-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* --- Vertical Timeline --- */
+        .timeline {
+            position: relative;
+            margin-top: 50px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            width: 3px;
+            top: 0;
+            bottom: 0;
+            background-color: #e0e0e0;
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 50%;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-item:nth-child(odd) { left: 0; padding-right: 50px; }
+        .timeline-item:nth-child(even) { left: 50%; padding-left: 50px; }
+        .timeline-dot {
+            content: '';
+            position: absolute;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-blue);
+            border: 4px solid var(--white);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .timeline-item:nth-child(odd) .timeline-dot { right: -10px; transform: translateX(50%); }
+        .timeline-item:nth-child(even) .timeline-dot { left: -10px; transform: translateX(-50%); }
+        .timeline-content {
+            background-color: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .timeline-date {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+        .timeline-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-blue);
+        }
+        .timeline-content p { color: var(--gray-text); }
+
+        /* --- Footer --- */
+        .footer { background-color: var(--primary-blue); color: #a7bce8; padding: 60px 0 20px 0; }
+    </style>
+</head>
+<body>
+    <!-- ======== NAVIGATION BAR (Corrected) ======== -->
+    <header class="container">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="book.html">Book</a></li>
+                <li><a href="routes.html">Our Routes</a></li>
+                <li><a href="fleet.html">Our Fleet</a></li>
+                <li><a href="passes.html">Passes</a></li>
+                <li><a href="history.html" class="active">History</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="#" class="login-btn">Log In</a>
+                <a href="#" class="signup-btn">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ======== HERO SECTION ======== -->
+        <section class="history-hero">
+            <div class="container">
+                <h1 class="section-title">Our Journey</h1>
+                <p class="section-subtitle">From a bold idea to a bridge across the Pacific, discover the milestones that have shaped Con Chim Airlines.</p>
+            </div>
+        </section>
+
+        <!-- ======== TIMELINE SECTION ======== -->
+        <section class="section">
+            <div class="container">
+                <div class="timeline">
+
+                    <!-- Timeline Item 1: Origins -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-date">2017</p>
+                            <h3>Origins</h3>
+                            <p>In 2017, 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈 was founded in the vibrant heart of Ho Chi Minh City. The vision was simple yet ambitious: to create a modern, world-class airline connecting Vietnam directly to the world. Our journey began with an order for our very first aircraft, a state-of-the-art Airbus A350-1000, setting the stage for a new era in long-haul travel.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2: A Challenging Year -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-date">2020</p>
+                            <h3>A Challenging Year</h3>
+                            <p>The year 2020 marked the most challenging part of our history. Faced with unprecedented global events, we were pushed to the brink, nearly having to return our only A350-1000 order and losing half of our dedicated employees. It was a period of immense difficulty that tested our resolve and commitment.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3: Our Rise -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-date">late 2021</p>
+                            <h3>Our Rise</h3>
+                            <p>Persevering through adversity, we finally welcomed our first A350 and proudly launched our inaugural route from Ho Chi Minh City to Los Angeles. This triumph was quickly followed by the delivery of three more A350-1000s, enabling us to launch our second and third routes to San Francisco and Seattle.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 4: The Great Step -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-date">2023</p>
+                            <h3>The Great Step</h3>
+                            <p>With growing momentum, we took a great step forward by adding four more A350-1000s to our fleet. This expansion allowed us to connect Vietnam to the heartland of America, launching new non-stop flights to Dallas, Houston, Chicago, and New York.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 5: The Step to Today -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-date">2024-2025</p>
+                            <h3>The Step to Today</h3>
+                            <p>Receiving our final four A350-1000s, we solidified our international presence. We established a new hub in Hanoi, launched Ho Chi Minh City flights to Boston, Paris, and London, and introduced new routes from our Hanoi base to London, Paris, and Washington D.C., truly becoming Vietnam's bridge to the world.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 6: The Future -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-date">The Future</p>
+                            <h3>Leading the Way</h3>
+                            <p>Our journey is far from over. Our vision is to become the undisputed leader in the Vietnamese-American market, making Con Chim Airlines the definitive #1 choice for every passenger, giving high hopes of beating Vietnam Airlines. Through relentless focus on customer experience and strategic growth, we aim to dominate this vital sector and redefine trans-Pacific travel for generations to come.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ======== FOOTER (Placeholder) ======== -->
+    <footer class="footer">
+        <div class="container">
+            <p style="text-align: center; padding: 2rem 0;">© 2025 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

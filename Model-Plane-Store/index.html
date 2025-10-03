@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAXPlanes - Model Store</title>
+  <style>
+    /* Basic Styling */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      background: url('images/lax-background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+    header {
+      background: url('images/lax-header.jpg') no-repeat center center;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .search-bar {
+      margin-top: 1rem;
+    }
+    .search-bar input {
+      padding: 0.5rem;
+      width: 80%;
+      max-width: 400px;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    header h1,
+    header p {
+      color: white;
+      text-shadow:
+        -2px -2px 0 #000,
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000,
+        -2px  0px 0 #000,
+         2px  0px 0 #000,
+         0px -2px 0 #000,
+         0px  2px 0 #000;
+    }
+    main {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(3px);
+      padding: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Products Grid */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .product {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .product:hover {
+        transform: translateY(-5px);
+    }
+    .product h3 {
+      font-size: 1.1rem;
+      margin: 0.75rem 0 0.5rem;
+    }
+    .product p {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #e63946;
+      margin: 0.5rem 0;
+    }
+    .product button {
+      background-color: #457b9d;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: auto; /* Pushes button to the bottom */
+      transition: background-color 0.2s;
+    }
+    .product button:hover {
+      background-color: #1d3557;
+    }
+
+    /* Image Gallery Styles */
+    .product-gallery .main-image {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 5px;
+      border: 1px solid #eee;
+    }
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .thumbnails img {
+      width: 50px;
+      height: 40px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      opacity: 0.7;
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+    .thumbnails img:hover {
+      opacity: 1;
+      border-color: #457b9d;
+    }
+
+    /* Cart Section */
+    .cart {
+      margin-top: 2rem;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .cart h2 {
+      margin-top: 0;
+    }
+    #cart-items {
+      list-style-type: none;
+      padding: 0;
+    }
+    #cart-items li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    #cart-items li:last-child {
+      border-bottom: none;
+    }
+    .cart p {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: right;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #e63946;
+      font-size: 1rem;
+      cursor: pointer;
+      visibility: hidden;
+    }
+
+    #cart-items li:hover .remove-btn {
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LAXPlanes ✈️</h1>
+    <p>Get a plane in LA</p>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for a plane..." oninput="filterProducts()">
+    </div>
+  </header>
+  <div style="text-align: center; font-size: 1.8rem; font-weight: bold; color: black; margin: 1rem 0;">
+    Planes We Sell:
+  </div>
+
+  <main>
+    <section class="products">
+      <!-- Product 1: American 777-300ER -->
+      <div class="product">
+        <div class="product-gallery">
+          <img class="main-image" src="images/american-777-model-1.jpg" alt="American Airlines 777-300ER" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/american-777-model-1.jpg" alt="American 777 model thumbnail">
+              <img src="images/american-777-model-2.jpg" alt="American 777 model thumbnail 2">
+              <img src="images/american-777-box-1.jpg" alt="American 777 box thumbnail">
+            <img src="images/american-777-real-1.jpg" alt="American 777 real photo thumbnail">
+          </div>
+        </div>
+        <h3>American Airlines 777-300ER – 1:400</h3>
+        <p>$49.99</p>
+        <small>Brand: GeminiJets</small>
+        <button onclick="addToCart('American Airlines 777-300ER', 49.99)">Add to Cart</button>
+      </div>
+      <!-- Product 2: American DC-10-10 -->
+      <div class="product">
+         <div class="product-gallery">
+          <img class="main-image" src="images/american-dc10-model-1.jpg" alt="American Airlines DC-10-10" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/american-dc10-model-1.jpg" alt="American DC-10 model thumbnail">
+            <img src="images/american-dc10-real-1.jpg" alt="American DC-10 real photo thumbnail">
+          </div>
+        </div>
+        <h3>American Airlines DC-10-10 – 1:400</h3>
+        <p>$44.99</p>
+        <small>Brand: GeminiJets</small>
+        <button onclick="addToCart('American DC-10-10', 44.99)">Add to Cart</button>
+      </div>
+       <!-- Product 3: Air France Concorde (Old Livery) -->
+      <div class="product">
+         <div class="product-gallery">
+          <img class="main-image" src="images/airfrance-concorde-model-1.jpg" alt="AirFrance Concorde (Old Livery)" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/airfrance-concorde-model-1.jpg" alt="AirFrance Concorde model thumbnail">
+              <img src="images/airfrance-concorde-model-2.jpg" alt="AirFrance Concorde model thumbnail">
+            <img src="images/airfrance-concorde-real-1.jpg" alt="AirFrance Concorde box thumbnail">
+              <img src="images/airfrance-concorde-real-2.jpg" alt="AirFrance Concorde box thumbnail">
+          </div>
+        </div>
+        <h3>AirFrance Concorde (Old Livery)– 1:400</h3>
+        <p>$59.99</p>
+        <small>Brand: GeminiJets</small>
+        <button onclick="addToCart('AirFrance Concorde (Old Livery)', 59.99)">Add to Cart</button>
+      </div>
+      <!-- Product 4: Pan Am 747SP (Classic Globe Livery) -->
+      <div class="product">
+         <div class="product-gallery">
+          <img class="main-image" src="images/panam-747sp-model-1.jpg" alt="Pan Am 747SP (Classic Globe Livery" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/panam-747sp-model-1.jpg" alt="Pan Am 747SP model thumbnail">
+            <img src="images/panam-747sp-real-1.jpg" alt="Pan Am 747SP real photo thumbnail">
+          </div>
+        </div>
+        <h3>Pan Am 747SP (Classic Globe Livery) – 1:400</h3>
+        <p>$54.99</p>
+        <small>Brand: GeminiJets</small>
+        <button onclick="addToCart('Pan Am 747SP (Classic Globe Livery)', 54.99)">Add to Cart</button>
+      </div>
+       <!-- Product 5: Emirates A380 (New Livery) -->
+      <div class="product">
+         <div class="product-gallery">
+          <img class="main-image" src="images/emirates-a380-model-1.jpg" alt="Emirates A380-800 (New Livery)" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/emirates-a380-model-1.jpg" alt="Emirates A380 model thumbnail">
+               <img src="images/emirates-a380-model-2.jpg" alt="Emirates A380 drawing thumbnail">
+            <img src="images/emirates-a380-real-1.png" alt="Emirates A380 real photo thumbnail">
+            <img src="images/emirates-a380-realnew-1.jpg" alt="Emirates A380 drawing thumbnail">
+          </div>
+        </div>
+        <h3>Emirates A380-800 (New Livery)– 1:400</h3>
+        <p>$59.99</p>
+        <small>Brand: GeminiJets</small>
+        <button onclick="addToCart('Emirates A380-800 (New Livery)', 59.99)">Add to Cart</button>
+      </div>
+       <!-- Product 6: Aeroflot IL-96-300 (Old Livery) -->
+      <div class="product">
+         <div class="product-gallery">
+          <img class="main-image" src="images/aeroflot-il96-model-1.jpg" alt="Aeroflot IL-96-300 (Old Livery)" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/aeroflot-il96-model-1.jpg" alt="Aeroflot IL-96 model thumbnail">
+              <img src="images/aeroflot-il96-model-2.jpeg" alt="Aeroflot IL-96 model thumbnail">
+            <img src="images/aeroflot-il96-real-1.jpg" alt="Aeroflot IL-96 real photo thumbnail">
+               <img src="images/aeroflot-il96-real-2.jpg" alt="Aeroflot IL-96 real photo thumbnail">
+          </div>
+        </div>
+        <h3>Aeroflot IL-96-300 (Old Livery)– 1:400</h3>
+        <p>$39.99</p>
+        <small>Brand: Phoenix</small>
+        <button onclick="addToCart('Aeroflot IL-96-300 (Old Livery)', 39.99)">Add to Cart</button>
+      </div>
+       <!-- Product 7: TAP Air Portugal A330-900neo -->
+      <div class="product">
+         <div class="product-gallery">
+          <img class="main-image" src="images/tap-a330neo-model-1.jpeg" alt="TAP Air Portugal A330-900neo" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/tap-a330neo-model-1.jpeg" alt="TAP A330neo model thumbnail">
+            <img src="images/tap-a330neo-real-1.png" alt="TAP A330neo real photo thumbnail">
+              <img src="images/tap-a330neo-real-2.jpeg" alt="TAP A330neo real photo thumbnail">
+          </div>
+        </div>
+        <h3>TAP Air Portugal A330-900neo – 1:400</h3>
+        <p>$52.99</p>
+        <small>Brand: JC Wings</small>
+        <button onclick="addToCart('TAP Air Portugal A330-900neo', 52.99)">Add to Cart</button>
+      </div>
+      <!-- Product 8: Southwest 737MAX (Canyon Blue Livery) -->
+      <div class="product">
+        <div class="product-gallery">
+          <img class="main-image" src="images/southwest-737-model-1.jpg" alt="Southwest 737 MAX 8 (Canyon Blue Livery)" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/southwest-737-model-1.jpg" alt="Southwest 737 model thumbnail 1">
+            <img src="images/southwest-737-model-2.jpg" alt="Southwest 737 model thumbnail 2">
+            <img src="images/southwest-737-real-1.png" alt="Southwest 737 real photo thumbnail">
+          </div>
+        </div>
+        <h3>Southwest Airlines 737 MAX 8 (Canyon Blue Livery) – 1:200</h3>
+        <p>$34.99</p>
+        <small>Brand: Skymarks</small>
+        <button onclick="addToCart('Southwest 737 MAX 8 (Canyon Blue Livery)', 34.99)">Add to Cart</button>
+      </div>
+       <!-- Product 9: Korean Air 747-8 -->
+      <div class="product">
+         <div class="product-gallery">
+          <img class="main-image" src="images/korean-7478-model-1.png" alt="Korean Air 747-8" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/korean-7478-model-1.png" alt="Korean Air 747-8 model thumbnail">
+              <img src="images/korean-7478-model-2.png" alt="Korean Air 747-8 model thumbnail">
+            <img src="images/korean-7478-real-1.jpg" alt="Korean Air 747-8 real photo thumbnail">
+              <img src="images/korean-7478-real-2.jpg" alt="Korean Air 747-8 real photo thumbnail">
+          </div>
+        </div>
+        <h3>Korean Air 747-8 – 1:400</h3>
+        <p>$56.99</p>
+        <small>Brand: JC Wings</small>
+        <button onclick="addToCart('Korean Air 747-8', 56.99)">Add to Cart</button>
+      </div>
+      <!-- Product 10: C5 Super Galaxy -->
+      <div class="product">
+         <div class="product-gallery">
+          <img class="main-image" src="images/c5-super-galaxy-model-1.jpg" alt="C5 Super Galaxy" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/c5-super-galaxy-model-1.jpg" alt="C5 Galaxy model thumbnail">
+              <img src="images/c5-super-galaxy-on-box-1.jpg" alt="C5 Galaxy box thumbnail">
+            <img src="images/c5-super-galaxy-real-1.jpg" alt="C5 Galaxy real photo thumbnail">
+          </div>
+        </div>
+        <h3>C5 Super Galaxy – 1:400</h3>
+        <p>$64.99</p>
+        <small>Brand: GeminiJets</small>
+        <button onclick="addToCart('C5 Super Galaxy', 64.99)">Add to Cart</button>
+      </div>
+      <!-- Product 11: Lufthansa A340-600 (New Livery) -->
+      <div class="product">
+        <div class="product-gallery">
+          <img class="main-image" src="images/lufthansa-a340-model-1.jpg" alt="Lufthansa A340-600 (New Livery)" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/lufthansa-a340-model-1.jpg" alt="Lufthansa A340 model thumbnail 1">
+            <img src="images/lufthansa-a340-model-2.jpg" alt="Lufthansa A340 model thumbnail 2">
+            <img src="images/lufthansa-a340-real-1.png" alt="Lufthansa A340 real photo thumbnail">
+              <img src="images/lufthansa-a340-real-2.jpeg" alt="Lufthansa A340 real photo thumbnail">
+          </div>
+        </div>
+        <h3>Lufthansa A340-600 (New Livery) – 1:400</h3>
+        <p>$58.99</p>
+        <small>Brand: GeminiJets</small>
+        <button onclick="addToCart('Lufthansa A340-600 (New Liveru)', 58.99)">Add to Cart</button>
+      </div>
+      <!-- Product: Swiss 777-300ER -->
+      <div class="product">
+        <div class="product-gallery">
+          <img class="main-image" src="images/swiss-777-model-1.jpg" alt="Swiss 777-300ER" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/swiss-777-model-1.jpg" alt="Swiss 777 model thumbnail 1">
+            <img src="images/swiss-777-model-2.jpg" alt="Swiss 777 model thumbnail 2">
+            <img src="images/swiss-777-real-1.jpg" alt="Swiss 777 model thumbnail 3">
+            <img src="images/swiss-777-real-2.png" alt="Swiss 777 real photo thumbnail">
+          </div>
+        </div>
+        <h3>Swiss 777-300ER – 1:400</h3>
+        <p>$57.99</p>
+        <small>Brand: Phoenix</small>
+        <button onclick="addToCart('Swiss 777-300ER', 57.99)">Add to Cart</button>
+      </div>
+      <!-- Product: Delta A350-900 (Team USA LA 28) -->
+      <div class="product">
+        <div class="product-gallery">
+          <img class="main-image" src="images/delta-a350-la28-model-1.jpg" alt="Delta A350-900 (Team USA LA 28)" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/delta-a350-la28-model-1.jpg" alt="Delta A350 LA 28 model thumbnail 1">
+            <img src="images/delta-a350-la28-model-2.jpg" alt="Delta A350 LA 28 model thumbnail 2">
+            <img src="images/delta-a350-la28-real-1.jpg" alt="Delta A350 LA 28 real photo thumbnail">
+          </div>
+        </div>
+        <h3>Delta A350-900 (Team USA LA 28) – 1:400</h3>
+        <p>$62.99</p>
+        <small>Brand: NG Models</small>
+        <button onclick="addToCart('Delta A350-900 (Team USA LA 28)', 62.99)">Add to Cart</button>
+      </div>
+      <!-- Product: Asiana Airlines 777-200ER -->
+      <div class="product">
+        <div class="product-gallery">
+          <img class="main-image" src="images/asiana-777-model-1.jpg" alt="Asiana Airlines 777-200ER" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/asiana-777-model-1.jpg" alt="Asiana 777-200ER model thumbnail 1">
+            <img src="images/asiana-777-model-2.png" alt="Asiana 777-200ER box thumbnail">
+            <img src="images/asiana-777-real-1.jpg" alt="Asiana 777-200ER real photo thumbnail">
+            <img src="images/asiana-777-real-2.jpg" alt="Asiana 777-200ER real photo thumbnail">
+          </div>
+        </div>
+        <h3>Asiana Airlines 777-200ER – 1:400</h3>
+        <p>$53.99</p>
+        <small>Brand: GeminiJets</small>
+        <button onclick="addToCart('Asiana Airlines 777-200ER', 53.99)">Add to Cart</button>
+      </div>
+      <!-- Product: Skymarks American Airlines 737-800 -->
+      <div class="product">
+        <div class="product-gallery">
+          <img class="main-image" src="images/aa-738-model-1.jpg" alt="American Airlines 737-800" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+          <div class="thumbnails">
+            <img src="images/aa-738-model-1.jpg" alt="American 737-800 model thumbnail 1">
+            <img src="images/aa-738-model-2.jpg" alt="American 737-800 model thumbnail 2">
+            <img src="images/aa-738-model-3.jpg" alt="American 737-800 real photo thumbnail 1">
+            <img src="images/aa-738-real-1.jpg" alt="American 737-800 real photo thumbnail 2">
+          </div>
+        </div>
+        <h3>American Airlines 737-800– 1:130</h3>
+        <p>$39.99</p>
+        <small>Brand: Skymarks</small>
+        <button onclick="addToCart('American Airlines 737-800', 39.99)">Add to Cart</button>
+      </div>
+
+      <!-- Product: American 777-300 Skymarks -->
+<div class="product">
+  <div class="product-gallery">
+    <img class="main-image" src="images/american-777-300-model-1.jpg" alt="American 777-300 Skymarks" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+    <div class="thumbnails">
+      <img src="images/american-777-300-model-1.jpg" alt="American 777-300 model thumbnail 1">
+      <img src="images/american-777-300-model-2.png" alt="American 777-300 model thumbnail 2">
+      <img src="images/american-777-300-model-3.png" alt="American 777-300 real photo thumbnail 1">
+      <img src="images/american-777-300-real-1.jpg" alt="American 777-300 real photo thumbnail 2">
+    </div>
+  </div>
+  <h3>American 777-300 – 1:200</h3>
+  <p>$59.99</p>
+  <small>Brand: Skymarks</small>
+  <button onclick="addToCart('American 777-300 Skymarks', 59.99)">Add to Cart</button>
+</div>
+
+      <!-- Product: Alitalia 777-200 Old Livery -->
+<div class="product">
+  <div class="product-gallery">
+    <img class="main-image" src="images/alitalia-777-model-1.png" alt="Alitalia 777-200 (Old Livery)" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+    <div class="thumbnails">
+      <img src="images/alitalia-777-model-1.png" alt="Alitalia 777-200 model thumbnail 1">
+      <img src="images/alitalia-777-model-2.jpg" alt="Alitalia 777-200 model thumbnail 2">
+      <img src="images/alitalia-777-box.jpg" alt="Alitalia 777-200 box thumbnail">
+      <img src="images/alitalia-777-real.jpg" alt="Alitalia 777-200 real photo thumbnail">
+    </div>
+  </div>
+  <h3>Alitalia 777-200 (Old Livery)– 1:400</h3>
+  <p>$54.99</p>
+  <small>Brand: GeminiJets</small>
+  <button onclick="addToCart('Alitalia 777-200 (Old Livery)', 54.99)">Add to Cart</button>
+</div>
+
+      <!-- Product: United Airlines 777-300ER (Continental Livery) -->
+<div class="product">
+  <div class="product-gallery">
+    <img class="main-image" src="images/united-773-model-1.png" alt="United Airlines 777-300ER (Continental Livery)" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+    <div class="thumbnails">
+      <img src="images/united-773-model-1.png" alt="United 777-300ER model thumbnail 1">
+      <img src="images/united-773-model-2.jpg" alt="United 777-300ER model thumbnail 2">
+      <img src="images/united-773-real-1.jpg" alt="United 777-300ER real photo thumbnail">
+    </div>
+  </div>
+  <h3>United Airlines 777-300ER (Continental Livery) – 1:400</h3>
+  <p>$58.99</p>
+  <small>Brand: GeminiJets</small>
+  <button onclick="addToCart('United Airlines 777-300ER (Continental Livery)', 58.99)">Add to Cart</button>
+</div>
+
+   <!-- Product: Air China 747-400 -->
+<div class="product">
+  <div class="product-gallery">
+    <img class="main-image" src="images/air-china-747-model-1.jpg" alt="Air China 747-400" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x140?text=No+Image'">
+    <div class="thumbnails">
+      <img src="images/air-china-747-model-1.jpg" alt="Air China 747-400 model thumbnail 1">
+      <img src="images/air-china-747-model-2.png" alt="Air China 747-400 model thumbnail 2">
+      <img src="images/air-china-747-model-3.png" alt="Air China 747-400 model thumbnail 3">
+      <img src="images/air-china-747-real-1.jpg" alt="Air China 747 model thumbnail 1">
+    </div>
+  </div>
+  <h3>Air China 747-400– 1:400</h3>
+  <p>$59.99</p>
+  <small>Brand: GeminiJets</small>
+  <button onclick="addToCart('Air China 747-400', 58.99)">Add to Cart</button>
+</div>
+
+      <div style="grid-column: 1 / -1; text-align: center; margin-top: 2rem; font-size: 1.2rem; color: #222;">
+        We sell planes that have flown to LAX — whether they were daily visitors, limited-time guests, or made a one-time appearance.
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 3rem;">
+        <!-- Suggestion Box -->
+        <div style="flex: 1 1 300px; text-align: center;">
+          <label for="suggestion" style="display: block; font-weight: bold; margin-bottom: 0.5rem;">What plane should we sell?</label>
+          <input type="text" id="suggestion" name="suggestion" placeholder="Enter your suggestion here" style="width: 80%; max-width: 400px; padding: 0.5rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+          <button id="suggestionBtn" style="margin-top: 0.75rem; padding: 0.5rem 1rem; font-size: 1rem; cursor: pointer;">Send Suggestion</button>
+          <div id="suggestionMsg" style="margin-top: 1rem; color: green; font-weight: bold; display: none;">Sent!</div>
+        </div>
+   </section>
+</div>
+    <section class="cart">
+      <h2>🛒 Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <p>Total: $<span id="total">0.00</span></p>
+      <div style="margin-top: 2rem;">
+        <label for="deliveryOption" style="font-weight: bold; display: block; margin-bottom: 0.5rem;">Pickup or Shipping:</label>
+        <select id="deliveryOption" style="width: 100%; padding: 0.5rem; font-size: 1rem; border-radius: 4px; border: 1px solid #ccc;">
+          <option value="pickup">Pickup</option>
+          <option value="shipping">Shipping</option>
+        </select>
+        <button id="buyBtn" style="margin-top: 1rem; width: 100%; padding: 1rem; font-size: 1.2rem; background-color: #2a9d8f; color: white; border: none; border-radius: 5px; cursor: pointer;">Buy</button>
+        <div id="purchaseMsg" style="margin-top: 1rem; color: green; font-weight: bold;"></div>
+      </div>
+  </section>
+</div>
+    </section>
+   </main>
+
+  <script>
+    // --- Shopping Cart Logic ---
+    const cart = [];
+    const cartItemsEl = document.getElementById('cart-items');
+    const totalEl = document.getElementById('total');
+
+    function addToCart(name, price) {
+      // Check if item is already in cart
+      const existingItem = cart.find(item => item.name === name);
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({ name, price, quantity: 1 });
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      cartItemsEl.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`;
+
+        if (item.quantity > 1) {
+          const qtyInput = document.createElement('input');
+          qtyInput.type = 'number';
+          qtyInput.min = 1;
+          qtyInput.max = item.quantity;
+          qtyInput.value = 1;
+          qtyInput.style.margin = '0 8px';
+          qtyInput.style.width = '60px';
+
+          const removeBtn = document.createElement('button');
+          removeBtn.textContent = 'Remove';
+          removeBtn.className = 'remove-btn';
+          removeBtn.onclick = () => {
+            const qty = parseInt(qtyInput.value);
+            if (!isNaN(qty) && qty > 0 && qty <= item.quantity) {
+              item.quantity -= qty;
+              if (item.quantity === 0) {
+                cart.splice(index, 1);
+              }
+              updateCart();
+            } else {
+              alert("Please enter a valid quantity to remove.");
+            }
+          };
+
+          li.appendChild(qtyInput);
+          li.appendChild(removeBtn);
+        } else {
+          const removeBtn = document.createElement('button');
+          removeBtn.textContent = 'Remove';
+          removeBtn.className = 'remove-btn';
+          removeBtn.onclick = () => {
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = 0;
+            overlay.style.left = 0;
+            overlay.style.width = '100vw';
+            overlay.style.height = '100vh';
+            overlay.style.background = 'rgba(0, 0, 0, 0.5)';
+            overlay.style.display = 'flex';
+            overlay.style.alignItems = 'center';
+            overlay.style.justifyContent = 'center';
+            overlay.style.zIndex = 1000;
+
+            const dialog = document.createElement('div');
+            dialog.style.background = 'white';
+            dialog.style.padding = '20px';
+            dialog.style.borderRadius = '8px';
+            dialog.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
+            dialog.style.textAlign = 'center';
+
+            const msg = document.createElement('p');
+            msg.textContent = `Are you sure you want to delete ${item.quantity > 1 ? item.quantity + ' planes' : item.name}?`;
+            msg.style.marginBottom = '1rem';
+
+            const confirmBtn = document.createElement('button');
+            confirmBtn.textContent = 'Yes, Remove';
+            confirmBtn.style.marginRight = '1rem';
+            confirmBtn.style.padding = '0.5rem 1rem';
+            confirmBtn.onclick = () => {
+              cart.splice(index, 1);
+              updateCart();
+              document.body.removeChild(overlay);
+            };
+
+            const cancelBtn = document.createElement('button');
+            cancelBtn.textContent = 'Cancel';
+            cancelBtn.style.padding = '0.5rem 1rem';
+            cancelBtn.onclick = () => {
+              document.body.removeChild(overlay);
+            };
+
+            dialog.appendChild(msg);
+            dialog.appendChild(confirmBtn);
+            dialog.appendChild(cancelBtn);
+            overlay.appendChild(dialog);
+            document.body.appendChild(overlay);
+          };
+          li.appendChild(removeBtn);
+        }
+
+        cartItemsEl.appendChild(li);
+        total += item.price * item.quantity;
+      });
+
+      totalEl.textContent = total.toFixed(2);
+    }
+
+    // removeFromCart() is now replaced by inline logic in updateCart()
+
+
+    // --- Image Gallery Logic ---
+    function setupGalleries() {
+      const products = document.querySelectorAll('.product');
+      products.forEach(product => {
+        const mainImage = product.querySelector('.main-image');
+        const thumbnails = product.querySelectorAll('.thumbnails img');
+
+        thumbnails.forEach(thumbnail => {
+          thumbnail.addEventListener('click', () => {
+            mainImage.src = thumbnail.src;
+            mainImage.alt = thumbnail.alt.replace(' thumbnail', '');
+          });
+        });
+      });
+    }
+
+    // Initialize the galleries when the page loads
+    document.addEventListener('DOMContentLoaded', setupGalleries);
+
+    // --- Product Search Filter ---
+    function filterProducts() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const products = document.querySelectorAll('.product');
+      products.forEach(product => {
+        const title = product.querySelector('h3').textContent.toLowerCase();
+        product.style.display = title.includes(input) ? '' : 'none';
+      });
+    }
+    // --- Suggestion Box Logic ---
+    document.getElementById('suggestionBtn').addEventListener('click', () => {
+      const input = document.getElementById('suggestion');
+      const msg = document.getElementById('suggestionMsg');
+      if (input.value.trim() === '') {
+        alert('Please enter a suggestion before sending.');
+        return;
+      }
+      // For now, no actual email sending — just show confirmation
+      input.value = '';
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 3000);
+    });
+
+    // --- Buy Button Logic ---
+    document.getElementById('buyBtn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+
+      const msg = document.getElementById('purchaseMsg');
+      const boughtPlanes = cart.map(item => `${item.name} (x${item.quantity})`).join(', ');
+
+      msg.textContent = `You bought: ${boughtPlanes}`;
+      cart.length = 0;
+      updateCart();
+
+      setTimeout(() => { msg.textContent = ''; }, 5000);
+    });
+  </script>
+</body>
+</html>

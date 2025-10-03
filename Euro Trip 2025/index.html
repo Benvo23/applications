@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euro Trip 2025</title>
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #005A9C; /* A rich, professional blue */
+            --secondary-color: #D4AF37; /* A classy gold accent */
+            --background-color: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        /* --- HEADER --- */
+        .hero-header {
+            position: relative;
+            height: 60vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://static1.simpleflyingimages.com/wordpress/wp-content/uploads/2025/01/lax-to-europe-map.jpg') no-repeat center center / cover;
+            filter: brightness(1.2);
+            z-index: -1;
+        }
+
+        .hero-header h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 0 10px rgba(0,0,0,0.5);
+            margin: 0;
+        }
+
+        .hero-header p {
+            font-size: 1.5rem;
+            font-weight: 400;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 5px rgba(0,0,0,0.5);
+            margin-top: 10px;
+        }
+
+        /* --- TIMELINE CONTAINER --- */
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #ddd;
+            top: 0;
+            bottom: 0;
+            left: 50px;
+            margin-left: -2px;
+        }
+
+        /* --- TIMELINE ITEM (EACH CITY) --- */
+        .timeline-item {
+            padding: 10px 0 40px 90px;
+            position: relative;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .timeline-content h2 {
+            margin: 0 0 15px 0;
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .timeline-content h2 small {
+            font-size: 1.2rem;
+            color: #777;
+            font-weight: 400;
+        }
+
+        .details-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .details-card h3 {
+            margin: 0 0 10px 0;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        .details-card i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .details-card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .details-card li {
+            padding: 5px 0;
+        }
+
+        /* --- INTERACTIVE IMAGE TRIGGER STYLES --- */
+        .image-trigger {
+            cursor: pointer;
+            color: var(--primary-color);
+            font-weight: 600;
+            border-bottom: 2px dotted var(--secondary-color);
+            transition: color 0.2s ease, border-bottom-color 0.2s ease;
+        }
+        .image-trigger:hover {
+            color: var(--secondary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* --- IMAGE MODAL STYLES --- */
+        .image-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 85vw;
+            max-height: 85vh;
+            border-radius: 5px;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media screen and (max-width: 768px) {
+            .hero-header { height: 50vh; }
+            .hero-header h1 { font-size: 3rem; }
+            .hero-header p { font-size: 1.2rem; }
+            .timeline-container::after { left: 30px; }
+            .timeline-item { padding-left: 70px; }
+            .timeline-icon { left: 30px; width: 30px; height: 30px; font-size: 1rem; }
+            .timeline-content h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-header">
+        <div>
+            <h1>Euro Trip 2025</h1>
+            <p>A Big Journey in Europe</p>
+        </div>
+    </header>
+
+    <main class="timeline-container">
+
+    <!-- City: Madrid -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Madrid <small>Spain🇪🇸</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Los Angeles-Madrid Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://miro.medium.com/v2/resize:fit:710/1*_rYpDG5l6mOYLnxxPGjyOA.jpeg">Iberia Airlines</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://aviationweek.com/sites/default/files/styles/crop_freeform/public/2023-06/orig_IBERIA_A350-9_EC-NDR_JFK_0819_JP_small.jpeg?itok=DhiGpvoM">Airbus A350-900</span><br>
+                        <strong>Flight:</strong> Iberia 0352<br>
+                        <strong>Departure:</strong> Monday, July 14 at 5:50 PM from <span class="image-trigger" data-image-src="https://images.fineartamerica.com/images-medium-large-5/los-angeles-international-airport-geoeyescience-photo-library.jpg">Los Angeles International Airport (KLAX/LAX)</span><br>
+                        <strong>Arrival:</strong> Tuesday, July 15 at 1:50 PM at <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Madrid-Barajas_-_Aerial_photograph.jpg">Madrid Barajas International Airport(LEMD/MAD)</span><br>
+                        <strong>Flight Duration:</strong> 11 Hours
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i>Things to do at Madrid</h3>
+                     <ul>
+                        <li><strong>July 15, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>3PM or later - Check In, eat Madrid Pho, and rest.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 16, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM - Visit the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Palacio_Real_de_Madrid_Julio_2016_%28cropped%29.jpg">Royal Palace</span>.</li><li>1:00 PM - Go to <span class="image-trigger" data-image-src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/a0/52/7a/centro-comercial-principe.jpg?w=1200&h=-1&s=1">Centro Comercial Príncipe Pío</span> mall.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 17, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM - Visit <span class="image-trigger" data-image-src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/53/53/2c/img-20160729-205021-largejpg.jpg?w=900&h=500&s=1">El Retiro Park</span>.</li><li>11:00 AM - Visit the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Almudena_2022_-_overview.jpg">Almudena Cathedral</span>.</li><li>12:00 PM - Walk down <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Gran_V%C3%ADa_%28Madrid%29_1.jpg/1200px-Gran_V%C3%ADa_%28Madrid%29_1.jpg">Gran Vía street</span>.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 18, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM - Visit the <span class="image-trigger" data-image-src="https://media.cntraveler.com/photos/580775c2fefb7fe774d64246/16:9/w_2560,c_limit/GettyImages-104515838.jpg">Museo Nacional del Prado</span>.</li><li>12:10 PM - Visit the <span class="image-trigger" data-image-src="https://ejercitodelaireydelespacio.defensa.gob.es/EA/museodelaire/assets/images/hangares/h3-5p.jpg">Museum of Aeronautics and Astronautics</span>.</li><li>3-5PM - Go to <span class="image-trigger" data-image-src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/3c/ba/c7/plaza-norte-2.jpg?w=900&h=500&s=1">Plaza Norte 2</span> for shopping.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <!-- City: Barcelona -->
+       <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Barcelona <small>Spain🇪🇸</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Madrid-Barcelona Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://miro.medium.com/v2/resize:fit:710/1*_rYpDG5l6mOYLnxxPGjyOA.jpeg">Iberia Airlines</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://live.staticflickr.com/4447/23888814958_874e687775_b.jpg">Airbus A321-200</span><br>
+                        <strong>Flight:</strong> Iberia 0411<br>
+                        <strong>Departure:</strong> Saturday, July 19 at 11:25 AM from <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Madrid-Barajas_-_Aerial_photograph.jpg">Madrid Barajas International Airport (LEMD/MAD)</span><br>
+                        <strong>Arrival:</strong> Saturday, July 19 at 12:40 PM at <span class="image-trigger" data-image-src="https://www.airportmaps.com/uploads/1730706957.jpg">Barcelona El Prat International Airport (LEBL/BCN)</span><br>
+                        <strong>Flight Duration:</strong> 1 Hour and 15 Minutes
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i>Things to do in Barcelona</h3>
+                    <ul>
+                        <li><strong>July 19, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>After 12:40PM: Settle in and eat Barcelona Pho.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 20, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM - Go to Church in <span class="image-trigger" data-image-src="https://cdn-imgix.headout.com/media/images/c98112a48b0cda4700acb41e9a6dd046-27281-barcelona-barcelona-cathedral--ticket--guided-tour--terrace-access---virtual-experience-05.jpg?auto=format&w=1069.6000000000001&h=687.6&q=90&fit=crop&ar=14%3A9&crop=faces">Cathedral of Barcelona</span>.</li><li>11:00 AM - Chill at <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Ciutadella_Park_fountain.jpg">Ciutadella Park</span>.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 21, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Barcelona_-_Arc_de_Triomf_%282%29.JPG">Arc de Triomf</span>.</li><li>11:00 AM: Relax at <span class="image-trigger" data-image-src="https://travel.usnews.com/images/Barceloneta_beach_Aimee_Tavares.jpg">Barceloneta Beach</span>.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 22, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM: Take the cable car up <span class="image-trigger" data-image-src="https://worldtraveltoucan.com/wp-content/uploads/2023/12/Untitled-1-10.jpg">Montjuïc Hill</span> and visit <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Castell_de_Montjuic_-_Fossat_entrada_-_Barcelona_%28Catalonia%29.jpg">Montjuïc Castle</span>.</li><li>12:00 PM: Visit <span class="image-trigger" data-image-src="https://www.barcelo.com/guia-turismo/wp-content/uploads/2019/05/port-vell-paseo.jpg">Port Vell</span>.</li><li>Later: Go to plane model shop, <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/p/AF1QipMKcZUjFDBg837xDryqOha_4lR6TG-E_d4duZxR=s680-w680-h510-rw">Aeroteca/Simutecap</span>✈️.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 23, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM: Visit the stylish <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Via_Barcelona_Casa_Mil%C3%A0.JPG">Passeig de Gràcia</span>.</li><li>1:00 PM: Visit <span class="image-trigger" data-image-src="https://www.metalocus.es/sites/default/files/styles/mopis_news_carousel_item_desktop/public/ml_CC%20Aeronautico_12_980.jpg?itok=E2PVECuv">Aeronautical Cultural Centre</span>.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <!-- City: Rome -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Rome <small>Italy🇮🇹</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Barcelona-Rome Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://www.liblogo.com/img-logo/vu5410v76f-vueling-logo-vueling-cheap-flights-apps-on-google-play.png">Vueling</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Airbus_A320-200_Vueling_AL_%28VLG%29_F-WWII_-_MSN_4661_-_Named_Luke_Sky_Vueling_-_Will_be_EC-LLJ_%285568571910%29.jpg/1200px-Airbus_A320-200_Vueling_AL_%28VLG%29_F-WWII_-_MSN_4661_-_Named_Luke_Sky_Vueling_-_Will_be_EC-LLJ_%285568571910%29.jpg">Airbus A320-200</span><br>
+                        <strong>Flight:</strong> Vueling 6104<br>
+                        <strong>Departure:</strong> Thursday, July 24 at 11:15 AM from <span class="image-trigger" data-image-src="https://www.airportmaps.com/uploads/1730706957.jpg">Barcelona (BCN)</span><br>
+                        <strong>Arrival:</strong> Thursday, July 24 at 1:05 PM at <span class="image-trigger" data-image-src="https://live.staticflickr.com/3773/19581174931_8695dff32d_b.jpg">Rome (FCO)</span><br>
+                        <strong>Flight Duration:</strong> 1 Hour and 45 Minutes
+                    </p>
+                </div>
+                <div class="details-card">
+                     <h3><i class="fa-solid fa-map-signs"></i>Things to do in Rome</h3>
+                     <ul>
+                        <li><strong>July 24, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>After 1:05 PM: Settle in and eat Rome Pho.</li><li>Evening: Go to mass at <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Basilica_di_San_Pietro_in_Vaticano_September_2015-1a.jpg/1200px-Basilica_di_San_Pietro_in_Vaticano_September_2015-1a.jpg">Saint Peter’s Basilica</span>.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 25, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=1996&auto=format&fit=crop">Colosseum</span>.</li><li>12:40 PM: Visit the <span class="image-trigger" data-image-src="https://images.unsplash.com/photo-1531572750734-b9213854117b?q=80&w=1974&auto=format&fit=crop">Trevi Fountain</span>.</li><li>1:00 PM: Visit the <span class="image-trigger" data-image-src="https://cdn-web.greenlinetours.com/uploads/2022/09/26/thumb/s/spanish-steps-rome-478.jpg">Spanish Steps</span>.</li><li>Later: Enjoy the mall at <span class="image-trigger" data-image-src="https://www.klepierre.com/assets/f1920x1080-q85/d63ad329/csm_rer_21_dan0243_innen_3bdad7ef40.jpg">Centro Commerciale ROMAEST</span>.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 26, 2025 :</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://www.rome.info/wp-content/uploads/f-pantheon.jpg">Pantheon</span>.</li><li>11:00 AM: Visit: <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/d/d6/St_Peter%27s_Square%2C_Vatican_City_-_April_2007.jpg">Saint Peter's Square</span>.</li><li>1:00 PM: Visit the <span class="image-trigger" data-image-src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/78/c8/65/hangar-skema.jpg?w=900&h=500&s=1">Italian Air Force Museum</span>.</li><li>Later: Visit the <span class="image-trigger" data-image-src="https://www.azuremagazine.com/wp-content/uploads/2022/12/Azure-LaRinascente-Rome-2050-Lead2.jpg">RINASCENTE Rome</span> mall.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 27, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>All Day: Explore <span class="image-trigger" data-image-src="https://external-preview.redd.it/gd9sTFanu73cHtaYOba9lfDBVMPw3PaedGQxvRfMQac.jpg?auto=webp&s=506ab2fe61f63757dee83ff184fdf15ab38c52e0">Vatican City</span>.</li><li>Night: Rest and get ready to fly to Venice tomorrow.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <!-- City: Venice -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Venice <small>Italy🇮🇹</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Rome-Venice Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://cdn.businesstraveller.com/wp-content/uploads/fly-images/1552675/Logo-e1727677642949-916x516.png">ITA Airways</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://cdn.plnspttrs.net/02195/ei-dto-ita-airways-airbus-a320-216_PlanespottersNet_1782853_325600858a_o.jpg">Airbus A320-200</span><br>
+                        <strong>Flight:</strong> ITA 1475<br>
+                        <strong>Departure:</strong> Monday, July 28 at 1:20 PM from <span class="image-trigger" data-image-src="https://live.staticflickr.com/3773/19581174931_8695dff32d_b.jpg">Rome's Fiumicino International Airport (LIRF/FCO)</span><br>
+                        <strong>Arrival:</strong> Monday, July 28 at 2:30 PM at <span class="image-trigger" data-image-src="https://www.airportmaps.com/uploads/1737763236.png">Venice Marco Polo Airport (LIPZ/VCE)</span><br>
+                        <strong>Flight Duration:</strong> 1 Hour and 5 minutes
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i>Things to do in Venice</h3>
+                    <ul>
+                        <li><strong>July 28, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>3:00 PM: Check in at hotel, then have some Venice Pho.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                        <li><strong>July 29, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>10:00 AM - Visit <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Ponte_di_Rialto_facciata_ovest_di_sera.jpg/1200px-Ponte_di_Rialto_facciata_ovest_di_sera.jpg">Ponte di Rialto</span>.</li><li> 12:00 PM: Visit the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npQf_uSFd3MD4EG-oVDTqcnIhB9Xi9iWp4enAToQ-nYvmUe9b_7DmqDIhcmEreE7YDg3Ue0qnsenO2cgl-5VRrGj0QTUVoybND9Ma7khN9hjzT2fbL00a4Nld3EIEmbPylLVaFX=s680-w680-h510-rw">Doge's Palace</span>.</li><li>Later: Chill at the mall of <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/p/AF1QipOiJLYVwuftIoIFHuWzI-Tw6-3TtJU7fls-OC8X=s680-w680-h510-rw">Nave de Vero</span>.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                         <li><strong>July 30, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;"><li>11:00 AM - <span class="image-trigger" data-image-src="https://cdn-imgix.headout.com/media/images/0f7a290f8d7a98b03a00260b934e95af-9182-venice-private-gondola-ride-02.jpg?auto=format&w=1222.3999999999999&h=687.6&q=90&fit=crop&ar=16%3A9&crop=faces">Ride a gondola</span> through the canals.</li><li>12:00 PM - Visit the cathedral of  <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/6/61/Venezia_Basilica_di_San_Marco_Fassade_2.jpg">Saint Mark's Basilica</span>.</li><li>Later: Rest and get ready to fly to Hamburg.</li><li>DONT GET LOST(FOR RYAN).</li></ul></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <!-- City: Hamburg -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Hamburg <small>Germany🇩🇪</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Venice-Hamburg Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://i.ytimg.com/vi/DrwJF4wRfNs/hqdefault.jpg">Eurowings</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://cdn.planespotters.net/08077/d-agwv-eurowings-airbus-a319-132_PlanespottersNet_1253457_b1600868a8_o.jpg">Airbus A319-100</span><br>
+                        <strong>Flight:</strong> Eurowings 7891<br>
+                        <strong>Departure:</strong> Wednesday, July 30 at 9:00 AM from <span class="image-trigger" data-image-src="https://www.airportmaps.com/uploads/1737763236.png">Venice Marco Polo Airport (LIPZ/VCE)</span><br>
+                        <strong>Arrival:</strong> Wednesday, July 30 at 10:45 AM at <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/1/15/Hamburg-Airport-Fuhlsbuettel-Terminal2.jpg">Hamburg Airport (EDDH/HAM)</span><br>
+                        <strong>Flight Duration:</strong> 1 Hour and 45 minutes
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i>Things to do in Hamburg</h3>
+                    <ul>
+                        <li><strong>July 30, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>12:00PM: Check in at hotel and leave to get some Hamburg Pho.</li>
+                            <li>1:00PM: Go and chill at the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Stadtpark_%28Hamburg-Winterhude%29.Blick_vom_Planetarium.18mm.30809.ajb.jpg">Hamburg Stadtpark</span>.</li>
+                            <li>Later: Go to the mall of <span class="image-trigger" data-image-src="https://www.hamburg-tourism.de/images/hYuZVyXFB5M/rs:fill-down:1116:624/sharpen:1.2/cb:/g:ce/aHR0cHM6Ly9oaHQuaW14cGxhdGZvcm0uZGUvZGF0YS9pbWFnZXMvZXVyb3BhLXBhc3NhZ2Vfc2hvcHBpbmdfYy0yMDA2LWNocmlzdGlhbi1zcGFocmJpZXJfMDEuanBn">Europa Passage</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                        <li><strong>July 31, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Go to mass at the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/6/64/Hamburg-Michaeliskirche-Hafen.jpg">St. Michael's Church</span>.</li>
+                            <li>11:00 AM: Visit the <span class="image-trigger" data-image-src="https://image.wmsm.co/2aae248d56666feceb32f60fe352617c/u-boot-museum-hamburg-1.jpg?quality=80&width=1280">U-Boot Museum Hamburg</span>.</li>
+                            <li>12:50 PM: Visit the <span class="image-trigger" data-image-src="https://blog.turbopass.com/wp-content/uploads/2024/12/800_HAM_General_shutterstock_1221967516.jpg">Hamburg Townhall</span>.</li>
+                            <li>Later: Go chill at a mall in Hamburg, named the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Hamburg_Hamburger_Meile_2010.jpg/1200px-Hamburg_Hamburger_Meile_2010.jpg">Hamburger Meile</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                         <li><strong>August 1, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://www.historyhit.com/app/uploads/2021/02/St-Nikolai-Kirche_Hamburg_shutterstock_1273928917.jpg">St. Nikolai Memorial</span>.</li>
+                            <li>11:00 AM: Visit the <span class="image-trigger" data-image-src="https://i.redd.it/wj5z30prdui51.jpg">Miniatur Wunderland</span>.</li>
+                            <li>12:50 PM: Visit the <span class="image-trigger" data-image-src="https://prototyp-hamburg.de/wp-content/uploads/2019/06/%C2%A9-Automuseum-PROTOTYP-Dauerausstellung-Jordan-F1-191-Schumacher-rgb-1-1701x800.jpg">Car Museum Prototyp</span>.</li>
+                            <li>Later: Chill and rest at the mall of <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Hamburg.Wandelhalle.wmt.jpg/640px-Hamburg.Wandelhalle.wmt.jpg">Wandelhalle Hamburg</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                         </ul></li>
+                         <li><strong>August 2, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Rickmer_Rickmers_nach_Restaurierung_09-2016_%282%29.jpg">Rickmer Rickmers</span>.</li>
+                            <li>11:00 AM: Visit the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Cap_San_Diego-DSC_0417.jpg">Cap San Diego</span>.</li>
+                            <li>12:30 PM: Visit the <span class="image-trigger" data-image-src="https://live.staticflickr.com/65535/52512760063_de87a3bf62_b.jpg">Chocoversum</span>.</li>
+                            <li>Later: Chill, sightseeing, walk around, and go to the <span class="image-trigger" data-image-src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2f/7e/16/21/unser-hanseviertel.jpg?w=1200&h=-1&s=1">Hanseviertel</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                         </ul></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <!-- City: Berlin -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-train"></i></div>
+            <div class="timeline-content">
+                <h2>Berlin <small>Germany🇩🇪</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-train"></i>Hamburg-Berlin Train</h3>
+                    <p>
+                        <strong>Operator:</strong> <span class="image-trigger" data-image-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgKcWCP3rVu5JXFZLfzJfu-qX39Ac7EfkVIw&s">Deutsche Bahn</span><br>
+                        <strong>Train Type:</strong> <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/b/bb/D%C3%BCsseldorf_Rath_DB_9003_omleiding_2_%2852219697326%29.jpg">ICE 4</span><br>
+                        <strong>Departure:</strong> Sunday, August 3 at 10:00 AM from <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqNwQZcdYKW8wHOynIo-7OkGIy0dzazdQUeMu2StkbaA5-gwkGOYmDmOYthmXp83YyQIoXvBB-uQ8YaSS1e5rNZ5rvKcqKfCAZApwI2dA2NR8vn1pmDxyvMDyBKTSwCJzEktcFX=s680-w680-h510-rw">Hamburg (Hbf)</span><br>
+                        <strong>Arrival:</strong> Sunday, August 3 at 12:00 PM at <span class="image-trigger" data-image-src="https://www.seat61.com/images2/Berlin-hbf-exterior2.jpg">Berlin (Hbf)</span><br>
+                        <strong>Journey Duration:</strong> Approx. 2 Hours
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i>Things to do in Berlin</h3>
+                    <ul>
+                        <li><strong>August 2, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>After Arrival: Check in and rest for tomorrow.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                        <li><strong>August 3, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Brandenburger_Tor_abends.jpg">Brandenburg Gate</span>.</li>
+                            <li>11:20 AM: Visit the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Berlin_reichstag_west_panorama_2.jpg">Reichstag Building</span>.</li>
+                            <li>12:10 AM: Visit the <span class="image-trigger" data-image-src="https://www.bordersofadventure.com/wp-content/uploads/2020/05/See-the-Berlin-Wall-at-Topography-of-Terror.jpg">Berlin Wall</span>.</li>
+                            <li>Later: Chill, eat, drink, and shop at the <span class="image-trigger" data-image-src="https://mindtrip.ai/cdn-cgi/image/w=1200,format=webp,h=1200,fit=cover/https://iorigin.mindtrip.ai/attractions/1e75/24cb/1eff/236d/d0c7/563a/d60a/2f59">Mall of Berlin</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                        <li><strong>August 4, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Berlin_-_Flughafen_Tempelhof_-_2016.jpg/1200px-Berlin_-_Flughafen_Tempelhof_-_2016.jpg">Tempelhof Airport park</span>.</li>
+                            <li>12:00 PM: Visit the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq32VGwJRgdhP9wQunNZ119JRZYIuferaquKU5Q0siVRaIcj9S5-WX7jBx6Sq-dtw9zFvPjYPnQZq43UyX3bPzJayw_tywouZZZ8dmOU_C5jQGDUkKmFA_pYMqLw-rTseOs9JBU=s680-w680-h510-rw">Military History Museum - airport Berlin-Gatow</span>.</li>
+                            <li>1:00 PM: Visit the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npH45ayCddGZZeHDQQItdNsL_bIg-8ExIb3sJOId7VXh8vFoDZXam5GhtlZpjKpSihhvQ0NGyz4C29cXFPWIhNmFiFi2Pd8AbdFaWHITraFpO7X0Dr7GE-hRDw2J_cc7DZdSXzzvQ=s680-w680-h510-rw">Berlin TV Tower</span>.</li>
+                            <li>Later: Chill at the  <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/p/AF1QipO6gD-NxAdw-7BvwQkNAx5ydWPDP4F1FI4FQAJK=s680-w680-h510-rw">Boulevard Berlin</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                        <li><strong>August 5, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://freight.cargo.site/t/original/i/a2ffe0ac626298223dcfb93159f418101cc07f366fa02557cdccb4a73507af31/38.jpg">Memorial to the Murdered Jews of Europe</span>
+                            <li>11:00 AM: Visit the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npzQoYu5topZ4CXGmki1Ht2MazOoGZ2hspNI-fO-R98JZD6Dis30z6aqTZqyJwhJh7fibMqC8UyzmWn19IwfxAQnydJmh9tHfSUleGpUSrsHY3vbW1YlqGAjTIYiIjEvfKWcIKRPw=s680-w680-h510-rw">Checkpoint Charlie</span>
+                            <li>12:10 PM: Visit the<span class="image-trigger" data-image-src="https://libeskind.com/wp-content/uploads/SDL_Jewish-Museum_%C2%A9HuftonCrow_013-2280x1721.jpg">Jewish Museum Berlin</span>.</li>
+                            <li>1:00 PM: Go to <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrwQ_8l19ce02kEQFqOdPY49zMNcB0RxY7PEXnJ3gsSuUAUffhf2xk4G-2geUT5NVtV4ZDT0DAGAIK7kPeGi9Qnma2alZyj5s9OoTv_kaUHQl4Esp-eWa3dIzo-3iEjdOzYvESm=s680-w680-h510-rw">German Museum of Technology</span>.</li>
+                            <li>Evening: Go to the <span class="image-trigger" data-image-src="https://cdn.dam.union-investment.de/2400/642758_ALEXA_Berlin_WE1258_76_CW_Liegenschaftsseite_2400x1350.jpg">ALEXA Berlin</span> mall.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                        <li><strong>August 6, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Visit the  <span class="image-trigger" data-image-src="https://static.dw.com/image/63002200_605.webp">Victory Column</span>.</li>
+                            <li>12:00 PM: Go mass at the <span class="image-trigger" data-image-src="https://www.berlin.de/binaries/asset/image_assets/9617218/source/1745314915/1000x500/">Berlin Cathedral</span>.</li>
+                            <li>1:00 PM: Go mass at the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gpms-cs-s/AB8u6HZdaIwYt83TRq77aiUnumvvZAGRWHQ6q5mfbKmMTDD2PJVDt-uyE-i_mO2PMQOx_dnJmSDBD68BN_WJhFLAuC8Vbj4QOzcYzUQM-AgXaHJVAIg7yGUA8apqvHkVsLxyG6addshUaQ=s680-w680-h510-rw">Kaiser Wilhelm Memorial Church</span>.</li>
+                            <li>Afternoon: Head to Berlin (BER) airport for evening flight to Zurich.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <!-- City: Zurich -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Zurich <small>Switzerland🇨🇭</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Berlin-Zurich Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://i.ytimg.com/vi/DrwJF4wRfNs/hqdefault.jpg">Eurowings</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://live.staticflickr.com/4293/36052592802_eb02bc41a5_b.jpg">Airbus A320-200</span><br>
+                        <strong>Flight:</strong> Eurowings 8762<br>
+                        <strong>Departure:</strong> Wednesday, August 6 at 6:00 PM from <span class="image-trigger" data-image-src="https://preview.redd.it/mx0gxri56jw51.jpg?width=1280&format=pjpg&auto=webp&s=229bdbb53cfe5b7339ff522dcdb19739362e1fcd">Berlin Brandenburg International Airport (EDDB/BER)</span><br>
+                        <strong>Arrival:</strong> Wednesday, August 6 at 7:30 PM at <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Zurich_airport_img_3324.jpg">Zurich Kloten International Airport (LSZH/ZRH)</span><br>
+                        <strong>Flight Duration:</strong> 1 Hour and 30 Minutes
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i>Things to do in Zurich</h3>
+                     <ul>
+                         <li><strong>August 6, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Berlin_reichstag_west_panorama_2.jpg">Swiss National Museum</span>.</li>
+                            <li>12:00 AM: Visit the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gpms-cs-s/AB8u6HZUcSJ1QIm0dLMViPv7xFX74Eby_4bEvVZ_fkHdkBQU76DWjyToZLVetZLWyED3NXh2IEssg8uDKoa0h8T9ST3HVEiqLAq0N-5Si1PNfT8FpOPQTjp91H4y-pVj_g87-ukKggN6=s680-w680-h510-rw">Botanical Garden</span>.</li>
+                             <li>Later: Chill at the  <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Shopville_zurich.jpg">ShopVille</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                         <li><strong>August 7, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr5te6sJ545H-nWhuePU5Y2eBlzef7ayTRnT74aiIY8LkhCX5WpCYb0JqzLBCkB4L-5NZfBBYsDoPWpNTaIEEZpfeVQuVve686OPCUNs2uPkW64cTWe-vufsbI7j-i-RrxDgir6=s680-w680-h510-rw">Lindt Home of Chocolate</span>.</li>
+                            <li>11:00 AM: Visit the <span class="image-trigger" data-image-src="https://www.zuerich.com/sites/default/files/styles/1920_1152_focal_scale_crop/public/keyvisual/web_zurich_kultur_tram-museum_01.jpg?h=2021-07-06T11:43:14+02:00">Zurich Tram Museum</span>(can't believe myself for this).</li>
+                            <li>1:00 PM: Chill and watch the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/SBB_RABe_514_DTZ_Rheinfall.jpg/960px-SBB_RABe_514_DTZ_Rheinfall.jpg">Rhine Falls</span>.</li>
+                             <li>Later: Chill and shop at the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/p/AF1QipNR-8Obs3sCoz23p-_xWZOkUhmKKIBGuGgkNJag=s680-w680-h510-rw">Aero-terminal</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                        <li><strong>August 8, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Go mass at the  <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/1/11/Grossm%C3%BCnster_-_M%C3%BCnsterhof_2014-05-23_12-08-43.JPG">Grossmünster</span>.</li>
+                            <li>12:00 PM: Visit the <span class="image-trigger" data-image-src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/c1/72/ed/20160627-133045-largejpg.jpg?w=900&h=-1&s=1">Chinagarten Zürich</span>.</li>
+                            <li>1:00 PM: Visit the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gpms-cs-s/AB8u6HZd99C50jq_9L8FBg9jCAqKMpYKmEPk4D0izE6huRQytwciYaqBx4jrRIuAKjzcC9INYLKlB7gj1sKfJ77CiK2b4or5GNjgHLJlFo6XvF37iDb8dX7SBfywQ6-yJMQIjyt3oxJj5w=s680-w680-h510-rw-">Uetliberg</span>.</li>
+                            <li>Later: Chill at the  <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrWuvoJ5koyMUTT1KS24sEkwMWsjpkx0IQo7FuLtaQbFbLDfqDnLXw8W_PCrCw8KwgqnZIqSJjvOMqa7EhOszAEhgwFxpbWVMOU9J0zHFxLLInD6-rw0ZeqOU81SmVxfsWNBOx6IQ=s680-w680-h510-rw">Züri 11</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                        <li><strong>August 9, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrftSIU98-0K_BcvQ5-18BzmxHmctNzzEkNzuvBXrs2Tkl5Kq_snQ9wD7-P-j6jrFItr5Uq_g868Lj22_4oF453__UA986LyaCqaVbUz2n-zYHWV27o7ecr7YrErUyeD10Pwqsf=s680-w680-h510-rw">Lindenhof</span>
+                            <li>11:00 AM: Visit the <span class="image-trigger" data-image-src="https://cdn.britannica.com/51/102451-050-97471A92/Lake-Zurich-Switzerland.jpg">Lake Zurich</span>
+                            <li>12:10 PM and later: Chill and go to the mall <span class="image-trigger" data-image-src="https://cdn.ais-online.de/m1/75/12506975/images/76/12506976px650x489.jpg">Center Eleven</span>.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                        <li><strong>August 10, 2025:</strong><ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                            <li>10:00 AM: Use an aerial tram to climb the <span class="image-trigger" data-image-src="https://static.dw.com/image/63002200_605.webp">Felsenegg</span>.</li>
+                            <li>1:30 PM: Go mass at the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npvxpGxFKNL1-ULIN1rk520OQD-9Q2CeIJC7B4KxLgULURXNpYvCNwAQaFfT6wISSCIZZ4EH4sd6rKZMLrGb7T_V3TwAHfUQAUrfjtsBWaS_COuEY-wccYfEC6Ml8688hwCUGaI=s680-w680-h510-rw">Flieger Flab Museum</span>.</li>
+                            <li>Afternoon: Prepare to head to Paris.</li>
+                            <li>DONT GET LOST(FOR RYAN).</li>
+                        </ul></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <!-- City: Paris -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Paris <small>France🇫🇷</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane"></i>Zurich-Paris Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/AirBaltic_Logo.svg/1200px-AirBaltic_Logo.svg.png">Air Baltic</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://cdn.plnspttrs.net/04645/yl-aaz-airbaltic-airbus-a220-300-bd-500-1a11_PlanespottersNet_1604827_70fb4fc0cf_o.jpg">Airbus A220-300</span><br>
+                        <strong>Flight:</strong> Swiss International Air Lines 638 operated by Air Baltic<br>
+                        <strong>Departure:</strong> Monday, August 11 at 12:45 PM from <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Zurich_airport_img_3324.jpg">Zurich Kloten International Airport(LSZH/ZRH)</span><br>
+                        <strong>Arrival:</strong> Monday, August 11 at 2:05 PM at <span class="image-trigger" data-image-src="https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/.dzi/ji2b66-8353071-Pliades-RoissyCharlesdeGaulleAirportParisjpg/thumbnail.jpeg">Paris Charles de Gaulle International Airport (LFPG/CDG)</span><br>
+                        <strong>Journey Duration:</strong> 1 Hour and 20 Minutes
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i>Things to do in Paris</h3>
+                    <ul>
+                        <li><strong>August 10, 2025:</strong>
+                            <ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                                <li>Arrival: Go check in at the hotel and rest.</li>
+                                <li>later: Go eat at the mall of <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/p/AF1QipMmeZZhoQXevpHqO0dW_0Mth9qo2qiNPXygAzpt=s680-w680-h510-rw">Westfield Forum des Halles</span>.</li>
+                            </ul>
+                        </li>
+                        <li><strong>August 11, 2025:</strong>
+                            <ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                                <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://media.cntraveler.com/photos/5a93281d8087c02669a7dc07/16:9/w_2560,c_limit/Arc%20de%20Triomphe_GettyImages-615063063.jpg">Arc de Triomphe</span>.</li>
+                                <li>11:20 AM: See the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/960px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg">Eiffel Tower</span>.</li>
+                                <li>Later: Chill at the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Shopping_mall_%40_Beaugrenelle_%40_Paris_%2825975398892%29.jpg">Centre Commercial Beaugrenelle</span>.</li>
+                                <li>DONT GET LOST(FOR RYAN).</li>
+                            </ul>
+                        </li>
+                        <li><strong>August 12, 2025:</strong>
+                            <ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                                <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/dc/ce/26/hall-concorde.jpg?w=800&h=500&s=1">Musée de l'Air et de l'Espace</span>.</li>
+                                <li>12:00 PM: Explore the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/en/4/42/Louvre_Pyramid.jpg">Louvre Pyramid</span>.</li>
+                                <li>Later: Go the mall of <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npAWeYJGzjUHkrLeylTeN0wox2jutEmftOJ13b6Bpj_K0n-KSj8N1FHwdxMP0Ow7Dugs6k6xdsTGtZ_Ficss1WDMa4y77N_9QVTSqaw7po6Al8C3epYS24hecAPrBZz_RF9l4M-=s680-w680-h510-rw">Galeries Lafayette Haussmann</span>.</li>
+                                <li>DONT GET LOST(FOR RYAN).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+<!-- City: Lourdes -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Lourdes <small>France🇫🇷</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Paris-Lourdes Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Volotea_logo.jpg">Volotea</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://mediaassets.airbus.com/pm_38_526_526441-ngc34kx377.jpg">Airbus A319-100</span><br>
+                        <strong>Flight:</strong> Volotea 2180 <br>
+                        <strong>Departure:</strong> Tuesday, August 12 at 8:50 AM from <span class="image-trigger" data-image-src="https://media.istockphoto.com/id/598699720/photo/orly-airtport-paris.jpg?s=612x612&w=0&k=20&c=5aKZDumLTF8oFunt-dvytrQlNiLdVur0G3M1gVujkdU=">Paris Orly International Airport (LFPO/ORY)</span><br>
+                        <strong>Arrival:</strong> Tuesday, August 12 at 10:10 AM at <span class="image-trigger" data-image-src="https://vfr-pilote.fr/wp-content/uploads/2018/09/LFBT.jpg">Tarbes–Lourdes–Pyrénées Airport (LFBT/LDE)</span><br>
+                        <strong>Flight Duration:</strong> 1 Hour 20 Minutes
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i>Things to do in Lourdes</h3>
+                    <ul>
+                        <li><strong>August 13, 2025:</strong>
+                            <ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                                <li>Arrival: Go check in at the hotel and rest.</li>
+                                <li>later: Enjoy the sigths of Lourdes.</li>
+                            </ul>
+                        </li>
+                        <li><strong>August 14, 2025:</strong>
+                            <ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                                <li>10:00 AM: Visit the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4np_m_39JDxiuRrqawf6FXJ_s73YOu18Zvl3OmO07DIMhohOTwDz1xDAc_uMjFTNwrJgPJ18SxLzsJaw_rNZvReCy-WCj6PbXbs5uTK-O6zelE-DQeaH-ATbDe3evEh8w0HNK6QPJj8xc1fW=s680-w680-h510-rw">Basilica of the Immaculate Conception</span>.</li>
+                                <li>11:20 AM: See the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nobGNL4Y0l7DpORCEFqXa8dbvkhgjUGH6xz0qhO5DHQY4JCWAT9u3oH7yiXmc7RJWDPYbKtlJ9uiiOenxikhhwH2Ge8TsjPfwd3h6ulPnY0WEbfExJ49oXu7ca2Qi324dZGAfqMpA=s680-w680-h510-rw">Basilica of St. Pius X</span>.</li>
+                                <li>Later: Chill at the <span class="image-trigger" data-image-src="https://woody.cloudly.space/app/uploads/lourdes/2021/06/thumbs/halles-interieur-bdp-vincent-ot-lourdes-2014-640x320-crop-1623168952.jpg">Les Halles</span>.</li>
+                                <li>DONT GET LOST(FOR RYAN).</li>
+                            </ul>
+                        </li>
+                        <li><strong>August 15, 2025:</strong>
+                            <ul style="padding-left: 20px; list-style-type: circle; margin-top: 5px;">
+                                <li>10:00 AM: Go mass at the <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Sanctuary_NDL_3.jpg/1200px-Sanctuary_NDL_3.jpg">Basilica of Our Lady of the Rosary</span>.</li>
+                                <li>11:00 AM: Explore the <span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4no_d9uFoS8_tumVBvhQR68j4uPdLREvrQ1vQQb015TM1XzOuMq9FDSos-5_wf5hxzGANnDpqrUQ6i7zobhQc6-9z7f1WZBNfat2pW9jYluL6Q0odtsn6CPnPIhGxV2ZcTMovpQ=s680-w680-h510-rw">Grottes de Bétharram</span>.</li>
+                                <li>12:00 PM: Go visit the<span class="image-trigger" data-image-src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4np5QwHRdnPkn6YJcyW-FizAT3oBaMiYbvr2oyojydiUPJBY96EVR8GXBwZLeMWves5L9ddEQ9x7ECBNRvKlMxfPOtQ2ki7sktNKEYCzdXyPextdvSWNPEw44bhOR_8rpVCMh_U=s680-w680-h510-rw">Massabielle Grotto</span>.</li>
+                                <li>DONT GET LOST(FOR RYAN).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- City: Paris (Return) -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Return to Paris <small>France🇫🇷</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Lourdes-Paris Flight</h3>
+                     <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Volotea_logo.jpg">Volotea</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://mediaassets.airbus.com/pm_38_526_526441-ngc34kx377.jpg">Airbus A319-100</span><br>
+                        <strong>Departure:</strong> Thursday, August 14 at 11:00 AM from <span class="image-trigger" data-image-src="https://vfr-pilote.fr/wp-content/uploads/2018/09/LFBT.jpg">Tarbes–Lourdes–Pyrénées Airport (LFBT/LDE)</span><br>
+                        <strong>Arrival:</strong> Thursday, August 14 at 12:20 PM at <span class="image-trigger" data-image-src="https://media.istockphoto.com/id/598699720/photo/orly-airtport-paris.jpg?s=612x612&w=0&k=20&c=5aKZDumLTF8oFunt-dvytrQlNiLdVur0G3M1gVujkdU=">Paris Orly International Airport (LFPO/ORY)</span><br>
+                        <strong>Flight Duration:</strong> 1 Hour 20 Minutes
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-departure"></i>Paris-Los Angeles Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://logowik.com/content/uploads/images/norse-atlantic-airways3580.logowik.com.webp">Norse Atlantic</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://corporate.flynorse.com/content/uploads/sites/3/2023/08/B787-9-OE-LNP-LN-FNJ-NORSE-ATLANTIC-6-scaled.jpg">Boeing 787-9</span><br>
+                        <strong>Flight:</strong> Norse Atlantic 0066<br>
+                        <strong>Departure:</strong> Friday, August 15 at 10:30 AM from <span class="image-trigger" data-image-src="https://storage.googleapis.com/p-oaf-ibe-back-00e-strapi-uploads/.dzi/ji2b66-8353071-Pliades-RoissyCharlesdeGaulleAirportParisjpg/thumbnail.jpeg">Paris Charles de Gaulle International Airport (LFPG/CDG)</span><br>
+                        <strong>Arrival:</strong> Friday, August 15 at 1:00 PM at <span class="image-trigger" data-image-src="https://images.fineartamerica.com/images-medium-large-5/los-angeles-international-airport-geoeyescience-photo-library.jpg">Los Angeles International Airport(KLAX/LAX)</span><br>
+                        <strong>Flight Duration:</strong> 11 Hours 30 Minutes
+                    </p>
+                </div>
+            </div>
+        </div>
+                <!-- City: Paris (Return) -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-house"></i></div>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main> <!-- Added closing main tag for proper structure -->
+
+    <!-- !!! FIX: ADDED THE MISSING MODAL HTML STRUCTURE HERE !!! -->
+    <div id="imageModal" class="image-modal">
+        <span id="closeModal" class="close-modal">×</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const closeModal = document.getElementById("closeModal");
+        const triggers = document.querySelectorAll('.image-trigger');
+
+        const openModal = (imgSrc) => {
+            modal.style.display = "flex";
+            modalImg.src = imgSrc;
+            requestAnimationFrame(() => {
+                modal.style.opacity = "1";
+                modalImg.style.transform = "scale(1)";
+            });
+        };
+
+        const doCloseModal = () => {
+            modal.style.opacity = "0";
+            modalImg.style.transform = "scale(0.9)";
+            setTimeout(() => {
+                modal.style.display = "none";
+                modalImg.src = "";
+            }, 400);
+        };
+
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                const imgSrc = this.dataset.imageSrc;
+                if (imgSrc) {
+                    openModal(imgSrc);
+                }
+            });
+        });
+
+        closeModal.addEventListener('click', doCloseModal);
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                doCloseModal();
+            }
+        });
+    });
+    </script>
+</body>
+</html>
