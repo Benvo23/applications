@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA2k Bar Trainer</title>
+    <style>
+body {
+    background-image: url('https://wallpapers.com/images/hd/nba-2k20-1680-x-1000-wallpaper-6959tq1tvl4kekn6.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    gap: 50px;
+}
+
+#left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#trainer-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#shot-meter-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#shot-meter {
+    width: 30px;
+    height: 400px;
+    background-color: #444;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+#green-zone {
+    position: absolute;
+    width: 100%;
+    height: 40px; /* Adjust for difficulty */
+    background-color: #00ff00;
+    top: 0;
+    left: 0;
+}
+
+#shot-bar {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    background-color: #ff0000;
+    bottom: 0;
+    left: 0;
+}
+
+#feedback-container {
+    height: 30px;
+    margin-top: 10px;
+}
+
+#feedback-text {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#score-container, #streak-container {
+    margin-top: 10px;
+}
+
+#tips-box, #highscore-box, #streak-box {
+    width: 250px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    border: 1px solid #fff;
+    text-align: center;
+}
+
+#tips-box h2, #highscore-box h2, #streak-box h2 {
+    margin-top: 0;
+    color: #00ff00;
+}
+
+#highscore-value, #highest-streak-value {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#difficulty-buttons {
+    margin-bottom: 20px;
+}
+
+#difficulty-buttons button {
+    padding: 10px 20px;
+    border: 1px solid #fff;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+#difficulty-buttons button.active {
+    background-color: #00ff00;
+    color: #000;
+}
+
+#reset-stats-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: 1px solid #fff;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+@keyframes flash {
+    0% { background-color: rgba(255, 255, 255, 0.5); }
+    100% { background-color: transparent; }
+}
+
+.flash-effect {
+    animation: flash 0.3s ease-out;
+}
+    </style>
+</head>
+<body>
+    <div id="left-column">
+        <div id="highscore-box">
+            <h2>High Score</h2>
+            <p id="highscore-value">0</p>
+        </div>
+        <div id="streak-box">
+            <h2>Highest Streak</h2>
+            <p id="highest-streak-value">0</p>
+        </div>
+        <button id="reset-stats-btn">Reset Stats</button>
+    </div>
+
+    <div id="trainer-container">
+        <h1>NBA2k Bar Trainer</h1>
+        <div id="difficulty-buttons">
+            <button id="easy-btn">Easy</button>
+            <button id="intermediate-btn" class="active">Intermediate</button>
+            <button id="pro-btn">Pro</button>
+        </div>
+        <div id="shot-meter-container">
+            <div id="shot-meter">
+                <div id="green-zone"></div>
+                <div id="shot-bar"></div>
+            </div>
+        </div>
+        <div id="feedback-container">
+            <p id="feedback-text"></p>
+        </div>
+        <div id="score-container">
+            <p>Score: <span id="score">0</span></p>
+        </div>
+        <div id="streak-container">
+            <p>Current Streak: <span id="current-streak">0</span></p>
+        </div>
+    </div>
+
+    <div id="tips-box">
+        <h2>How to Use</h2>
+        <p>Press and hold Spacebar or the Left Mouse Button to start the shot, release to stop.</p>
+        <p>Your goal is to stop the bar inside the green zone for a "Perfect" shot.</p>
+        <h2>Tips for Timing</h2>
+        <p>Focus on a single point on the meter and react as the bar approaches it.</n>
+        <p>Try to find a visual cue that helps you anticipate the release point.</p>
+        <p>Consistency is key. Keep practicing!</p>
+    </div>
+
+    <audio id="chime-sound" src="https://www.soundjay.com/buttons/sounds/button-7.mp3" preload="auto"></audio>
+    <audio id="wrong-sound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const shotBar = document.getElementById('shot-bar');
+    const greenZone = document.getElementById('green-zone');
+    const feedbackText = document.getElementById('feedback-text');
+    const scoreEl = document.getElementById('score');
+    const highScoreEl = document.getElementById('highscore-value');
+    const currentStreakEl = document.getElementById('current-streak');
+    const highestStreakEl = document.getElementById('highest-streak-value');
+    const chimeSound = document.getElementById('chime-sound');
+    const wrongSound = document.getElementById('wrong-sound');
+    const easyBtn = document.getElementById('easy-btn');
+    const intermediateBtn = document.getElementById('intermediate-btn');
+    const proBtn = document.getElementById('pro-btn');
+    const trainerContainer = document.getElementById('trainer-container');
+    const resetStatsBtn = document.getElementById('reset-stats-btn');
+
+    const meterHeight = 400;
+    const barHeight = 5;
+    const barSpeed = 10;
+
+    let score = 0;
+    let highScore = localStorage.getItem('nba2kHighScore') || 0;
+    highScoreEl.textContent = highScore;
+
+    let currentStreak = 0;
+    let highestStreak = localStorage.getItem('nba2kHighestStreak') || 0;
+    highestStreakEl.textContent = highestStreak;
+
+    let barPosition = meterHeight - barHeight;
+    let isBarMoving = false;
+    let animationFrameId;
+    let shotStartTime;
+    let difficulty = 'intermediate';
+
+    function setDifficulty(newDifficulty) {
+        difficulty = newDifficulty;
+
+        easyBtn.classList.remove('active');
+        intermediateBtn.classList.remove('active');
+        proBtn.classList.remove('active');
+        document.getElementById(difficulty + '-btn').classList.add('active');
+
+        if (difficulty === 'easy') {
+            greenZone.style.height = (meterHeight / 2) + 'px';
+            greenZone.style.top = '0px';
+        } else if (difficulty === 'intermediate') {
+            greenZone.style.height = '40px';
+            greenZone.style.top = '0px';
+        } else { // pro
+            greenZone.style.height = '20px';
+            greenZone.style.top = '0px';
+        }
+    }
+
+    function resetStats() {
+        highScore = 0;
+        highestStreak = 0;
+        score = 0;
+        currentStreak = 0;
+
+        highScoreEl.textContent = highScore;
+        highestStreakEl.textContent = highestStreak;
+        scoreEl.textContent = score;
+        currentStreakEl.textContent = currentStreak;
+
+        localStorage.removeItem('nba2kHighScore');
+        localStorage.removeItem('nba2kHighestStreak');
+    }
+
+    easyBtn.addEventListener('click', () => setDifficulty('easy'));
+    intermediateBtn.addEventListener('click', () => setDifficulty('intermediate'));
+    proBtn.addEventListener('click', () => setDifficulty('pro'));
+    resetStatsBtn.addEventListener('click', resetStats);
+
+    function updateBar() {
+        if (!isBarMoving) return;
+
+        barPosition -= barSpeed;
+
+        if (barPosition <= 0) {
+            barPosition = 0;
+            releaseShot(true); // Auto-release at the top
+            return;
+        }
+
+        shotBar.style.top = barPosition + 'px';
+        animationFrameId = requestAnimationFrame(updateBar);
+    }
+
+    function startShot() {
+        if (isBarMoving) return;
+
+        shotStartTime = Date.now();
+        feedbackText.textContent = '';
+        feedbackText.style.color = '#ffffff';
+        feedbackText.style.fontWeight = 'normal';
+        barPosition = meterHeight - barHeight;
+        shotBar.style.top = barPosition + 'px';
+        isBarMoving = true;
+        updateBar();
+    }
+
+    function releaseShot(isVeryLate = false) {
+        if (!isBarMoving) return;
+
+        const shotDuration = Date.now() - shotStartTime;
+        if (shotDuration < 100) { // less than 100ms, ignore
+            isBarMoving = false;
+            cancelAnimationFrame(animationFrameId);
+            barPosition = meterHeight - barHeight;
+            shotBar.style.top = barPosition + 'px';
+            return;
+        }
+
+        isBarMoving = false;
+        cancelAnimationFrame(animationFrameId);
+
+        let feedback = '';
+        if (isVeryLate) {
+            feedback = 'Very Late';
+            score = 0;
+            currentStreak = 0;
+            feedbackText.style.color = '#ffffff';
+            feedbackText.style.fontWeight = 'normal';
+            wrongSound.play();
+        } else {
+            const barCenter = barPosition + barHeight / 2;
+            const greenZoneTop = greenZone.offsetTop;
+            const greenZoneBottom = greenZoneTop + greenZone.offsetHeight;
+
+            if (barCenter >= greenZoneTop && barCenter <= greenZoneBottom) {
+                feedback = 'Perfect!';
+                let points = 0;
+                switch (difficulty) {
+                    case 'easy':
+                        points = 5;
+                        break;
+                    case 'intermediate':
+                        points = 10;
+                        break;
+                    case 'pro':
+                        points = 20;
+                        break;
+                }
+                score += points;
+                currentStreak++;
+                feedbackText.style.color = '#00ff00';
+                feedbackText.style.fontWeight = 'bold';
+                chimeSound.play();
+                trainerContainer.classList.add('flash-effect');
+                setTimeout(() => {
+                    trainerContainer.classList.remove('flash-effect');
+                }, 300);
+            } else if (barCenter > greenZoneBottom) {
+                feedback = 'Early';
+                score = 0;
+                currentStreak = 0;
+                feedbackText.style.color = '#ffffff';
+                feedbackText.style.fontWeight = 'normal';
+                wrongSound.play();
+            } else { // barCenter < greenZoneTop
+                feedback = 'Late';
+                score = 0;
+                currentStreak = 0;
+                feedbackText.style.color = '#ffffff';
+                feedbackText.style.fontWeight = 'normal';
+                wrongSound.play();
+            }
+        }
+
+        feedbackText.textContent = feedback;
+        scoreEl.textContent = score;
+        currentStreakEl.textContent = currentStreak;
+
+        if (score > highScore) {
+            highScore = score;
+            highScoreEl.textContent = highScore;
+            localStorage.setItem('nba2kHighScore', highScore);
+        }
+
+        if (currentStreak > highestStreak) {
+            highestStreak = currentStreak;
+            highestStreakEl.textContent = highestStreak;
+            localStorage.setItem('nba2kHighestStreak', highestStreak);
+        }
+    }
+
+    // Event Listeners
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space' && !event.repeat) {
+            startShot();
+        }
+    });
+
+    document.addEventListener('keyup', (event) => {
+        if (event.code === 'Space') {
+            releaseShot();
+        }
+    });
+
+    document.addEventListener('mousedown', (event) => {
+        if (event.button === 0) {
+            startShot();
+        }
+    });
+
+    document.addEventListener('mouseup', (event) => {
+        if (event.button === 0) {
+            releaseShot();
+        }
+    });
+
+    setDifficulty('intermediate');
+});
+    </script>
+</body>
+</html>
