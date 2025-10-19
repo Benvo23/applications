@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airlines</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-image: url('IMG_4389.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        main {
+            padding: 20px;
+        }
+        .airline-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .airline-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .airline-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .airline-card-content {
+            padding: 15px;
+        }
+        .airline-card-content h3 {
+            margin-top: 0;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Airlines I've Flown On</h1>
+        <a href="index.html" class="back-button">Home</a>
+    </header>
+    <main>
+        <div class="airline-grid">
+            <div class="airline-card">
+                <img src="https://djsaviation.net/wp-content/uploads/2025/06/52297919471_298cdc11f4_o-1.webp" alt="China Airlines">
+                <div class="airline-card-content">
+                    <h3>China Airlines</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://static0.simpleflyingimages.com/wordpress/wp-content/uploads/2025/07/shutterstock_1727674843-1.jpg" alt="Eva Air">
+                <div class="airline-card-content">
+                    <h3>Eva Air</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://images.airlinegeeks.com/wp-content/uploads/2017/03/27003139/IMG_8893.jpg" alt="Alaska">
+                <div class="airline-card-content">
+                    <h3>Alaska</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://aviationweek.com/sites/default/files/styles/crop_freeform/public/2025-09/allegiant_air_a320_source_rob_finlayson.png?itok=Rk6HrnaC" alt="Allegiant">
+                <div class="airline-card-content">
+                    <h3>Allegiant</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://liveandletsfly.boardingarea.com/wp-content/uploads/2018/11/Asiana-Airlines-A380-LAX.jpg" alt="Asiana Airlines">
+                <div class="airline-card-content">
+                    <h3>Asiana Airlines</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://media.aeroxplorer.com/uploads/to8jSosrTxIuWcuwMawB.jpg" alt="China Southern">
+                <div class="airline-card-content">
+                    <h3>China Southern</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://images.airlinegeeks.com/wp-content/uploads/2019/02/26205915/Vietnam-A359-ICN-Ben-Suskind.jpg" alt="Vietnam Airlines">
+                <div class="airline-card-content">
+                    <h3>Vietnam Airlines</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Norwegian_Long_Haul_B787-8_LN-LND_%2829784411145%29.jpg" alt="Norwegian (Norwegian Long Haul)">
+                <div class="airline-card-content">
+                    <h3>Norwegian (Norwegian Long Haul)</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://i.insider.com/632d8de0b431eb0019815c31?width=700" alt="United">
+                <div class="airline-card-content">
+                    <h3>United</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://ewscripps.brightspotcdn.com/dims4/default/2aaba67/2147483647/strip/true/crop/1280x720+0+0/resize/1280x720!/quality/90/?url=https%3A%2F%2Fewscripps.brightspotcdn.com%2F28%2Fde%2Fff7fcc044b4cb037e5c00ca2fa2c%2F1673296742-y8em2w.jpg" alt="Southwest">
+                <div class="airline-card-content">
+                    <h3>Southwest</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://images.airlinegeeks.com/wp-content/uploads/2023/10/29184756/jetBlue-Airways-Airbus-A220-FLL-William-Derrickson-scaled.jpg" alt="JetBlue">
+                <div class="airline-card-content">
+                    <h3>JetBlue</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://aviationweek.com/sites/default/files/styles/crop_freeform/public/2025-01/orig_vietjetairlines_a321neo_vn-a694_nrt_0224_3_jp_small_copy.jpeg?itok=eXs0pLn4" alt="Vietjet">
+                <div class="airline-card-content">
+                    <h3>Vietjet</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/HS-EAD_take_off_Don_Mueang.jpg/1024px-HS-EAD_take_off_Don_Mueang.jpg" alt=" Thai Airasia">
+                <div class="airline-card-content">
+                    <h3>AirAsia (Thai AirAsia)</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Bamboo_Airways_Airbus_A321-251neo_VN-A589.jpg" alt="Bamboo Airways">
+                <div class="airline-card-content">
+                    <h3>Bamboo Airways</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://assets.simpleviewinc.com/sv-boston/image/fetch/c_limit,q_75,w_1200/https://assets.simpleviewinc.com/simpleview/image/upload/crm/boston/a321neo_FF598EF4-D869-417F-05DF7F80723FFCD7-ff598c78beb1b4b_ff59c8e6-08bc-3215-08cef9e3565bf374.jpg" alt="Delta">
+                <div class="airline-card-content">
+                    <h3>Delta</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Airbus_A350-1041_%E2%80%98G-VJAM%E2%80%99_Virgin_Atlantic.jpg" alt="Virgin Atlantic">
+                <div class="airline-card-content">
+                    <h3>Virgin Atlantic</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://static0.simpleflyingimages.com/wordpress/wp-content/uploads/2022/05/Korean-Air-Airbus-A380-861-HL7615-(2)-(1).jpg" alt="Korean Air">
+                <div class="airline-card-content">
+                    <h3>Korean Air</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Air_France_Airbus_A350-900_F-HTYH_on_final_approach_to_Boston_Feb_2025_1.jpg" alt="AirFrance">
+                <div class="airline-card-content">
+                    <h3>AirFrance</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://cdn.plnspttrs.net/41896/b-32g2-sichuan-airlines-airbus-a350-941_PlanespottersNet_1613469_3fcefb6907_o.jpg" alt="Sichuan Airlines">
+                <div class="airline-card-content">
+                    <h3>Sichuan Airlines</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://www.aerotime.aero/images/2025/01/IB2-32.jpg" alt="Iberia">
+                <div class="airline-card-content">
+                    <h3>Iberia</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Vueling_A320-214_%28EC-JZQ%29_departing_Barcelona_Airport.jpg" alt="Vueling">
+                <div class="airline-card-content">
+                    <h3>Vueling</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Eurowings%2C_D-AENE%2C_Airbus_A320-251N_%2852928476865%29.jpg" alt="Eurowings">
+                <div class="airline-card-content">
+                    <h3>Eurowings</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://www.watson.ch/imgdb/04a7/Qx,A,0,0,2000,1236,833,515,333,206/6385254415738729" alt="SWISS">
+                <div class="airline-card-content">
+                    <h3>SWISS</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Hamburg-Finkenwerder_Airport_Volotea_Airbus_A319-112_EC-NDH_%28DSC03709%29.jpg" alt="Volotea">
+                <div class="airline-card-content">
+                    <h3>Volotea</h3>
+                </div>
+            </div>
+            <div class="airline-card">
+                <img src="https://www.aerotime.aero/images/2024/12/Norse-132.jpg" alt="Norse Atlantic">
+                <div class="airline-card-content">
+                    <h3>Norse Atlantic</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Airlines</p>
+        <p>Made by BV</p>
+        <p>&copy; 2025 Benjamin Vo's Aviation. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
