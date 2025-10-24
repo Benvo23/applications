@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanksgiving Asia Trip 2025</title>
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #005A9C; /* A rich, professional blue */
+            --secondary-color: #D4AF37; /* A classy gold accent */
+            --background-color: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        /* --- HEADER --- */
+        .hero-header {
+            position: relative;
+            height: 60vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://i0.wp.com/flightpathlax.com/wp-content/uploads/2022/05/AIP-Map-1.jpg?fit=1573%2C1287&ssl=1') no-repeat center center / cover;
+            filter: brightness(1.2);
+            z-index: -1;
+        }
+
+        .hero-header h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 0 10px rgba(0,0,0,0.5);
+            margin: 0;
+        }
+
+        .hero-header p {
+            font-size: 1.5rem;
+            font-weight: 400;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 5px rgba(0,0,0,0.5);
+            margin-top: 10px;
+        }
+
+        /* --- TIMELINE CONTAINER --- */
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #ddd;
+            top: 0;
+            bottom: 0;
+            left: 50px;
+            margin-left: -2px;
+        }
+
+        /* --- TIMELINE ITEM (EACH CITY) --- */
+        .timeline-item {
+            padding: 10px 0 40px 90px;
+            position: relative;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .timeline-content h2 {
+            margin: 0 0 15px 0;
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .timeline-content h2 small {
+            font-size: 1.2rem;
+            color: #777;
+            font-weight: 400;
+        }
+
+        .details-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .details-card h3 {
+            margin: 0 0 10px 0;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        .details-card i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .details-card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .details-card li {
+            padding: 5px 0;
+        }
+
+        /* --- INTERACTIVE IMAGE TRIGGER STYLES --- */
+        .image-trigger {
+            cursor: pointer;
+            color: var(--primary-color);
+            font-weight: 600;
+            border-bottom: 2px dotted var(--secondary-color);
+            transition: color 0.2s ease, border-bottom-color 0.2s ease;
+        }
+        .image-trigger:hover {
+            color: var(--secondary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* --- IMAGE MODAL STYLES --- */
+        .image-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 85vw;
+            max-height: 85vh;
+            border-radius: 5px;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media screen and (max-width: 768px) {
+            .hero-header { height: 50vh; }
+            .hero-header h1 { font-size: 3rem; }
+            .hero-header p { font-size: 1.2rem; }
+            .timeline-container::after { left: 30px; }
+            .timeline-item { padding-left: 70px; }
+            .timeline-icon { left: 30px; width: 30px; height: 30px; font-size: 1rem; }
+            .timeline-content h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-header">
+        <div>
+            <h1>Thanksgiving Asia Trip 2025</h1>
+            <p>Two Big Asian Cities</p>
+        </div>
+    </header>
+
+    <main class="timeline-container">
+
+    <!-- Flight: Los Angeles to Vancouver -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Los Angeles to Vancouver <small>🇺🇸->🇨🇦</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Los Angeles-Vancouver Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://images.seeklogo.com/logo-png/0/1/air-canada-logo-png_seeklogo-5051.png">Air Canada</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://global.discourse-cdn.com/infiniteflight/original/4X/a/f/0/af0c6a44acbe51571b51632e2eb59712f47db33c.jpeg">Boeing 737 MAX 8</span><br>
+                        <strong>Flight:</strong> Air Canada 551<br>
+                        <strong>Departure:</strong> Wednsday, November 19 ar 6:30 AM from <span class="image-trigger" data-image-src="https://images.fineartamerica.com/images-medium-large-5/los-angeles-international-airport-geoeyescience-photo-library.jpg">Los Angeles International Airport (KLAX/LAX)</span><br>
+                        <strong>Arrival:</strong> Wednsday, Nuvember 19 at 9:32 AM at <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/5/59/YVR_%283987950564%29.jpg">Vancouver International Airport (CYVR/YVR)</span><br>
+                        <strong>Flight Duration:</strong> 3 Hours
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flight: Vancouver to Hong Kong -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Vancouver to Hong Kong <small>🇨🇦->🇭🇰</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Vancouver-Hong Kong Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://images.seeklogo.com/logo-png/0/1/air-canada-logo-png_seeklogo-5051.png">Air Canada</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://i0.wp.com/www.nlarenas.com/wp-content/uploads/Air-Canada-pedido-aviones-Boeing-787-10-Dreamliner.jpg?fit=1024%2C576&ssl=1">Boeing 787-9</span><br>
+                        <strong>Flight:</strong> Air Canada 7<br>
+                        <strong>Departure:</strong> Wednesday, November 19 at 12:10 PM from <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/5/59/YVR_%283987950564%29.jpg">Vancouver International Airport (CYVR/YVR)</span><br>
+                        <strong>Arrival:</strong> Thursday, November 20 at 6:40 PM at <span class="image-trigger" data-image-src="https://www.cathaypacific.com/content/dam/focal-point/cx/inspiration/2018/07/Hero-Kai-tak-Airport-1.renditionimage.900.600.jpg">Hong Kong Chek Lap Kok International Airport(VHHH/HKG)</span><br>
+                        <strong>Flight Duration:</strong> 14 Hours 15 Minutes
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            
+            <div class="timeline-content">
+                <h2>Hong Kong <small>🇭🇰</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-hotel"></i> Hotel</h3>
+                    <p>
+                        <strong>Name:</strong> <span class="image-trigger" data-image-src="https://www.discoverhongkong.com/content/dam/dhk/intl/explore/neighbourhoods/central-sheung-wan/the-murray-hong-kong-a-niccolo-hotel/images/1920x1080/the-murray-hong-kong-a-niccolo-hotel-1920x1080.jpg">The Murray, Hong Kong</span><br>
+                        <strong>Address:</strong> 22 Cotton Tree Dr, Central, Hong Kong<br>
+                        <strong>Check-in:</strong> Thursday, November 20<br>
+                        <strong>Check-out:</strong> Thursday, November 27<br>
+                    </p>
+                </div>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i> Plan</h3>
+                    <h4>Part 1: Hong Kong (Nov 20 - 24)</h4>
+                    <p><strong>Family Pro-Tip:</strong> Get an "Octopus Card" for everyone. It's a tap-to-pay card for the MTR (subway), buses, trams, and even convenience stores. It's much easier than buying single tickets.</p>
+                    <h5>Day 1: Thurs, Nov 20 - Arrival & Lights</h5>
+                    <ul>
+                        <li><strong>Afternoon (6:40 pm):</strong> Land at HKG. You'll get through immigration, pick up bags, and travel to your hotel.</li>
+                        <li><strong>Evening:</strong> By the time you check in, it'll be dinner time. Find a simple, local spot for noodles or wonton soup.</li>
+                        <li><strong>Kid-Friendly Highlight (8:00 pm):</strong> If the family has the energy, walk to the Tsim Sha Tsui (TST) Promenade (near the clock tower). At 8 pm every night is the "Symphony of Lights," a 10-minute music and light show across the harbor. It's a perfect, low-effort "wow" moment for Ben and Ryan after a long flight.</li>
+                    </ul>
+                    <h5>Day 2: Fri, Nov 21 - The Peak & The Ferry</h5>
+                    <ul>
+                        <li><strong>Morning:</strong> Take the Star Ferry from Tsim Sha Tsui to Central. It's a 10-minute ride, super cheap, and the boys will love being on the water with the amazing skyline view.</li>
+                        <li><strong>Late Morning:</strong> From the Central ferry pier, head to the Peak Tram. This historic funicular railway goes almost vertically up the mountain.</li>
+                        <li><strong>Lunch:</strong> At the top, grab a casual lunch at the Peak Galleria.</li>
+                        <li><strong>Afternoon:</strong> Go to the Sky Terrace 428 observation deck for the most famous family photo you'll take on the trip.</li>
+                        <li>Go to Hong Kong Model plane shop, West Main Toys for one model.</li>
+                        <li><strong>Evening:</strong> Explore the Temple Street Night Market. It's a fun, chaotic jumble of lights, gadgets, and souvenirs. Grab a casual dinner there (like from a claypot rice spot).</li>
+                    </ul>
+                    <h5>Day 3: Sat, Nov 22 - Family Theme Park Day</h5>
+                    <ul>
+                        <li><strong>Full Day:</strong> This is the main day for the kids. You have two great choices:</li>
+                        <li><strong>Recommended:</strong> Ocean Park: This is a uniquely Hong Kong park. It's a mix of a massive aquarium, a zoo (with giant pandas!), and a theme park with thrill rides. The whole family will also love the cable car ride inside the park that connects the two main areas.</li>
+                        <li><strong>Alternative:</strong> Hong Kong Disneyland: If Ben and Ryan are big Disney fans, this is a classic "magic kingdom" experience.</li>
+                        <li><strong>Evening:</strong> You'll all be exhausted. Have an easy dinner near your hotel.</li>
+                    </ul>
+                    <h5>Day 4: Sun, Nov 23 - Big Buddha & Cable Cars</h5>
+                    <ul>
+                        <li><strong>Morning:</strong> Head to Lantau Island (via MTR). Take the Ngong Ping 360 Cable Car up the mountain. (Pro-tip: Book a "crystal cabin" with a glass bottom).</li>
+                        <li><strong>Lunch:</strong> At the top, the boys can climb the 268 steps to the base of the giant Tian Tan Buddha (Big Buddha). Explore the Po Lin Monastery and have lunch in the Ngong Ping village.</li>
+                        <li><strong>Afternoon:</strong> Head back to the city. If the family has energy, visit the Hong Kong Science Museum (in TST). It's full of hands-on, interactive exhibits that are perfect for kids.</li>
+                        <li><strong>Evening:</strong> Have a final Hong Kong dinner. A lively dim sum restaurant is a great choice.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flight: Hong Kong to Shanghai -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Hong Kong to Shanghai <small>🇭🇰->🇨🇳</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Hong Kong-Shanghai Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://logos-world.net/wp-content/uploads/2023/05/Hong-Kong-Airlines-Logo.jpg">Hong Kong Airlines</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://global.discourse-cdn.com/infiniteflight/optimized/4X/4/d/d/4dd525776ec2d6f9305542dcaca99df29935f00a_2_820x562.jpeg">Airbus A320-200</span><br>
+                        <strong>Flight:</strong> HX238<br>
+                        <strong>Departure:</strong> Monday, November 24 at 12:00 PM from <span class="image-trigger" data-image-src="https://www.cathaypacific.com/content/dam/focal-point/cx/inspiration/2018/07/Hero-Kai-tak-Airport-1.renditionimage.900.600.jpg">Hong Kong International Airport (VHHH/HKG)</span><br>
+                        <strong>Arrival:</strong> Monday, November 24 at 2:30 PM at <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/8/89/Shanghai_Pudong_Airport_2024_%28cropped%29.jpg">Shanghai Pudong International Airport (ZSPD/PVG)</span><br>
+                        <strong>Flight Duration:</strong> 2 Hours 30 Minutes
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shanghai Stay -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-city"></i></div>
+            <div class="timeline-content">
+                <h2>Shanghai <small>🇨🇳</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-map-signs"></i> Plan</h3>
+                    <h4>Part 2: Shanghai (Nov 24 - 28)</h4>
+                    <p><strong>Family Pro-Tip:</strong> Your apartment in Xuhui is in the French Concession, which is one of the best areas for just walking around. It's beautiful, with tree-lined streets, small parks, and great cafes.</p>
+                    <h5>Day 5: Mon, Nov 24 - Travel & Settling In</h5>
+                    <ul>
+                        <li><strong>Morning:</strong> Enjoy a last Hong Kong breakfast (maybe a pineapple bun from a bakery). Head to HKG airport around 10:30 am.</li>
+                        <li><strong>Afternoon (1:15 pm - 3:40 pm):</strong> Fly from HKG to Shanghai (PVG).</li>
+                        <li><strong>Evening:</strong> Take a taxi to your apartment in Xuhui. Get everyone settled, then take a family walk around your new neighborhood. Find a cozy, local restaurant for your first Shanghai dinner.</li>
+                    </ul>
+                    <h5>Day 6: Tues, Nov 25 - Science & City Lights</h5>
+                    <ul>
+                        <li><strong>Full Day:</strong> This is the #1 kid day in Shanghai. Take the metro to the Shanghai Science and Technology Museum. It is massive and incredibly interactive. Plan to spend at least 4-5 hours. Ben and Ryan will love the robot, space, and animal sections.</li>
+                        <li><strong>Late Afternoon:</strong> Head to People's Square. You can walk from there to the Nanjing Road Pedestrian Street, a giant, bright street closed to traffic. The boys might like the little trackless train that runs up and down the street.</li>
+                        <li>Go to WingsWorld for one more model.</li>
+                        <li><strong>Evening:</strong> Have dinner in the Nanjing Road area.</li>
+                    </ul>
+                    <h5>Day 7: Wed, Nov 26 - Old & New Shanghai</h5>
+                    <ul>
+                        <li><strong>Morning:</strong> Visit Yu Garden & the Old City Bazaar. The garden is a beautiful, 400-year-old maze of pagodas, ponds, and rockeries. The bazaar around it is fun for souvenirs and snacks.</li>
+                        <li><strong>Lunch:</strong> This is the best place to try xiaolongbao (soup dumplings)!</li>
+                        <li><strong>Afternoon:</strong> Head to Pudong (the futuristic side). Go to the Shanghai Ocean Aquarium, right near the giant towers. It has one of the longest underwater tunnels in the world.</li>
+                        <li><strong>Evening:</strong> This is the big one: The Bund. After the aquarium, walk to the riverfront on the Pudong side to see the historic Bund buildings. Then, take the 5-minute ferry across the river to the Bund promenade itself. Time it for dusk to watch the Pudong skyline light up.</li>
+                    </ul>
+                    <h5>Day 8: Thurs, Nov 27 - Dinos, Alleys & A Cruise</h5>
+                    <ul>
+                        <li><strong>Morning:</strong> Visit the Shanghai Natural History Museum. The building itself is amazing, and it's filled with fantastic exhibits, including a huge collection of dinosaur skeletons.</li>
+                        <li><strong>Afternoon:</strong> Head back to your side of the river and explore Tianzifang. It's a cool, artsy area of narrow, maze-like alleys filled with fun little shops and cafes. It's a great place for Thao to browse and for the boys to find a unique snack.</li>
+                        <li><strong>Evening:</strong> For your last night, take a Huangpu River Cruise. The whole family will love seeing both sides of the river—the Bund and Pudong—all lit up from the water. It's a perfect, relaxing way to end the trip.</li>
+                    </ul>
+                    <h5>Day 9: Fri, Nov 28 - The Maglev & Departure</h5>
+                    <ul>
+                        <li><strong>Morning:</strong> Enjoy a final family breakfast in the French Concession. Pack up and check out of your apartment by 12:00 pm.</li>
+                        <li><strong>Afternoon:</strong> The Grand Finale. Take the subway to Longyang Road station. From there, you will all ride the Maglev Train to the airport. It's the world's fastest commercial train, hitting 431 km/h (268 mph). It’s an attraction in itself and a perfect send-off for the boys, well one boy at least.</li>
+                        <li><strong>1:30 pm (approx.):</strong> Arrive at Pudong Airport (PVG) for your 4:40 pm flight home to LAX.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flight: Shanghai to Chengdu to Los Angeles -->
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="timeline-content">
+                <h2>Shanghai to Chengdu to Los Angeles <small>🇨🇳->🇺🇸</small></h2>
+                <div class="details-card">
+                    <h3><i class="fa-solid fa-plane-up"></i>Shanghai-Chengdu-Los Angeles Flight</h3>
+                    <p>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://static.routesonline.com/images/cached/organisation-4439-scaled-300x130.png">Sichuan Airlines</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://www.sanspotter.com/wp-content/uploads/2019/06/sichuan-airlines-review-30.jpg">Airbus A330-200</span><br>
+                        <strong>Flight:</strong> Sichuan Airlines 6992<br>
+                        <strong>Departure:</strong> Friday, November 28 ar 8:00 PM from <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/8/89/Shanghai_Pudong_Airport_2024_%28cropped%29.jpg">Shanghai Pudong International Airport (ZSPD/PVG)</span><br>
+                        <strong>Arrival:</strong> Friday, November 28 at 4:40 PM at <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/2/25/%E6%88%90%E9%83%BD%E5%A4%A9%E5%BA%9C%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA_Chengdu_Tianfu_International_Airport_1.jpg">Chengdu Tianfu International Airport (CYVR/ZUTF)</span><br>
+                        <strong>Flight Duration:</strong> 3 Hours 25 Minutes</span><br>
+</span><br>
+                        <strong>Airline:</strong> <span class="image-trigger" data-image-src="https://static.routesonline.com/images/cached/organisation-4439-scaled-300x130.png">Sichuan Airlines</span><br>
+                        <strong>Aircraft:</strong> <span class="image-trigger" data-image-src="https://static0.simpleflyingimages.com/wordpress/wp-content/uploads/2024/07/shutterstock_2424127669-1.jpg">Airbus A350-900</span><br>
+                        <strong>Flight:</strong> Sichuan Airlines 3837<br>
+                        <strong>Departure:</strong> Friday, November 28 ar 11:00 PM from <span class="image-trigger" data-image-src="https://upload.wikimedia.org/wikipedia/commons/2/25/%E6%88%90%E9%83%BD%E5%A4%A9%E5%BA%9C%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA_Chengdu_Tianfu_International_Airport_1.jpg">Chengdu Tianfu International Airport (CYVR/ZUTF)</span><br>
+                        <strong>Arrival:</strong> Friday, November 28 at 7:30 PM at <span class="image-trigger" data-image-src="https://images.fineartamerica.com/images-medium-large-5/los-angeles-international-airport-geoeyescience-photo-library.jpg">Los Angeles International Airport (KLAX/LAX)</span><br>
+                        <strong>Flight Duration:</strong> 3 Hours 25 Minutes
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main> <!-- Added closing main tag for proper structure -->
+
+    <!-- !!! FIX: ADDED THE MISSING MODAL HTML STRUCTURE HERE !!! -->
+    <div id="imageModal" class="image-modal">
+        <span id="closeModal" class="close-modal">×</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const closeModal = document.getElementById("closeModal");
+        const triggers = document.querySelectorAll('.image-trigger');
+
+        const openModal = (imgSrc) => {
+            modal.style.display = "flex";
+            modalImg.src = imgSrc;
+            requestAnimationFrame(() => {
+                modal.style.opacity = "1";
+                modalImg.style.transform = "scale(1)";
+            });
+        };
+
+        const doCloseModal = () => {
+            modal.style.opacity = "0";
+            modalImg.style.transform = "scale(0.9)";
+            setTimeout(() => {
+                modal.style.display = "none";
+                modalImg.src = "";
+            }, 400);
+        };
+
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                const imgSrc = this.dataset.imageSrc;
+                if (imgSrc) {
+                    openModal(imgSrc);
+                }
+            });
+        });
+
+        closeModal.addEventListener('click', doCloseModal);
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                doCloseModal();
+            }
+        });
+    });
+    </script>
+</body>
+</html>
