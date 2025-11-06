@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airports</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-image: url('IMG_4389.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        main {
+            padding: 20px;
+        }
+        .airport-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .airport-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .airport-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .airport-card-content {
+            padding: 15px;
+        }
+        .airport-card-content h3 {
+            margin-top: 0;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Airports I've Been To</h1>
+        <a href="index.html" class="back-button">Home</a>
+    </header>
+    <main>
+        <div class="airport-grid">
+            <div class="airport-card">
+                <img src="https://cdn.vox-cdn.com/thumbor/yP4P4wdfWTg0guE1akJRP0HbQPE=/0x365:5079x3024/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/10532573/shutterstock_471671102.jpg" alt="Los Angeles International Airport">
+                <div class="airport-card-content">
+                    <h3>Los Angeles International Airport (KLAX/LAX)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://scontent-lax3-1.xx.fbcdn.net/v/t1.6435-9/75576573_2971878902831606_1306704638296195072_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Inm7cOOaBRwQ7kNvwExCHng&_nc_oc=AdkqT_3Y8vicTuMCh1jghP9f_Cp4C2eZXBqkTO70G_HVbNzS2QMJAo67fMCQJYQQTc4&_nc_zt=23&_nc_ht=scontent-lax3-1.xx&_nc_gid=OgQ66n5bH-UfXE5c906dDQ&oh=00_AfdgcMz8TEc1q-lcZrhle9usr1t0tgzfsRVNplMs8Ye9HQ&oe=6919213C" alt="San Francisco International Airport">
+                <div class="airport-card-content">
+                    <h3>San Francisco International Airport (KSFO/SFO)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://cdn.jetphotos.com/full/3/45840_1314272959.jpg" alt="Las Vegas Harry Reid International Airport">
+                <div class="airport-card-content">
+                    <h3>Las Vegas Harry Reid International Airport (KLAS/LAS)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Seattle-Tacoma_Airport_Breidenstein-1.jpg" alt="Seattle Tacoma International Airport">
+                <div class="airport-card-content">
+                    <h3>Seattle Tacoma International Airport (KSEA/SEA)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://global.discourse-cdn.com/infiniteflight/original/4X/a/4/5/a45333cad711631b18ad1f69d063bc940cd5c455.jpeg" alt="Houston Intercontinental International Airport">
+                <div class="airport-card-content">
+                    <h3>Houston Intercontinental International Airport (KIAH/IAH)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Austin-Bergstrom_International_Airport_aerial.jpg/1200px-Austin-Bergstrom_International_Airport_aerial.jpg" alt="Austin Bergstrom International Airport">
+                <div class="airport-card-content">
+                    <h3>Austin Bergstrom International Airport (KAUS/AUS)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Chicago_Midway_Airport_Aerial_%2840124481472%29.jpg" alt="Chicago Midway International Airport">
+                <div class="airport-card-content">
+                    <h3>Chicago Midway International Airport (KMDW/MDW)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/North_Shore_of_Long_Island_2021_%28cropped%29.jpg" alt="LaGuardia Airport">
+                <div class="airport-card-content">
+                    <h3>LaGuardia Airport (KLGA/LGA)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://flyingmag1.b-cdn.net/wp-content/uploads/sites/2/2025/02/media-aerials-looking_northwest-scaled-5.jpg" alt="Orlando International Airport">
+                <div class="airport-card-content">
+                    <h3>Orlando International Airport (KMCO/MCO)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://imagewerx.us/wp-content/uploads/2019/03/KDEN-Denver-International-Airport-30x40.jpg" alt="Denver International Airport">
+                <div class="airport-card-content">
+                    <h3>Denver International Airport (KDEN/DEN)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/John_Wayne_Airport_photo_Don_Ramey_Logan.jpg" alt="John Wayne Airport">
+                <div class="airport-card-content">
+                    <h3>John Wayne Airport (KSNA/SNA)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Aerial_Photo_of_Daniel_K._Inouye_International_Airport.jpg" alt="Honolulu Daniel K. Inouye International Airport">
+                <div class="airport-card-content">
+                    <h3>Honolulu Daniel K. Inouye International Airport (KHNL/HNL)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://ps-image-bucket.s3.amazonaws.com/trbusiness.com/wp-content/uploads/2016/07/Cancun-International-Airport-Photo-credit-Luis-Elizalde-Mendieta.jpg" alt="Cancún International Airport">
+                <div class="airport-card-content">
+                    <h3>Cancún International Airport (MMUN/CUN)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/DV3DJY5JYZBENUF7GK3SRRG6TE.jpg&w=1440" alt="London Heathrow International Airport">
+                <div class="airport-card-content">
+                    <h3>London Heathrow International Airport (EGLL/LHR)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://media.sciencephoto.com/image/t6100109/800wm/T6100109.jpg" alt="Paris Charles de Gaulle International Airport">
+                <div class="airport-card-content">
+                    <h3>Paris Charles de Gaulle International Airport (LFPG/CDG)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://static0.simpleflyingimages.com/wordpress/wp-content/uploads/2019/01/dubai-airport.jpg" alt="Dubai International Airport">
+                <div class="airport-card-content">
+                    <h3>Dubai International Airport (OMDB/DXB)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://p.potaufeu.asahi.com/0b48-p/picture/29134385/3dc735f342b7a53ec726626479aad436.jpg" alt="Tokyo Narita International Airport">
+                <div class="airport-card-content">
+                    <h3>Tokyo Narita International Airport (RJAA/NRT)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://aviationweek.com/sites/default/files/2024-12/image_1_800.png" alt="Seoul Incheon International Airport">
+                <div class="airport-card-content">
+                    <h3>Seoul Incheon International Airport (RKSI/ICN)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://newsimg.koreatimes.co.kr/2024/02/29/c0595f69-74c1-4a26-8434-6b1f3b7ffd8c.jpg?v=1709341080000&w=1200" alt="Seoul Gimpo International Airport">
+                <div class="airport-card-content">
+                    <h3>Seoul Gimpo International Airport (RKSS/GMP)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://cdn.zbordirect.com/images/flights/airports/PUS.webp" alt="Busan Gimhae International Airport">
+                <div class="airport-card-content">
+                    <h3>Busan Gimhae International Airport (RKPK/PUS)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://content.fosterandpartners.com/api/media/getCroppedImage?imagePath=/media/viwat1qa/1235_fp386796.jpg&width=2000&height=2000&crop=false" alt="Beijing Capital International Airport">
+                <div class="airport-card-content">
+                    <h3>Beijing Capital International Airport (ZBAA/PEK)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://www.gz.gov.cn/img/1/1309/1309207/9954443.jpg" alt="Guangzhou Baiyun International Airport">
+                <div class="airport-card-content">
+                    <h3>Guangzhou Baiyun International Airport (ZGGG/CAN)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://dimg04.tripcdn.com/images/0M73b12000o00em99136C_Q60.jpg" alt="Chengdu Tianfu International Airport">
+                <div class="airport-card-content">
+                    <h3>Chengdu Tianfu International Airport (ZUTF/TFU)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://global.discourse-cdn.com/infiniteflight/optimized/4X/0/4/f/04f3797ece3375bb34fb8dcf9717b1acf7064f99_2_820x546.jpeg" alt="Taipei Taoyuan International Airport">
+                <div class="airport-card-content">
+                    <h3>Taipei Taoyuan International Airport (RCTP/TPE)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://cdn.jetphotos.com/full/2/96076_1269626214.jpg" alt="Hanoi Nội Bài International Airport">
+                <div class="airport-card-content">
+                    <h3>Hanoi Nội Bài International Airport (VVNB/HAN)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://vir.com.vn/stores/news_dataimages/2022/112022/21/11/in_article/danang-international-airport-needs-vnd3099-trillion-to-upgradation-20221121112812.jpg?rt=20221121112813" alt="Da Nang International Airport">
+                <div class="airport-card-content">
+                    <h3>Da Nang International Airport (VVDN/DAD)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://www.klia2.info/wp-content/uploads/cam-ranh-international-airport-pic01m.webp" alt="Cam Ranh International Airport">
+                <div class="airport-card-content">
+                    <h3>Cam Ranh International Airport (VVCR/CXR)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://www.airport-technology.com/wp-content/uploads/sites/14/2023/09/Image-3-Tan-Son-Nhat-International-Airports-Terminal-3.jpg" alt="Saigon Tân Sơn Nhất International Airport">
+                <div class="airport-card-content">
+                    <h3>Saigon Tân Sơn Nhất International Airport (VVTS/SGN)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Runway_Dmk.jpg" alt="Bangkok Don Mueang International Airport">
+                <div class="airport-card-content">
+                    <h3>Bangkok Don Mueang International Airport (VTBD/DMK)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://global.discourse-cdn.com/infiniteflight/original/4X/9/d/d/9dd294836f1cf42561bae14d27303ec77fc0de06.jpeg" alt="Madrid Barajas International Airport">
+                <div class="airport-card-content">
+                    <h3>Madrid Barajas International Airport (LEMD/MAD)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Barcelona_Airport_%2838923117160%29_%28cropped%29.jpg/1200px-Barcelona_Airport_%2838923117160%29_%28cropped%29.jpg" alt="Barcelona El Prat International Airport">
+                <div class="airport-card-content">
+                    <h3>Barcelona El Prat International Airport(LEBL/BCN)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://www.roma-airport.com/images/rome-fiumicino-airport.jpg" alt="Rome Fiumicino International Airport">
+                <div class="airport-card-content">
+                    <h3>Rome Fiumicino International Airport (LIRF/FCO)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://s28477.pcdn.co/wp-content/uploads/2018/05/VCE_1-984x554.jpg" alt="Venice Marco Polo Airport">
+                <div class="airport-card-content">
+                    <h3>Venice Marco Polo Airport (LIPZ/VCE)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://static.routesonline.com/images/cached/photograph-2273-scaled-620x0.jpg" alt="Hamburg Airport">
+                <div class="airport-card-content">
+                    <h3>Hamburg Airport (EDDH/HAM)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://mcparking.de/media/585/flugzeuge-am-ber.jpg" alt="Berlin Brandenburg International Airport">
+                <div class="airport-card-content">
+                    <h3>Berlin Brandenburg International Airport (EDDB/BER)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://www.airport-technology.com/wp-content/uploads/sites/14/2020/07/Image-1-Zurich-Airport-Expansion.jpg" alt="Zurich Kloten International Airport">
+                <div class="airport-card-content">
+                    <h3>Zurich Kloten International Airport (LSZH/ZRH)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://cdn.plnspttrs.net/40971/paris-orly-airport-overview_PlanespottersNet_1442209_1602f5db86_o.jpg" alt="Paris Orly International Airport">
+                <div class="airport-card-content">
+                    <h3>Paris Orly International Airport (LFPO/ORY)</h3>
+                </div>
+            </div>
+            <div class="airport-card">
+                <img src="https://www.airportspotting.com/wp-content/uploads/2020/01/LDE_02.01.2020-2-1024x588.jpg" alt="Tarbes Lourdes Pyrenees Airport">
+                <div class="airport-card-content">
+                    <h3>Tarbes Lourdes Pyrenees Airport (LFBT/LDE)</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Airports</p>
+        <p>Made by BV</p>
+        <p>&copy; 2025 Benjamin Vo's Aviation. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

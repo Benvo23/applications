@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collection</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-image: url('IMG_4389.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .gallery-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* Standard image styling for most planes */
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .gallery-item-content {
+            padding: 15px;
+        }
+        .gallery-item-content h3 {
+            margin-top: 0;
+        }
+
+        .fit-contain {
+            object-fit: contain;
+            background: #f0f2f5;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Collection</h1>
+        <a href="index.html" class="back-button">Home</a>
+    </header>
+    <main>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="IMG_4367.jpeg" alt="Alitalia Boeing 777-300ER 1:200">
+                <div class="gallery-item-content">
+                    <h3>Herpa Snap-Fit Alitalia Boeing 777-300ER 1:200</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4368.jpeg" alt="Allegiant Boeing 737 MAX 8-200 1:200">
+                <div class="gallery-item-content">
+                    <h3>Skymarks Lite Allegiant Boeing 737 MAX 8-200 1:200</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4369.jpeg" alt="American Airlines 757 1:200">
+                <div class="gallery-item-content">
+                    <h3>Flight Miniatures American Airlines 757-200 "AstroJet" 1:200</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4370.jpeg" alt="Pan Am 747 1:200">
+                <div class="gallery-item-content">
+                    <h3>Herpa Snap-Fit Pan Am Boeing 747-100 1:200</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4371.jpeg" alt="Nsmodel Lockheed Martin F-35B Lightning II British Air Force 1:72">
+                <div class="gallery-item-content">
+                    <h3>Nsmodel Lockheed Martin F-35B Lightning II British Air Force 1:72</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4373.jpeg" alt="Daron Air Canada 777-300ER 1:245">
+                <div class="gallery-item-content">
+                    <h3>Daron Air Canada 777-300ER 1:245</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4374.jpeg" alt="British Airways 787-8 1:245">
+                <div class="gallery-item-content">
+                    <h3>Daron British Airways 787-8 1:245</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4375.jpeg" alt="Turkish Airlines 777-300er 1:245">
+                <div class="gallery-item-content">
+                    <h3>Daron Turkish Airlines 777-300ER</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4376.jpeg" alt="Daron Delta Boeing 757-200 1:245">
+                <div class="gallery-item-content">
+                    <h3>Daron Delta Boeing 757-200 1:245</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4378.jpeg" alt="Aviation 400 Edelweiss Airbus A350-900 New Livery  1/400">
+                <div class="gallery-item-content">
+                    <h3>Aviation 400 Edelweiss Airbus A350-900 New Livery 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4377.jpeg" alt="Phoenix Westjet Boeing 767-300ER 1/400">
+                <div class="gallery-item-content">
+                    <h3>Phoenix Westjet Boeing 767-300ER 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4379.jpeg" alt="Avion Super Resort Express Boeing 747-300 1:300">
+                <div class="gallery-item-content">
+                    <h3>Avion Super Resort Express Boeing 747-300 1:300</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4380.jpeg" alt="Sceno Jet Vacation Time Airbus A380-800 1:300">
+                <div class="gallery-item-content">
+                    <h3>Sceno Jet Vacation Time Airbus A380-800 1:300</h3>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <div class="rotated-image-container">
+                    <img src="IMG_4382 copy.jpeg" alt="Daron Southwest Boeing 737-800 1:425" class="southwest-rotated-img">
+                </div>
+                <div class="gallery-item-content">
+                    <h3>Daron Southwest Boeing 737-800 1:425</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4381.jpeg" alt="Daron Allegiant Airbus A320-200 1:425">
+                <div class="gallery-item-content">
+                    <h3>Daron Allegiant Airbus A320-200 1:425</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4383 copy.jpeg" alt="Disney Planes El Chupacabra 1:55">
+                <div class="gallery-item-content">
+                    <h3>Disney Planes El Chupacabra 1:55</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4390.jpeg" alt="Tomica Japan Airlines Boeing 787-9 1:400">
+                <div class="gallery-item-content">
+                    <h3>Tomica Japan Airlines Boeing 787-9 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4391.jpeg" alt="Tomica ANA Boeing 787-9 1:400">
+                <div class="gallery-item-content">
+                    <h3>Tomica ANA Boeing 787-9 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4392.jpeg" alt="China Southern Airbus A380-800 1:400">
+                <div class="gallery-item-content">
+                    <h3>China Southern Airbus A380-800 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4395.jpeg" alt="Emirates Airbus A380-800 1:400">
+                <div class="gallery-item-content">
+                    <h3>Emirates Airbus A380-800 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4396.jpeg" alt="Vietnam Airlines Boeing 787-9 1:400">
+                <div class="gallery-item-content">
+                    <h3>Vietnam Airlines Boeing 787-9 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4397.jpeg" alt="EVA Air A380-800 1:400">
+                <div class="gallery-item-content">
+                    <h3>EVA Air A380-800 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4393.jpeg" alt="Coca Cola Airbus A380-800 1:400">
+                <div class="gallery-item-content">
+                    <h3>Coca Cola Airbus A380-800 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4399.jpeg" alt="Maisto Fastjet Boeing 787-8 1:450">
+                <div class="gallery-item-content">
+                    <h3>Maisto Fastjet Boeing 787-8 1:450</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4400.jpeg" alt="DHL Boeing 757-200 1:400">
+                <div class="gallery-item-content">
+                    <h3>DHL Boeing 757-200 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4401.jpeg" alt="Hot Wings American Airlines DC-10-30 1:500">
+                <div class="gallery-item-content">
+                    <h3>Hot Wings American Airlines DC-10-30 1:500</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4402.jpeg" alt="Micro Fun Flyers US Air Force Plane">
+                <div class="gallery-item-content">
+                    <h3>Micro Fun Flyers US Air Force Plane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4407.jpeg" alt="Green US Air Force Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Green US Air Force Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4408.jpeg" alt="Grey US Air Force Skinny Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Grey US Air Force Skinny Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4409.jpeg" alt="Condor Paper Livery Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Condor Paper Livery Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4410.jpeg" alt="Yellow US Air Force Model Airplane">
+                <div class="gallery-item-content">
+                    <h3>Yellow US Air Force Model Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4411.jpeg" alt="Graph Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Graph Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4412.jpeg" alt="Lime Green Sticky Note Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Lime Green Sticky Note Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4413.jpeg" alt="Light Yellow Sticky Note Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Light Yellow Sticky Note Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4414.jpeg" alt="Post-it Sticky Note Back Cover Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Post-it Sticky Note Back Cover Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4415.jpeg" alt="SoCal Note Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>SoCal Note Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4416.jpeg" alt="Purple Sticky Note Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Purple Sticky Note Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4417.jpeg" alt="Pink Sticky Note Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Pink Sticky Note Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4418.jpeg" alt="Pink-Red Sticky Note Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Pink-Red Sticky Note Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4419.jpeg" alt="Patty Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Patty Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4420.jpeg" alt="SoCal Lined Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>SoCal Lined Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4421.jpeg" alt="Socal Note Mark II Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3>Socal Note Mark II Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4550.jpeg" alt="BVO Lego Interceptor">
+                <div class="gallery-item-content">
+                    <h3> 🚧 BVO Lego Interceptor</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4551.jpeg" alt="BVO Supersonic Jumbo Jet">
+                <div class="gallery-item-content">
+                    <h3> 🚧 BVO Supersonic Jumbo Jet</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4552.jpeg" alt="BVO Lego Jumbo Jet">
+                <div class="gallery-item-content">
+                    <h3> 🚧 BVO Lego Jumbo Jet</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4554.jpeg" alt="BVO Lego Figther Jet">
+                <div class="gallery-item-content">
+                    <h3> 🚧 BVO Lego Figther Jet</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4555.jpeg" alt="Lego Creator Futuristic Flyer 1:14 scale">
+                <div class="gallery-item-content">
+                    <h3>Lego Creator Futuristic Flyer 1:14 scale</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4556.jpeg" alt="Broken Lufthansa A380-800 1:400">
+                <div class="gallery-item-content">
+                    <h3> 💔 Broken Lufthansa A380-800 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4557.jpeg" alt="Majorette BlueSky Boeing 787-9 1:500">
+                <div class="gallery-item-content">
+                    <h3> 💔 Broken Majorette BlueSky Boeing 787-9 1:500</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4558.jpeg" alt="Air Bus A380 '3802' 1:500">
+                <div class="gallery-item-content">
+                    <h3> 💔 Broken Air Bus A380 '3802' 1:500</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4559.jpeg" alt="Daron American Airlnies Boeing 777-300ER 1:425">
+                <div class="gallery-item-content">
+                    <h3> 💔 Broken Daron American Airlnies Boeing 777-300ER 1:425</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4560.jpeg" alt="United Airlines Boeing 777-300ER 1:425">
+                <div class="gallery-item-content">
+                    <h3> 💔 Broken United Airlines Boeing 777-300ER 1:425</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4561.jpeg" alt="AirModels Vietnam Airlines Boeing 787-9 1:300">
+                <div class="gallery-item-content">
+                    <h3> 💔 Broken AirModels Vietnam Airlines Boeing 787-9 1:300</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4563.jpeg" alt="MCP General Dynamics F-16A Falcon Korean Air Force 1:72">
+                <div class="gallery-item-content">
+                    <h3>MCP General Dynamics F-16A Falcon Korean Air Force 1:72</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4404.jpeg" alt="InAir Pullback F-14 Tomcat 1:48">
+                <div class="gallery-item-content">
+                    <h3>InAir Pullback F-14 Tomcat 1:48</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4564.jpeg" alt="BVO First Figther Jet 3D Model 1:600">
+                <div class="gallery-item-content">
+                    <h3> 🚧 BVO First Figther Jet 3D Model 1:600</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4565.jpeg" alt="Premier Planes Philippines Airbus A330-300 1:400">
+                <div class="gallery-item-content">
+                    <h3>Premier Planes Philippines Airbus A330-300 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4566.jpeg" alt="BVO Private Paper Airplane">
+                <div class="gallery-item-content">
+                    <h3> 🚧 BVO Private Paper Airplane</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4584.jpeg" alt="JC Wings Asiana Airlines Airbus A380-800 1:400">
+                <div class="gallery-item-content">
+                    <h3>JC Wings Asiana Airlines Airbus A380-800 1:400</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="j20.jpeg" alt="QMAN Chengdu J-20 Mighty Dragon 1:30">
+                <div class="gallery-item-content">
+                    <h3>QMAN Chengdu J-20 Mighty Dragon 1:30</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG_4611.jpeg" alt="BVO 3D Model Pumpkin Plane">
+                <div class="gallery-item-content">
+                    <h3>🚧 BVO 3D Model Pumpkin Plane</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Collection</p>
+        <p>Made by BV</p>
+        <p>&copy; 2025 Benjamin Vo's Aviation. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

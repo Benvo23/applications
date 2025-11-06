@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Routes | 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* This is the same CSS as the homepage for a consistent look */
+        :root {
+            --primary-blue: #0A2463;
+            --secondary-blue: #3E5F8A;
+            --accent-yellow: #FFC300;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --dark-text: #343a40;
+            --gray-text: #6c757d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--white); color: var(--dark-text); line-height: 1.7; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .section { padding: 80px 0; }
+
+        /* --- Navigation Bar --- */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; background-color: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        .nav-logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-blue); text-decoration: none; }
+        .nav-logo span { color: var(--accent-yellow); }
+        .nav-links { list-style: none; display: flex; gap: 2.5rem; }
+        .nav-links a { text-decoration: none; color: var(--dark-text); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
+        .nav-right a { text-decoration: none; font-weight: 500; padding: 0.6rem 1.2rem; border-radius: 5px; transition: all 0.3s ease; }
+        .login-btn { color: var(--primary-blue); background-color: transparent; }
+        .signup-btn { color: var(--white); background-color: var(--primary-blue); }
+
+        /* --- Section Titles --- */
+        .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; color: var(--primary-blue); }
+        .section-subtitle { text-align: center; max-width: 700px; margin: 0 auto 60px auto; color: var(--gray-text); font-size: 1.1rem; }
+
+        /* --- Routes Page Specific Styles --- */
+        .route-section-group {
+            padding-bottom: 60px;
+            margin-bottom: 60px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .route-section-group:last-of-type {
+            border-bottom: none; /* Removes the border from the last section */
+        }
+        .route-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+        }
+        .route-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .route-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        }
+        .route-card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        .route-card-body {
+            padding: 1.5rem;
+            flex-grow: 1; /* Ensures cards in the same row have equal height */
+            display: flex;
+            flex-direction: column;
+        }
+        .route-card-body h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+        .route-card-body .description {
+            flex-grow: 1; /* Pushes details to the bottom */
+            margin-bottom: 1.5rem;
+            color: var(--gray-text);
+        }
+        .route-card-body p { margin-bottom: 0.5rem; }
+        .route-card-body strong { color: var(--primary-blue); }
+
+        /* --- Footer --- */
+        .footer { background-color: var(--primary-blue); color: #a7bce8; padding: 60px 0 20px 0; margin-top: 20px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 2rem; margin-bottom: 40px; }
+        .footer-column h4 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--white); }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 0.75rem; }
+        .footer-column a { text-decoration: none; color: #a7bce8; transition: color 0.3s ease; }
+        .footer-column a:hover { color: var(--white); }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid var(--secondary-blue); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <!-- ======== NAVIGATION BAR ======== -->
+    <header class="container">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="book.html">Book</a></li>
+                <li><a href="routes.html" class="active">Our Routes</a></li>
+                <li><a href="fleet.html">Our Fleet</a></li>
+                <li><a href="passes.html">Passes</a></li>
+                <li><a href="history.html" class="active">History</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="#" class="login-btn">Log In</a>
+                <a href="#" class="signup-btn">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section route-section-group">
+            <div class="container">
+                <h1 class="section-title">Ho Chi Minh City Routes</h1>
+                <p class="section-subtitle">Fly non-stop from Vietnam's bustling southern metropolis to major destinations across the world. Experience our world-class service on the bridge across the Pacific.</p>
+
+                <div class="route-grid">
+                    <!-- Los Angeles -->
+                    <div class="route-card">
+                        <img src="https://www.tripsavvy.com/thmb/UfG0_2WB67pErEqfIQMvEjV4W20=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-947698310-1729da81e58f40058a9e45ba82532d57-2f992696318c42cbbd595ef3ec1043fd.jpg" alt="Los Angeles Skyline" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ Los Angeles</h3>
+                            <p class="description">Fly to the entertainment capital of the world, from Hollywood glamour to sunny Southern California beaches.</p>
+                            <p><strong>Frequency:</strong> Daily</p>
+                            <p><strong>Duration:</strong> 16h 50m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- San Francisco -->
+                    <div class="route-card">
+                        <img src="https://cdn.vox-cdn.com/thumbor/MSBVEL6zXxblc89zhYMmtarqPUA=/0x201:1400x934/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/20005220/shutterstock_450977137.jpg" alt="Golden Gate Bridge" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ San Francisco</h3>
+                            <p class="description">Connect directly to the heart of innovation in Silicon Valley and the iconic sights of the City by the Bay.</p>
+                            <p><strong>Frequency:</strong> Daily</p>
+                            <p><strong>Duration:</strong> 13h 55m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- Seattle -->
+                    <div class="route-card">
+                        <img src="https://a.travel-assets.com/findyours-php/viewfinder/images/res70/480000/480163-Seattle.jpg" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ Seattle</h3>
+                            <p class="description">Explore the lush landscapes and thriving tech scene of the beautiful Emerald City in the Pacific Northwest.</p>
+                            <p><strong>Frequency:</strong> 5x Weekly</p>
+                            <p><strong>Duration:</strong> 15h 45m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                     <!-- Houston -->
+                    <div class="route-card">
+                        <img src="https://www.houston.org/sites/default/files/2024-06/Houston%20Skyline%20Sunset.jpg" alt="Houston Skyline" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ Houston</h3>
+                            <p class="description">Connecting the southern hubs of two great nations, rich in culture, energy, and commerce.</p>
+                            <p><strong>Frequency:</strong> 5x Weekly</p>
+                            <p><strong>Duration:</strong> 17h 30m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- Dallas -->
+                    <div class="route-card">
+                        <img src="https://www.omnihotels.com/-/media/images/hotels/daldtn/destinations/daldtn-omni-dallas-hotel-skyline-river-5.jpg" alt="Dallas city" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ Dallas</h3>
+                            <p class="description">Touch down in Texas with our direct flight to a major hub for business, sports, and classic Southern hospitality.</p>
+                            <p><strong>Frequency:</strong> 4x Weekly</p>
+                            <p><strong>Duration:</strong> 17h 15m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- Chicago -->
+                    <div class="route-card">
+                        <img src="https://cdn.choosechicago.com/uploads/2020/10/CC-northave-beach-aerial-1-1800x1197.jpg" alt="Chicago Cloud Gate" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ Chicago</h3>
+                            <p class="description">Experience the architectural marvels and vibrant arts scene of the Windy City, right from the heart of Vietnam.</p>
+                            <p><strong>Frequency:</strong> 4x Weekly</p>
+                            <p><strong>Duration:</strong> 17h 30m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                     <!-- New York -->
+                     <div class="route-card">
+                        <img src="https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg" alt="New York City" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ New York</h3>
+                            <p class="description">Fly non-stop to the city that never sleeps. Explore Times Square, Central Park, and the endless energy of NYC.</p>
+                            <p><strong>Frequency:</strong> Daily</p>
+                            <p><strong>Duration:</strong> 17h 00m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- Boston -->
+                    <div class="route-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Boston_%C3%A0_lheure_bleue_%284769294947%29.jpg/1200px-Boston_%C3%A0_lheure_bleue_%284769294947%29.jpg" alt="Boston City" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ Boston</h3>
+                            <p class="description">Discover the historic charm and academic excellence of America's East Coast, from the Freedom Trail to Fenway Park.</p>
+                            <p><strong>Frequency:</strong> 3x Weekly</p>
+                            <p><strong>Duration:</strong> 17h 00m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- San Diego -->
+                    <div class="route-card">
+                        <img src="https://drupal-prod.visitcalifornia.com/sites/default/files/styles/fluid_1920/public/SanDiego_Skyline_JohnBahu_1280x642_downsized.jpg.webp?itok=XyJ-VgtV" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ San Diego</h3>
+                            <p class="description">Discover sunny San Diego, where vibrant city life blends seamlessly with beautiful beaches and endless coastal charm.</p>
+                            <p><strong>Frequency:</strong> 5x Weekly</p>
+                            <p><strong>Duration:</strong> 14h 30m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- Toronto -->
+                    <div class="route-card">
+                        <img src="https://d1l57x9nwbbkz.cloudfront.net/files/s3fs-public/2025-03/toronto-financial-district-cn-tower-skyline.jpg?VersionId=tx68tJbKmCQPv5WJT_hHiBh41FwbZPwf" alt="Toronto CN Tower" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ Toronto</h3>
+                            <p class="description">Our premier Canadian route, linking you to Canada's largest, most diverse city and a world of culture.</p>
+                            <p><strong>Frequency:</strong> 3x Weekly</p>
+                            <p><strong>Duration:</strong> 16h 00m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- Vancouver -->
+                    <div class="route-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Concord_Pacific_Master_Plan_Area.jpg" alt="Vancouver and mountains" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ Vancouver</h3>
+                            <p class="description">Journey to Canada's stunning west coast, where majestic mountains meet the sparkling Pacific Ocean.</p>
+                            <p><strong>Frequency:</strong> 5x Weekly</p>
+                            <p><strong>Duration:</strong> 14h 30m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- London -->
+                    <div class="route-card">
+                        <img src="https://media.istockphoto.com/id/155392163/photo/big-ben-and-the-parliament-in-london-at-sunset.jpg?s=612x612&w=0&k=20&c=EYnEpxd5naw_p1rvCGDqVRuinwuPSeg6S0NCydMgp9c=" alt="London City Skyline with Big Ben" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ London</h3>
+                            <p class="description">Take on a trek to London to see ancient landmarks stand tall against a bustling modern skyline.</p>
+                            <p><strong>Frequency:</strong> 2x Weekly</p>
+                            <p><strong>Duration:</strong> 13h 20m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- Paris -->
+                     <div class="route-card">
+                        <img src="https://www.travelandleisure.com/thmb/SPUPzO88ZXq6P4Sm4mC5Xuinoik=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/eiffel-tower-paris-france-EIFFEL0217-6ccc3553e98946f18c893018d5b42bde.jpg" alt="Eiffel Tower" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Ho Chi Minh City ↔ Paris</h3>
+                            <p class="description">Discover the magic of Paris, a city of light where art and history fill every street. .</p>
+                            <p><strong>Frequency:</strong> 3x Weekly</p>
+                            <p><strong>Duration:</strong> 13h 45m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======== NEW HANOI ROUTES SECTION ======== -->
+        <section class="section route-section-group">
+            <div class="container">
+                <h1 class="section-title">Hanoi Routes</h1>
+                <p class="section-subtitle">Depart from Vietnam's historic capital and fly directly to key destinations in North America and Europe. Discover our seamless long-haul connections from Hanoi.</p>
+
+                <div class="route-grid">
+                    <!-- Washington D.C. -->
+                    <div class="route-card">
+                        <img src="https://www.nps.gov/common/uploads/places/images/nri/20131126/siteadmin/D2F5EA00-C5B7-F538-0D33DD9DB13B2BBF/D2F5EA00-C5B7-F538-0D33DD9DB13B2BBF.jpg" alt="Washington D.C. Capitol Building" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Hanoi ↔ Washington D.C.</h3>
+                            <p class="description">Connect the capitals of Vietnam and the United States. Explore the historic monuments and world-class museums of America.</p>
+                            <p><strong>Frequency:</strong> 4x Weekly</p>
+                            <p><strong>Duration:</strong> 17h 45m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- London -->
+                    <div class="route-card">
+                        <img src="https://media.istockphoto.com/id/155392163/photo/big-ben-and-the-parliament-in-london-at-sunset.jpg?s=612x612&w=0&k=20&c=EYnEpxd5naw_p1rvCGDqVRuinwuPSeg6S0NCydMgp9c=" alt="London City Skyline with Big Ben" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Hanoi ↔ London</h3>
+                            <p class="description">Journey from the ancient streets of Hanoi to the historic grandeur of London. Experience the best of both worlds with our direct service.</p>
+                            <p><strong>Frequency:</strong> 2x Weekly</p>
+                            <p><strong>Duration:</strong> 12h 50m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                    <!-- Paris -->
+                     <div class="route-card">
+                        <img src="https://www.travelandleisure.com/thmb/SPUPzO88ZXq6P4Sm4mC5Xuinoik=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/eiffel-tower-paris-france-EIFFEL0217-6ccc3553e98946f18c893018d5b42bde.jpg" alt="Eiffel Tower" class="route-card-img">
+                        <div class="route-card-body">
+                            <h3>Hanoi ↔ Paris</h3>
+                            <p class="description">Fly from the charming capital of Vietnam to the romantic capital of France. Indulge in art, cuisine, and culture with our non-stop flight.</p>
+                            <p><strong>Frequency:</strong> 3x Weekly</p>
+                            <p><strong>Duration:</strong> 13h 10m</p>
+                            <p><strong>Aircraft:</strong> Airbus A350-1000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ======== FOOTER ======== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="index.html" class="nav-logo" style="color: var(--white);">𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈<span>.</span></a>
+                    <p style="margin-top: 1rem;">Your Bridge Across the Pacific.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>For Travelers</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="routes.html">Our Routes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 𝒞𝑜𝓃 𝒞𝒽𝒾𝓂 𝒜𝒾𝓇𝓁𝒾𝓃𝑒𝓈. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
