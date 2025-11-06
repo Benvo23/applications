@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Make AI</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+:root {
+    --primary-color: #00aaff;
+    --background-color: #0a0a0a;
+    --text-color: #e0e0e0;
+    --glow-color: rgba(0, 170, 255, 0.5);
+}
+
+body {
+    background-image: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, #0a0a0a 100%), url('https://cdn.ceps.eu/wp-content/uploads/2024/07/vecteezy_ai-generated-ai-circuit-board-technology-background_37348385-1300x731.jpg');
+    background-color: var(--background-color);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    background-color: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px var(--glow-color);
+    margin-right: 2rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 20px 0 20px 0;
+    text-shadow: 0 0 5px var(--glow-color);
+    transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+main {
+    padding-top: 80px;
+}
+
+.about-section {
+    padding: 4rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about-section h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 15px var(--glow-color);
+}
+
+.about-section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Make AI</a>
+            <ul>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-section">
+            <h1>About Make AI</h1>
+            <p>
+                Make AI was born from a simple yet powerful idea: to democratize artificial intelligence. We believe that everyone should have the ability to create and innovate with AI, regardless of their technical background. Our platform is designed to be the most intuitive and powerful tool for building AI, empowering creators, developers, and businesses to bring their ideas to life.
+            </p>
+            <p>
+                Our mission is to push the boundaries of what's possible with AI and to provide a platform that is both easy to use and incredibly powerful. We are a team of passionate engineers, designers, and researchers dedicated to building the future of artificial intelligence.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Make AI. All rights reserved.</p>
+    </footer>
+</body>
+</html>

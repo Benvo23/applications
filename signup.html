@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Make AI</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+:root {
+    --primary-color: #00aaff;
+    --background-color: #0a0a0a;
+    --text-color: #e0e0e0;
+    --glow-color: rgba(0, 170, 255, 0.5);
+}
+
+body {
+    background-image: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, #0a0a0a 100%), url('https://cdn.ceps.eu/wp-content/uploads/2024/07/vecteezy_ai-generated-ai-circuit-board-technology-background_37348385-1300x731.jpg');
+    background-color: var(--background-color);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 2rem;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    border: 1px solid var(--primary-color);
+    text-align: center;
+}
+
+.auth-container h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: rgba(0,0,0,0.5);
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    color: var(--background-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.auth-container button:hover {
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+.auth-container p {
+    margin-top: 1.5rem;
+}
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Sign Up</h1>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button id="signup-button">Sign Up</button>
+        <p>Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+
+    <script>
+        const signupButton = document.querySelector('#signup-button');
+        const usernameInput = document.querySelector('#username');
+        const passwordInput = document.querySelector('#password');
+
+        signupButton.addEventListener('click', async () => {
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+
+            const response = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Sign up successful! Please log in.');
+                window.location.href = 'login.html';
+            } else {
+                alert(`Sign up failed: ${data.error}`);
+            }
+        });
+    </script>
+</body>
+</html>

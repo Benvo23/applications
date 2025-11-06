@@ -1,0 +1,10 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "benddvo@gmail.com",
+      "password": "$2b$08$vgObN0GFsyaiHANgJ2egWeUCwOgywx2zc3nrvLuh59pMMF.B7dM4i",
+      "apiKey": null
+    }
+  ]
+}

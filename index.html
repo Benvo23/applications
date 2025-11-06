@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make AI</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+:root {
+    --primary-color: #00aaff;
+    --background-color: #0a0a0a;
+    --text-color: #e0e0e0;
+    --glow-color: rgba(0, 170, 255, 0.5);
+}
+
+body {
+    background-image: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, #0a0a0a 100%), url('https://cdn.ceps.eu/wp-content/uploads/2024/07/vecteezy_ai-generated-ai-circuit-board-technology-background_37348385-1300x731.jpg');
+    background-color: var(--background-color);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    background-color: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px var(--glow-color);
+    margin-right: 2rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 20px 0 20px 0;
+    text-shadow: 0 0 5px var(--glow-color);
+    transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+main {
+    padding-top: 80px; 
+}
+
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: calc(100vh - 80px);
+    position: relative;
+}
+
+.hero-content h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 15px var(--glow-color);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--glow-color);
+    }
+    100% {
+        box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
+    }
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    animation: pulse 2s infinite;
+}
+
+.cta-button:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    box-shadow: 0 0 20px var(--glow-color);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Make AI</a>
+            <ul>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Create AI with a single prompt.</h1>
+                <p>Unleash the power of artificial intelligence. No code required.</p>
+                <a href="signup.html" class="cta-button">Get Started</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Make AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const heroContent = document.querySelector('.hero-content');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                heroContent.style.animation = 'fadeInUp 1s forwards';
+            }
+        });
+    });
+
+    observer.observe(heroContent);
+});
+
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content {
+    opacity: 0;
+}
+`;
+document.head.appendChild(style);
+    </script>
+</body>
+</html>

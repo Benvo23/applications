@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create AI - Make AI</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+:root {
+    --primary-color: #00aaff;
+    --background-color: #0a0a0a;
+    --text-color: #e0e0e0;
+    --glow-color: rgba(0, 170, 255, 0.5);
+}
+
+body {
+    background-image: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, #0a0a0a 100%), url('https://cdn.ceps.eu/wp-content/uploads/2024/07/vecteezy_ai-generated-ai-circuit-board-technology-background_37348385-1300x731.jpg');
+    background-color: var(--background-color);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    background-color: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px var(--glow-color);
+    margin-right: 2rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 20px 0 20px 0;
+    text-shadow: 0 0 5px var(--glow-color);
+    transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+main {
+    padding-top: 80px;
+    display: flex;
+    gap: 2rem;
+}
+
+.left-column {
+    flex: 1;
+    padding: 2rem;
+}
+
+.right-column {
+    flex: 1;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-creation-section h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 15px var(--glow-color);
+    text-align: center;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 1rem;
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    resize: none;
+    margin-bottom: 2rem;
+}
+
+#api-key-input {
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.generate-button {
+    display: block;
+    width: 100%;
+    padding: 1rem 2rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.generate-button:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    box-shadow: 0 0 20px var(--glow-color);
+}
+
+.danger-button {
+    background-color: #ff4d4d;
+    color: white;
+    margin-top: 1rem;
+}
+
+#logout-button {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px 0 20px 0;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#logout-button:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+.example-prompts {
+    margin-top: 4rem;
+    text-align: left;
+}
+
+.example-prompts h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.example-prompts ul {
+    list-style: none;
+    padding: 0;
+}
+
+.example-prompts li {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.example-prompts li:hover {
+    background-color: rgba(0, 170, 255, 0.2);
+}
+
+#ai-result {
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 2rem;
+    height: calc(100vh - 120px);
+    background-color: rgba(0,0,0,0.5);
+    overflow-y: auto;
+}
+
+#ai-result h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.chat-message {
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    max-width: 80%;
+}
+
+.ai-message {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    align-self: flex-start;
+}
+
+.user-message {
+    background-color: #333;
+    align-self: flex-end;
+}
+
+.chat-input {
+    display: flex;
+    margin-top: 2rem;
+}
+
+.chat-input input {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--primary-color);
+    border-radius: 5px 0 0 5px;
+    padding: 0.8rem;
+    color: var(--text-color);
+}
+
+.chat-input button {
+    background-color: var(--primary-color);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    color: var(--background-color);
+    font-weight: bold;
+}
+
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 2px;
+    animation: bounce 1s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Make AI</a>
+            <ul>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#" id="logout-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="left-column">
+            <div class="ai-creation-section">
+                <h1>Create Your AI</h1>
+                <textarea placeholder="Describe the AI you want to create... for example: 'A friendly chatbot that tells jokes'"></textarea>
+                <input type="text" id="api-key-input" placeholder="Enter your Gemini API Key...">
+                <button class="generate-button">Generate AI</button>
+                <button id="delete-account-button" class="danger-button">Delete Account</button>
+
+                <div class="example-prompts">
+                    <h2>Example Prompts</h2>
+                    <ul>
+                        <li>A friendly chatbot that tells jokes</li>
+                        <li>A virtual assistant that can schedule meetings and send emails.</li>
+                        <li>A creative writing partner that can help me brainstorm ideas.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="right-column">
+            <div id="ai-result">
+                <h2>Your AI will appear here</h2>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Make AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const generateButton = document.querySelector('.generate-button');
+        const deleteAccountButton = document.querySelector('#delete-account-button');
+        const logoutButton = document.querySelector('#logout-button');
+        const aiResult = document.querySelector('#ai-result');
+        const textarea = document.querySelector('textarea');
+        const apiKeyInput = document.querySelector('#api-key-input');
+        const examplePrompts = document.querySelectorAll('.example-prompts li');
+
+        examplePrompts.forEach(prompt => {
+            prompt.addEventListener('click', () => {
+                textarea.value = prompt.textContent.trim();
+            });
+        });
+
+        generateButton.addEventListener('click', () => {
+            const prompt = textarea.value;
+            const apiKey = apiKeyInput.value;
+
+            if (!apiKey) {
+                alert('Please enter your Gemini API Key.');
+                return;
+            }
+
+            aiResult.innerHTML = `
+                <h2>Generating...</h2>
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+
+            setTimeout(() => {
+                let response = `
+                    <h2>Your AI</h2>
+                    <div id="chat-history"></div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Talk to your AI...">
+                        <button>Send</button>
+                    </div>
+                `;
+                aiResult.innerHTML = response;
+                const chatHistory = document.querySelector('#chat-history');
+                const chatInput = document.querySelector('.chat-input input');
+                const sendButton = document.querySelector('.chat-input button');
+
+                const addMessage = (message, sender) => {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('chat-message', sender === 'ai' ? 'ai-message' : 'user-message');
+                    messageElement.innerHTML = `<p>${message}</p>`;
+                    chatHistory.appendChild(messageElement);
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                };
+
+                const getAIResponse = async (message, personality, apiKey) => {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch('http://localhost:3000/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-access-token': token
+                        },
+                        body: JSON.stringify({ message, personality, apiKey })
+                    });
+                    const data = await response.json();
+                    if (data.error) {
+                        return `Error: ${data.error}`;
+                    }
+                    return data.reply;
+                };
+
+                sendButton.addEventListener('click', async () => {
+                    const userInput = chatInput.value;
+                    if (userInput) {
+                        addMessage(userInput, 'user');
+                        chatInput.value = '';
+                        const aiResponse = await getAIResponse(userInput, prompt, apiKey);
+                        addMessage(aiResponse, 'ai');
+                    }
+                });
+
+                addMessage("Hello! I'm your custom AI. How can I help you today?", 'ai');
+
+            }, 2000);
+        });
+
+        deleteAccountButton.addEventListener('click', async () => {
+            const token = localStorage.getItem('token');
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                const response = await fetch('http://localhost:3000/delete-account', {
+                    method: 'DELETE',
+                    headers: {
+                        'x-access-token': token
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Account deleted successfully.');
+                    localStorage.removeItem('token');
+                    window.location.href = 'signup.html';
+                } else {
+                    alert(`Failed to delete account: ${data.error}`);
+                }
+            }
+        });
+
+        logoutButton.addEventListener('click', () => {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
