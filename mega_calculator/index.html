@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Workspace</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.11.2/lib/browser/math.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            background-color: #dcdcdc;
+            font-family: 'Poppins', sans-serif;
+            padding-top: 20px;
+            gap: 20px;
+        }
+
+        .workspace-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+        }
+
+        .side-panel, .calculator {
+            background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            border: 1px solid #b0b0b0;
+        }
+
+        .side-panel {
+            width: 350px;
+            height: 650px;
+        }
+
+        .side-panel h2 {
+            text-align: center;
+            margin-top: 0;
+            color: #444;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        /* Canvas Styles */
+        #drawing-canvas {
+            border: 2px solid #333;
+            border-radius: 8px;
+            cursor: crosshair;
+            background-color: #fff;
+        }
+        .canvas-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .canvas-controls button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 1px solid #888;
+            background-color: #aaa;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Image Uploader Styles */
+        .image-uploader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .image-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+        .image-controls button, #upload-label {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #888;
+            background-color: #4a4a4a;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        #image-upload {
+            display: none;
+        }
+        #image-viewport {
+            width: 310px;
+            height: 480px;
+            border: 2px dashed #888;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+            overflow: hidden;
+        }
+        #image-preview {
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+
+        /* Calculator Styles */
+        .calculator {
+            width: 350px;
+            background: linear-gradient(to bottom, #5a5a5a, #4a4a4a);
+            border: 1px solid #333;
+        }
+
+        .display {
+            background-color: #b0c4b1;
+            color: #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: right;
+            border: 2px solid #333;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .display input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #333;
+            font-size: 2.2em;
+            text-align: right;
+        }
+
+        #expression { font-size: 1.2em; color: #555; height: 30px; }
+        #result { height: 50px; }
+
+        .tabs { display: flex; margin-bottom: 15px; gap: 5px; }
+        .tab-button {
+            flex: 1;
+            padding: 10px;
+            background-color: #4a4a4a;
+            color: #ccc;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8em;
+            font-weight: 500;
+            border-radius: 5px;
+        }
+        .tab-button.active { background-color: #6b6b6b; color: #ffffff; }
+
+        .keypad-tab { display: none; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .keypad-tab.active { display: grid; }
+
+        #history-tab {
+            display: none;
+            flex-direction: column;
+            height: 265px;
+            overflow-y: auto;
+            background: #b0c4b1;
+            border-radius: 8px;
+            padding: 10px;
+            border: 2px solid #333;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        #history-tab.active { display: flex; }
+
+        #history-list { list-style: none; padding: 0; margin: 0; font-family: 'Poppins', sans-serif; }
+        #history-list li { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; border-bottom: 1px solid #888; color: #333; }
+        #history-list .entry { display: flex; flex-direction: column; }
+        #history-list .expression { font-size: 0.8em; color: #555; }
+        #history-list .result { font-size: 1.1em; }
+        #history-list .delete-btn { background: #d9534f; color: white; border: none; border-radius: 5px; width: 25px; height: 25px; cursor: pointer; font-size: 0.8em; }
+
+        .keypad button {
+            height: 45px;
+            font-size: 1.1em;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background-color: #6b6b6b;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+        }
+        .keypad button:active { transform: translateY(1px); box-shadow: 0 1px 1px rgba(0,0,0,0.2); }
+        .keypad button.operator { background-color: #ff9500; font-weight: 500; }
+        .keypad button.clear, .keypad button.del { background-color: #d9534f; font-weight: 500; }
+
+        .signature {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.75em;
+            color: #222;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="workspace-container">
+        <div class="side-panel left-panel">
+            <h2>Drawing Pad</h2>
+            <canvas id="drawing-canvas" width="310" height="500"></canvas>
+            <div class="canvas-controls">
+                <button id="clear-canvas">Clear</button>
+            </div>
+        </div>
+
+        <div class="calculator">
+            <div class="display">
+                <input type="text" id="expression" readonly>
+                <input type="text" id="result" value="0" readonly>
+            </div>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="basic">Basic</button>
+                <button class="tab-button" data-tab="scientific">Scientific</button>
+                <button class="tab-button" data-tab="matrix">Matrix</button>
+                <button class="tab-button" data-tab="history">History</button>
+            </div>
+            <div class="keypad">
+                <div class="keypad-tab active" id="basic-tab">
+                    <button class="clear" onclick="clearDisplay()">C</button>
+                    <button class="del" onclick="deleteLastChar()">DEL</button>
+                    <button onclick="inputSymbol('(')">(</button>
+                    <button onclick="inputSymbol(')')">)</button>
+                    <button onclick="inputSymbol('7')">7</button>
+                    <button onclick="inputSymbol('8')">8</button>
+                    <button onclick="inputSymbol('9')">9</button>
+                    <button class="operator" onclick="inputSymbol('/')">/</button>
+                    <button onclick="inputSymbol('4')">4</button>
+                    <button onclick="inputSymbol('5')">5</button>
+                    <button onclick="inputSymbol('6')">6</button>
+                    <button class="operator" onclick="inputSymbol('*')">*</button>
+                    <button onclick="inputSymbol('1')">1</button>
+                    <button onclick="inputSymbol('2')">2</button>
+                    <button onclick="inputSymbol('3')">3</button>
+                    <button class="operator" onclick="inputSymbol('-')">-</button>
+                    <button onclick="inputSymbol('0')">0</button>
+                    <button onclick="inputSymbol('.')">.</button>
+                    <button class="operator" onclick="inputSymbol('+')">+</button>
+                    <button class="operator" onclick="calculate()">=</button>
+                </div>
+                <div class="keypad-tab" id="scientific-tab">
+                    <button onclick="inputFunction('sin(')">sin</button>
+                    <button onclick="inputFunction('cos(')">cos</button>
+                    <button onclick="inputFunction('tan(')">tan</button>
+                    <button onclick="inputFunction('sqrt(')">√</button>
+                    <button onclick="inputFunction('log(')">log</button>
+                    <button onclick="inputSymbol('^')">^</button>
+                    <button onclick="inputSymbol('pi')">π</button>
+                    <button onclick="inputSymbol('e')">e</button>
+                    <button onclick="inputFunction('abs(')">abs</button>
+                    <button onclick="inputFunction('exp(')">exp</button>
+                    <button onclick="inputFunction('floor(')">floor</button>
+                    <button onclick="inputFunction('ceil(')">ceil</button>
+                </div>
+                <div class="keypad-tab" id="matrix-tab">
+                    <button onclick="inputSymbol('[')">[</button>
+                    <button onclick="inputSymbol(']')">]</button>
+                    <button onclick="inputSymbol(',')">,</button>
+                    <button onclick="inputSymbol(';')">;</button>
+                    <button onclick="inputFunction('det(')">det</button>
+                    <button onclick="inputFunction('inv(')">inv</button>
+                    <button onclick="inputFunction('transpose(')">trans</button>
+                    <button onclick="inputFunction('eye(')">eye</button>
+                </div>
+                <div class="keypad-tab" id="history-tab">
+                    <ul id="history-list"></ul>
+                </div>
+            </div>
+            <p class="signature">Made by Benjamin Vo</p>
+        </div>
+
+        <div class="side-panel right-panel">
+            <h2>Image Viewer</h2>
+            <div class="image-uploader">
+                <div class="image-controls">
+                    <label for="image-upload" id="upload-label">Upload</label>
+                    <button id="zoom-in-btn">+</button>
+                    <button id="zoom-out-btn">-</button>
+                    <button id="remove-image-btn">Remove</button>
+                </div>
+                <input type="file" id="image-upload" accept="image/*">
+                <div id="image-viewport">
+                    <img id="image-preview" src="" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Calculator Logic ---
+        const expressionInput = document.getElementById('expression');
+        const resultInput = document.getElementById('result');
+        const tabs = document.querySelectorAll('.tab-button');
+        const keypads = document.querySelectorAll('.keypad-tab');
+        const historyList = document.getElementById('history-list');
+
+        let expression = '';
+        let calculationHistory = [];
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                keypads.forEach(k => k.classList.remove('active'));
+                document.getElementById(tab.dataset.tab + '-tab').classList.add('active');
+            });
+        });
+
+        function inputSymbol(symbol) {
+            expression += symbol;
+            expressionInput.value = expression;
+        }
+
+        function inputFunction(func) {
+            expression += func;
+            expressionInput.value = expression;
+        }
+
+        function clearDisplay() {
+            expression = '';
+            expressionInput.value = '';
+            resultInput.value = '0';
+        }
+
+        function deleteLastChar() {
+            expression = expression.slice(0, -1);
+            expressionInput.value = expression;
+        }
+
+        function calculate() {
+            if (expression === '') return;
+            try {
+                const result = math.evaluate(expression);
+                
+                const tempFormatted = math.format(result, { notation: 'fixed', precision: 4 });
+                const formattedResult = parseFloat(tempFormatted).toString();
+
+                resultInput.value = formattedResult;
+                
+                calculationHistory.unshift({ expression: expression, result: formattedResult });
+                renderHistory();
+
+            } catch (error) {
+                resultInput.value = 'Error';
+            }
+        }
+
+        function renderHistory() {
+            historyList.innerHTML = '';
+            calculationHistory.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="entry">
+                        <span class="expression">${item.expression}</span>
+                        <span class="result">${item.result}</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteHistoryItem(${index})">×</button>
+                `;
+                historyList.appendChild(li);
+            });
+        }
+
+        function deleteHistoryItem(index) {
+            calculationHistory.splice(index, 1);
+            renderHistory();
+        }
+
+        // --- Drawing Canvas Logic ---
+        const canvas = document.getElementById('drawing-canvas');
+        const ctx = canvas.getContext('2d');
+        const clearCanvasBtn = document.getElementById('clear-canvas');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        function draw(e) {
+            if (!isDrawing) return;
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseout', () => isDrawing = false);
+        clearCanvasBtn.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        // --- Image Uploader Logic ---
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreview = document.getElementById('image-preview');
+        const zoomInBtn = document.getElementById('zoom-in-btn');
+        const zoomOutBtn = document.getElementById('zoom-out-btn');
+        const removeImageBtn = document.getElementById('remove-image-btn');
+        let imageScale = 1;
+
+        imageUpload.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imageScale = 1;
+                    imagePreview.style.transform = 'scale(1)';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        zoomInBtn.addEventListener('click', () => {
+            if (imagePreview.src) {
+                imageScale += 0.1;
+                imagePreview.style.transform = `scale(${imageScale})`;
+            }
+        });
+
+        zoomOutBtn.addEventListener('click', () => {
+            if (imagePreview.src) {
+                imageScale = Math.max(0.2, imageScale - 0.1);
+                imagePreview.style.transform = `scale(${imageScale})`;
+            }
+        });
+
+        removeImageBtn.addEventListener('click', () => {
+            imagePreview.src = '';
+            imageScale = 1;
+            imagePreview.style.transform = 'scale(1)';
+            imageUpload.value = ''; // Reset file input
+        });
+    </script>
+</body>
+</html>
