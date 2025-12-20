@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noting: Text & Draw</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable class-based dark mode
+            theme: {
+                extend: {
+                    colors: {
+                        'indigo-accent': '#6366F1', // Indigo-500
+                        'dark-bg-start': '#0f172a', // Slate-900 (Primary Dark)
+                        'dark-bg-end': '#1e293b',   // Slate-800
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for the body background (Light Mode) */
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0f8 100%);
+            transition: background-color 0.5s ease;
+        }
+
+        /* FORCE OUTER BACKGROUND DARK MODE */
+        .dark body {
+            background-color: #0f172a !important; 
+            background-image: none !important;
+        }
+        
+        /* Notebook Styling for Drawing Space */
+        .canvas-container {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            /* Grid Paper Texture */
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        .dark .canvas-container {
+            background-color: #0f172a; 
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        #drawingCanvas {
+            display: block;
+            touch-action: none;
+            background: transparent; /* Allow the container grid to show through */
+        }
+
+        /* Notebook Ruled Paper Styling for Text Space */
+        #noteContent {
+            background-color: #fffdfa; /* Slightly off-white cream color */
+            background-image: 
+                linear-gradient(90deg, transparent 79px, #ffccd5 79px, #ffccd5 81px, transparent 81px),
+                linear-gradient(#e5eaf1 .1em, transparent .1em);
+            background-size: 100% 1.5em; /* Matches the line-height */
+            line-height: 1.5em;
+            padding-left: 100px !important; /* Spacing for the red margin line */
+            padding-top: 1.5em;
+        }
+
+        .dark #noteContent {
+            background-color: #1e293b;
+            background-image: 
+                linear-gradient(90deg, transparent 79px, #450a0a 79px, #450a0a 81px, transparent 81px),
+                linear-gradient(#0f172a .1em, transparent .1em);
+            color: #e2e8f0;
+        }
+
+        .mode-btn {
+            transition: all 0.3s ease;
+        }
+
+        .highlight-swatch {
+            transition: all 0.15s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        /* CSS Placeholder for ContentEditable */
+        #noteContent:empty:before {
+            content: attr(data-placeholder);
+            color: #9ca3af; 
+            cursor: text;
+        }
+        .dark #noteContent:empty:before {
+            color: #475569;
+        }
+
+        .tool-btn.active {
+            background-color: #6366F1;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Color Circle / Picker Styling */
+        .color-circle-btn {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            overflow: hidden;
+        }
+        .color-circle-btn:hover {
+            transform: scale(1.1);
+        }
+        .color-circle-btn input[type="color"] {
+            position: absolute;
+            opacity: 0;
+            width: 150%;
+            height: 150%;
+            cursor: pointer;
+            left: -25%;
+            top: -25%;
+        }
+
+        /* Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #e2e8f0;
+            border-radius: 3px;
+        }
+        .dark input[type=range]::-webkit-slider-runnable-track {
+            background: #334155;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #6366F1;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+    </style>
+    <script>
+        let currentMode = 'text'; 
+        let currentTool = 'pencil'; 
+        let currentDrawColor = '#3b82f6'; 
+        let currentThickness = 4;
+        const DARK_CANVAS_COLOR = '#0f172a'; 
+
+        let canvas, ctx;
+        let isDrawing = false;
+        let lastX = 0, lastY = 0;
+        let lastDrawingData = null;
+
+        const isDarkMode = () => document.documentElement.classList.contains('dark');
+        
+        const toggleTheme = () => {
+            const wasDark = isDarkMode();
+            if (wasDark) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            if (wasDark) {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+            
+            if (canvas) setupCanvas(true); 
+        };
+
+        const draw = (e) => {
+            if (!isDrawing || currentMode !== 'draw') return;
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.clientX ?? (e.touches && e.touches[0].clientX);
+            const clientY = e.clientY ?? (e.touches && e.touches[0].clientY);
+            if (clientX === undefined) return;
+            
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            
+            if (currentTool === 'pencil') {
+                ctx.strokeStyle = currentDrawColor;
+                ctx.lineWidth = currentThickness;
+            } else {
+                ctx.strokeStyle = isDarkMode() ? DARK_CANVAS_COLOR : '#ffffff';
+                ctx.lineWidth = currentThickness * 6; 
+            }
+            
+            ctx.stroke();
+            [lastX, lastY] = [x, y];
+        };
+
+        const startDrawing = (e) => {
+            if (currentMode !== 'draw') return;
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.clientX ?? (e.touches && e.touches[0].clientX);
+            const clientY = e.clientY ?? (e.touches && e.touches[0].clientY);
+            if (clientX === undefined) return;
+
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+            [lastX, lastY] = [x, y];
+        };
+
+        const stopDrawing = () => isDrawing = false;
+
+        const clearCanvas = () => {
+            showConfirmationModal("Clear the entire drawing?", () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                lastDrawingData = null;
+            });
+        };
+        
+        const setupCanvas = (forceRedraw = false) => {
+            if (!canvas) {
+                 canvas = document.getElementById('drawingCanvas');
+                 ctx = canvas.getContext('2d');
+            }
+            const container = document.getElementById('canvasContainer');
+            const resizeCanvas = () => {
+                if (canvas && ctx && !forceRedraw) {
+                    try { lastDrawingData = canvas.toDataURL(); } catch (e) { lastDrawingData = null; }
+                }
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+                
+                // Note: We are using clearRect instead of fillStyle to let CSS background show
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                if (lastDrawingData) {
+                    const img = new Image();
+                    img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    img.src = lastDrawingData;
+                }
+            };
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+        };
+
+        const setTool = (tool) => {
+            currentTool = tool;
+            document.getElementById('pencilBtn').classList.toggle('active', tool === 'pencil');
+            document.getElementById('eraserBtn').classList.toggle('active', tool === 'eraser');
+        };
+
+        const formatText = (command, value = null) => {
+            document.getElementById('noteContent').focus();
+            document.execCommand(command, false, value);
+        };
+
+        const resetTextColor = () => {
+            const defaultColor = isDarkMode() ? '#ffffff' : '#000000';
+            formatText('foreColor', defaultColor);
+        };
+
+        const switchMode = (mode) => {
+            currentMode = mode;
+            const textWrapper = document.getElementById('textWrapper');
+            const drawWrapper = document.getElementById('drawWrapper');
+            const textBtn = document.getElementById('textModeBtn');
+            const drawBtn = document.getElementById('drawModeBtn');
+            const clearBtn = document.getElementById('clearDrawBtn');
+            const toolbar = document.getElementById('textToolbar');
+            const sketchToolbar = document.getElementById('sketchToolbar');
+
+            const activeClasses = 'bg-indigo-600 text-white shadow-lg dark:bg-indigo-500';
+            const inactiveClasses = 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+
+            if (mode === 'text') {
+                textWrapper.classList.remove('hidden');
+                drawWrapper.classList.add('hidden');
+                toolbar.classList.remove('hidden');
+                sketchToolbar.classList.add('hidden');
+                textBtn.className = `mode-btn px-4 py-2 rounded-full text-sm font-semibold ${activeClasses}`;
+                drawBtn.className = `mode-btn px-4 py-2 rounded-full text-sm font-semibold ${inactiveClasses}`;
+                clearBtn.classList.add('hidden');
+            } else {
+                drawWrapper.classList.remove('hidden');
+                textWrapper.classList.add('hidden');
+                toolbar.classList.add('hidden');
+                sketchToolbar.classList.remove('hidden');
+                drawBtn.className = `mode-btn px-4 py-2 rounded-full text-sm font-semibold ${activeClasses}`;
+                textBtn.className = `mode-btn px-4 py-2 rounded-full text-sm font-semibold ${inactiveClasses}`;
+                clearBtn.classList.remove('hidden');
+                setupCanvas();
+                setTool('pencil');
+            }
+        };
+
+        const showConfirmationModal = (message, onConfirm) => {
+            const modal = document.getElementById('confirmationModal');
+            document.getElementById('modalMessage').textContent = message;
+            const confirmBtn = document.getElementById('modalConfirmBtn');
+            const cancelBtn = document.getElementById('modalCancelBtn');
+            confirmBtn.onclick = () => { onConfirm(); modal.classList.add('hidden'); };
+            cancelBtn.onclick = () => modal.classList.add('hidden');
+            modal.classList.remove('hidden');
+        };
+
+        window.onload = function () {
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.getElementById('sunIcon').classList.add('hidden');
+                document.getElementById('moonIcon').classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('sunIcon').classList.remove('hidden');
+                document.getElementById('moonIcon').classList.add('hidden');
+            }
+
+            setupCanvas();
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('clearDrawBtn').addEventListener('click', clearCanvas);
+            document.getElementById('textModeBtn').addEventListener('click', () => switchMode('text'));
+            document.getElementById('drawModeBtn').addEventListener('click', () => switchMode('draw'));
+            document.getElementById('resetColorBtn').addEventListener('click', resetTextColor);
+            document.getElementById('fontSizeSelect').addEventListener('change', (e) => formatText('fontSize', e.target.value));
+            document.getElementById('highlightSwatches').onclick = (e) => {
+                const swatch = e.target.closest('.highlight-swatch');
+                if (swatch) formatText('hiliteColor', swatch.dataset.bgColor);
+            };
+
+            document.getElementById('pencilBtn').addEventListener('click', () => setTool('pencil'));
+            document.getElementById('eraserBtn').addEventListener('click', () => setTool('eraser'));
+            document.getElementById('drawColorPicker').addEventListener('input', (e) => {
+                currentDrawColor = e.target.value;
+                setTool('pencil');
+            });
+            document.getElementById('textColorPicker').addEventListener('input', (e) => {
+                formatText('foreColor', e.target.value);
+            });
+            document.getElementById('thicknessSlider').addEventListener('input', (e) => {
+                currentThickness = parseInt(e.target.value);
+                document.getElementById('thicknessValue').textContent = currentThickness + 'px';
+            });
+
+            switchMode('text');
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); });
+            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+            canvas.addEventListener('touchend', stopDrawing);
+        };
+    </script>
+</head>
+<body class="min-h-screen font-sans antialiased flex flex-col items-center p-4 sm:p-6 dark:bg-dark-bg-start text-slate-900 dark:text-slate-100">
+
+    <div id="confirmationModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-40 dark:bg-gray-900 dark:bg-opacity-80 flex items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-dark-bg-end p-6 rounded-2xl shadow-3xl max-sm w-full border border-gray-200 dark:border-gray-700">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Confirm Action</h3>
+            <p id="modalMessage" class="text-gray-700 dark:text-gray-300 mb-6">Are you sure?</p>
+            <div class="flex justify-end space-x-3">
+                <button id="modalCancelBtn" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-xl">Cancel</button>
+                <button id="modalConfirmBtn" class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-xl">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="note-app" class="w-full max-w-4xl flex flex-col space-y-4">
+        <header class="bg-white/90 backdrop-blur-sm p-5 rounded-2xl shadow-xl flex justify-between items-center dark:bg-dark-bg-end/90 dark:ring-1 dark:ring-gray-700">
+            <div class="flex items-center space-x-3">
+                <h1 class="text-3xl font-black text-indigo-700 dark:text-indigo-400">✨ Noting</h1>
+                <button id="themeToggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-md transition-transform hover:scale-105 active:scale-95">
+                    <svg id="sunIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moonIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+            <div class="flex space-x-2">
+                <button id="textModeBtn" class="mode-btn px-4 py-2 rounded-full text-sm font-semibold">📝 Text Mode</button>
+                <button id="drawModeBtn" class="mode-btn px-4 py-2 rounded-full text-sm font-semibold">🎨 Draw Mode</button>
+            </div>
+        </header>
+
+        <main class="relative flex-grow bg-white p-6 rounded-2xl shadow-2xl h-[70vh] dark:bg-dark-bg-start dark:shadow-gray-900/50 flex flex-col overflow-hidden">
+            <div id="textWrapper" class="absolute inset-0 p-6 flex flex-col">
+                <div id="textToolbar" class="flex flex-wrap items-center gap-3 p-3 bg-gray-50 border-b border-gray-200 rounded-t-xl dark:bg-dark-bg-end dark:border-gray-700 z-10">
+                    <button id="undoBtn" class="p-2 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/30 text-gray-700 dark:text-gray-300">Undo</button>
+                    <button id="redoBtn" class="p-2 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/30 text-gray-700 dark:text-gray-300">Redo</button>
+                    <div class="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+                    <button id="boldBtn" class="p-2 font-bold hover:bg-indigo-100 dark:hover:bg-indigo-900/30 dark:text-gray-300">B</button>
+                    <button id="italicBtn" class="p-2 italic hover:bg-indigo-100 dark:hover:bg-indigo-900/30 dark:text-gray-300">I</button>
+                    <select id="fontSizeSelect" class="p-1 rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-300 outline-none">
+                        <option value="3">Small</option>
+                        <option value="4" selected>Normal</option>
+                        <option value="6">Large</option>
+                        <option value="7">Huge</option>
+                    </select>
+
+                    <div class="h-8 w-px bg-gray-300 dark:bg-gray-600 hidden sm:block"></div>
+
+                    <div class="flex items-center gap-2">
+                        <div class="color-circle-btn" title="Text Color">
+                            <input type="color" id="textColorPicker" value="#000000">
+                        </div>
+                        <button id="resetColorBtn" class="px-2 py-1 text-xs font-bold bg-gray-200 dark:bg-gray-600 dark:text-gray-300 rounded shadow-sm hover:bg-gray-300 dark:hover:bg-gray-500 transition">Reset</button>
+                    </div>
+
+                    <div class="h-8 w-px bg-gray-300 dark:bg-gray-600 hidden sm:block"></div>
+
+                    <div id="highlightSwatches" class="flex items-center gap-1">
+                        <button data-bg-color="#fef08a" class="highlight-swatch w-5 h-5 rounded-full bg-yellow-200" title="Yellow"></button>
+                        <button data-bg-color="#bbf7d0" class="highlight-swatch w-5 h-5 rounded-full bg-green-200" title="Green"></button>
+                        <button data-bg-color="#bfdbfe" class="highlight-swatch w-5 h-5 rounded-full bg-blue-200" title="Blue"></button>
+                        <button data-bg-color="#fecdd3" class="highlight-swatch w-5 h-5 rounded-full bg-red-200" title="Red"></button>
+                        <button data-bg-color="#e9d5ff" class="highlight-swatch w-5 h-5 rounded-full bg-purple-200" title="Purple"></button>
+                        <button data-bg-color="transparent" class="highlight-swatch w-5 h-5 rounded-full border border-gray-400 flex items-center justify-center text-[10px]" title="Clear Highlight">✕</button>
+                    </div>
+                </div>
+                <div id="noteContent" contenteditable="true" data-placeholder="Start typing your notes here..." class="flex-grow outline-none overflow-y-auto rounded-b-xl border border-gray-100 dark:border-gray-700"></div>
+            </div>
+
+            <div id="drawWrapper" class="hidden absolute inset-0 p-6 flex flex-col">
+                <div id="sketchToolbar" class="flex flex-wrap items-center gap-4 p-3 bg-gray-50 border-b border-gray-200 rounded-t-xl dark:bg-dark-bg-end dark:border-gray-700 z-10">
+                    <div class="flex gap-2">
+                        <button id="pencilBtn" class="tool-btn flex items-center justify-center w-10 h-10 rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-900/30 text-gray-700 dark:text-gray-300 transition-all text-xl active" title="Pencil">✏️</button>
+                        <button id="eraserBtn" class="tool-btn flex items-center justify-center w-10 h-10 rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-900/30 text-gray-700 dark:text-gray-300 transition-all text-xl" title="Eraser">🧼</button>
+                    </div>
+                    <div class="h-8 w-px bg-gray-300 dark:bg-gray-600 hidden sm:block"></div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Color:</span>
+                        <div class="color-circle-btn" title="Choose Sketch Color">
+                            <input type="color" id="drawColorPicker" value="#3b82f6">
+                        </div>
+                    </div>
+                    <div class="h-8 w-px bg-gray-300 dark:bg-gray-600 hidden sm:block"></div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Thickness:</span>
+                        <input type="range" id="thicknessSlider" min="1" max="20" value="4" class="w-24 sm:w-32 cursor-pointer">
+                        <span id="thicknessValue" class="text-xs font-mono text-gray-500 dark:text-gray-400 w-8">4px</span>
+                    </div>
+                    <div class="flex-grow"></div>
+                    <span class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mr-2 hidden md:inline">Drawing Tools</span>
+                </div>
+                <div id="canvasContainer" class="canvas-container w-full flex-grow rounded-t-none">
+                    <canvas id="drawingCanvas"></canvas>
+                </div>
+            </div>
+        </main>
+
+        <footer class="flex justify-end p-4 bg-white/90 rounded-2xl shadow-xl dark:bg-dark-bg-end/90 dark:ring-1 dark:ring-gray-700">
+            <button id="clearDrawBtn" class="hidden px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-xl hover:bg-red-600 transition shadow-lg">🗑️ Clear Drawing</button>
+        </footer>
+    </div>
+
+</body>
+</html>
