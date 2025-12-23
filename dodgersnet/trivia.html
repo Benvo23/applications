@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodgers Trivia - DodgersNet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .trivia-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .question-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        .question-number {
+            font-size: 0.8rem;
+            color: var(--dodger-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 1.25rem;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .option-btn {
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-btn:hover:not(.selected):not(.correct):not(.wrong) {
+            background: #e8f4fc;
+            border-color: var(--dodger-blue);
+        }
+        .option-btn.selected {
+            background: #e8f4fc;
+            border-color: var(--dodger-blue);
+        }
+        .option-btn.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        .option-btn.wrong {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        .option-btn:disabled {
+            cursor: default;
+        }
+        .result-box {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            display: none;
+        }
+        .result-box.show {
+            display: block;
+        }
+        .result-box.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+        .result-box.wrong {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .score-display {
+            background: var(--dodger-blue);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .score-number {
+            font-size: 3rem;
+            font-weight: 900;
+        }
+        .score-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+        }
+        .final-result {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .final-result.show {
+            display: block;
+        }
+        .final-score {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--dodger-blue);
+        }
+        .final-message {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            color: #1a1a2e;
+        }
+        .final-subtitle {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        .restart-btn {
+            background: var(--dodger-blue);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .restart-btn:hover {
+            background: var(--dodger-red);
+            transform: scale(1.05);
+        }
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: var(--dodger-blue);
+            height: 100%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            <span class="icon">⚾</span> DodgersNet
+        </a>
+        <form action="search.html" method="GET" class="navbar-search">
+            <input type="text" name="q" placeholder="Search...">
+            <button type="submit">Go</button>
+        </form>
+        <ul class="navbar-links">
+            <li><a href="roster.html">Roster</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="stadium.html">Stadium</a></li>
+            <li><a href="trivia.html" class="active">Trivia</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+        <div class="content-card">
+            <h1>🧠 Dodgers Trivia</h1>
+            <p>Test your knowledge of the Boys in Blue! 10 questions about Dodgers history, players, and championships.</p>
+
+            <div class="trivia-container">
+                <div class="score-display">
+                    <div class="score-number" id="score">0/10</div>
+                    <div class="score-label">Current Score</div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress" style="width: 0%"></div>
+                </div>
+
+                <div id="questions-container"></div>
+
+                <div class="final-result" id="final-result">
+                    <div class="final-score" id="final-score">0/10</div>
+                    <div class="final-message" id="final-message">Nice try!</div>
+                    <div class="final-subtitle" id="final-subtitle">Keep studying your Dodgers history!</div>
+                    <button class="restart-btn" onclick="restartQuiz()">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        DodgersNet &copy; 2025 | <a href="index.html">Home</a>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "What year did the Dodgers move from Brooklyn to Los Angeles?",
+                options: ["1955", "1958", "1962", "1965"],
+                correct: 1,
+                explanation: "The Dodgers moved to LA in 1958 and played at the LA Coliseum until Dodger Stadium opened in 1962."
+            },
+            {
+                question: "Who broke baseball's color barrier as a Dodger in 1947?",
+                options: ["Roy Campanella", "Jackie Robinson", "Don Newcombe", "Pee Wee Reese"],
+                correct: 1,
+                explanation: "Jackie Robinson became the first Black player in MLB history when he debuted for the Brooklyn Dodgers on April 15, 1947."
+            },
+            {
+                question: "How many World Series titles have the Dodgers won?",
+                options: ["7", "8", "9", "10"],
+                correct: 2,
+                explanation: "The Dodgers have won 9 World Series: 1955, 1959, 1963, 1965, 1981, 1988, 2020, 2024, and 2025."
+            },
+            {
+                question: "Who hit the famous walk-off home run in Game 1 of the 1988 World Series?",
+                options: ["Mike Scioscia", "Kirk Gibson", "Orel Hershiser", "Steve Sax"],
+                correct: 1,
+                explanation: "Kirk Gibson's iconic limping home run off Dennis Eckersley is one of the greatest moments in baseball history."
+            },
+            {
+                question: "What is Dodger Stadium's seating capacity?",
+                options: ["42,000", "48,000", "56,000", "62,000"],
+                correct: 2,
+                explanation: "Dodger Stadium has a capacity of 56,000, making it the largest MLB stadium by seating capacity."
+            },
+            {
+                question: "Which legendary broadcaster called Dodgers games for 67 years?",
+                options: ["Jaime Jarrin", "Vin Scully", "Ross Porter", "Jerry Doggett"],
+                correct: 1,
+                explanation: "Vin Scully called Dodgers games from 1950 to 2016, becoming one of the most beloved voices in sports history."
+            },
+            {
+                question: "In what year was Shohei Ohtani signed by the Dodgers?",
+                options: ["2022", "2023", "2024", "2025"],
+                correct: 1,
+                explanation: "Ohtani signed a historic 10-year, $700 million contract with the Dodgers in December 2023."
+            },
+            {
+                question: "Who was the MVP of the 2020 World Series?",
+                options: ["Mookie Betts", "Corey Seager", "Clayton Kershaw", "Justin Turner"],
+                correct: 1,
+                explanation: "Corey Seager won World Series MVP, hitting .400 with 2 home runs against the Rays."
+            },
+            {
+                question: "What pitcher holds the Dodgers record for career strikeouts?",
+                options: ["Sandy Koufax", "Don Drysdale", "Clayton Kershaw", "Don Sutton"],
+                correct: 3,
+                explanation: "Don Sutton holds the franchise record with 2,696 strikeouts as a Dodger from 1966-1980 and 1988."
+            },
+            {
+                question: "Who hit the 18-inning walk-off homer in the 2025 World Series Game 3?",
+                options: ["Shohei Ohtani", "Mookie Betts", "Freddie Freeman", "Will Smith"],
+                correct: 2,
+                explanation: "Freddie Freeman's walk-off homer in the 18th inning against the Blue Jays was an instant classic!"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = new Array(questions.length).fill(false);
+
+        function initQuiz() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `question-${index}`;
+                card.style.display = index === 0 ? 'block' : 'none';
+
+                card.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <button class="option-btn" onclick="selectAnswer(${index}, ${i})">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div class="result-box" id="result-${index}"></div>
+                `;
+                container.appendChild(card);
+            });
+
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (answered[questionIndex]) return;
+            answered[questionIndex] = true;
+
+            const question = questions[questionIndex];
+            const card = document.getElementById(`question-${questionIndex}`);
+            const buttons = card.querySelectorAll('.option-btn');
+            const resultBox = document.getElementById(`result-${questionIndex}`);
+
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === question.correct) {
+                    btn.classList.add('correct');
+                } else if (i === answerIndex && answerIndex !== question.correct) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            if (answerIndex === question.correct) {
+                score++;
+                resultBox.className = 'result-box show correct';
+                resultBox.innerHTML = `✓ Correct! ${question.explanation}`;
+            } else {
+                resultBox.className = 'result-box show wrong';
+                resultBox.innerHTML = `✗ Wrong! ${question.explanation}`;
+            }
+
+            document.getElementById('score').textContent = `${score}/${questions.length}`;
+            updateProgress();
+
+            // Move to next question after delay
+            setTimeout(() => {
+                if (questionIndex < questions.length - 1) {
+                    card.style.display = 'none';
+                    document.getElementById(`question-${questionIndex + 1}`).style.display = 'block';
+                    currentQuestion++;
+                } else {
+                    showFinalResult();
+                }
+            }, 2000);
+        }
+
+        function updateProgress() {
+            const answeredCount = answered.filter(a => a).length;
+            const percent = (answeredCount / questions.length) * 100;
+            document.getElementById('progress').style.width = `${percent}%`;
+        }
+
+        function showFinalResult() {
+            document.getElementById('questions-container').style.display = 'none';
+            const finalResult = document.getElementById('final-result');
+            finalResult.classList.add('show');
+
+            document.getElementById('final-score').textContent = `${score}/${questions.length}`;
+
+            let message, subtitle;
+            if (score === 10) {
+                message = "PERFECT! True Blue Legend!";
+                subtitle = "You know your Dodgers inside and out!";
+            } else if (score >= 8) {
+                message = "Excellent! Dodger Expert!";
+                subtitle = "You really know your stuff!";
+            } else if (score >= 6) {
+                message = "Good Job! Solid Fan!";
+                subtitle = "You know your Dodgers pretty well!";
+            } else if (score >= 4) {
+                message = "Not Bad! Keep Learning!";
+                subtitle = "Time to brush up on your Dodgers history.";
+            } else {
+                message = "Nice Try!";
+                subtitle = "Maybe check out our History page for some studying!";
+            }
+
+            document.getElementById('final-message').textContent = message;
+            document.getElementById('final-subtitle').textContent = subtitle;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = new Array(questions.length).fill(false);
+            document.getElementById('score').textContent = '0/10';
+            document.getElementById('questions-container').style.display = 'block';
+            document.getElementById('final-result').classList.remove('show');
+            initQuiz();
+        }
+
+        // Initialize quiz on page load
+        initQuiz();
+    </script>
+</body>
+</html>

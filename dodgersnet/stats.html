@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats & Standings - DodgersNet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            <span class="icon">⚾</span> DodgersNet
+        </a>
+        <form action="search.html" method="GET" class="navbar-search">
+            <input type="text" name="q" placeholder="Search...">
+            <button type="submit">Go</button>
+        </form>
+        <ul class="navbar-links">
+            <li><a href="roster.html">Roster</a></li>
+            <li><a href="stats.html" class="active">Stats</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="stadium.html">Stadium</a></li>
+            <li><a href="trivia.html">Trivia</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+        <div class="content-card">
+            <h1>📊 Stats & Standings</h1>
+            <p>Live standings and team statistics for the Los Angeles Dodgers.</p>
+
+            <h2>NL West Standings <span class="live-badge">LIVE</span></h2>
+            <div class="loading" id="standings-loading">
+                <div class="spinner"></div>
+            </div>
+            <table class="schedule-table" id="standings-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>W</th>
+                        <th>L</th>
+                        <th>PCT</th>
+                        <th>GB</th>
+                    </tr>
+                </thead>
+                <tbody id="standings-body">
+                </tbody>
+            </table>
+
+            <h2>2025 Season - Back-to-Back Champions 🏆🏆</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="number">101</div>
+                    <div class="label">Wins</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">61</div>
+                    <div class="label">Losses</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">.623</div>
+                    <div class="label">Win %</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">1st</div>
+                    <div class="label">NL West</div>
+                </div>
+            </div>
+
+            <h2>2025 Team Leaders</h2>
+
+            <h3 style="color: var(--dodger-blue); margin-top: 1.5rem;">Batting</h3>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>AVG</th>
+                        <th>HR</th>
+                        <th>RBI</th>
+                        <th>OPS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Shohei Ohtani</strong></td>
+                        <td>.305</td>
+                        <td>56</td>
+                        <td>144</td>
+                        <td>1.052</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mookie Betts</strong></td>
+                        <td>.295</td>
+                        <td>24</td>
+                        <td>82</td>
+                        <td>.898</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Freddie Freeman</strong></td>
+                        <td>.291</td>
+                        <td>25</td>
+                        <td>96</td>
+                        <td>.882</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Teoscar Hernandez</strong></td>
+                        <td>.278</td>
+                        <td>30</td>
+                        <td>95</td>
+                        <td>.855</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Will Smith</strong></td>
+                        <td>.268</td>
+                        <td>24</td>
+                        <td>85</td>
+                        <td>.842</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Max Muncy</strong></td>
+                        <td>.241</td>
+                        <td>22</td>
+                        <td>74</td>
+                        <td>.812</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tommy Edman</strong></td>
+                        <td>.265</td>
+                        <td>13</td>
+                        <td>58</td>
+                        <td>.756</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: var(--dodger-blue); margin-top: 1.5rem;">Pitching</h3>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>W-L</th>
+                        <th>ERA</th>
+                        <th>SO</th>
+                        <th>WHIP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Shohei Ohtani</strong></td>
+                        <td>15-5</td>
+                        <td>2.61</td>
+                        <td>197</td>
+                        <td>0.98</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Roki Sasaki</strong></td>
+                        <td>12-4</td>
+                        <td>2.45</td>
+                        <td>189</td>
+                        <td>0.92</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Yoshinobu Yamamoto</strong></td>
+                        <td>14-6</td>
+                        <td>2.89</td>
+                        <td>178</td>
+                        <td>1.05</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Blake Snell</strong></td>
+                        <td>13-5</td>
+                        <td>2.95</td>
+                        <td>201</td>
+                        <td>1.12</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tyler Glasnow</strong></td>
+                        <td>11-7</td>
+                        <td>3.18</td>
+                        <td>192</td>
+                        <td>1.08</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tanner Scott</strong></td>
+                        <td>6-2</td>
+                        <td>1.85</td>
+                        <td>89</td>
+                        <td>0.95</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Edwin Diaz</strong></td>
+                        <td>4-2</td>
+                        <td>2.10</td>
+                        <td>78</td>
+                        <td>1.02</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box highlight" style="margin-top: 2rem;">
+                <strong>2025 Highlights:</strong><br>
+                • Back-to-back World Series Champions - 9th title in franchise history<br>
+                • Shohei Ohtani: MVP season as two-way player (56 HR, 15 wins)<br>
+                • Roki Sasaki: Dominant rookie season, 102+ mph heat<br>
+                • 18-inning World Series Game 3 walk-off by Freddie Freeman vs Blue Jays<br>
+                • Best rotation in baseball: Ohtani, Sasaki, Yamamoto, Snell, Glasnow
+            </div>
+
+            <h2 style="margin-top: 2rem;">2026 Season Preview</h2>
+            <div class="info-box">
+                <strong>Three-Peat Quest:</strong><br>
+                The Dodgers enter 2026 looking to become the first team since the 1998-2000 Yankees to win three consecutive World Series.<br><br>
+                <strong>Projected 2026 Rotation:</strong><br>
+                1. Shohei Ohtani (two-way)<br>
+                2. Roki Sasaki<br>
+                3. Yoshinobu Yamamoto<br>
+                4. Blake Snell<br>
+                5. Tyler Glasnow<br><br>
+                <strong>Key Additions:</strong><br>
+                • Edwin Diaz - Elite closer with the trumpets
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        DodgersNet &copy; 2025 | <a href="index.html">Home</a>
+    </footer>
+
+    <script>
+        const DODGERS_TEAM_ID = 119;
+        const MLB_API_BASE = 'https://statsapi.mlb.com/api/v1';
+
+        async function fetchStandings() {
+            try {
+                // Try 2025 first, fall back to 2024
+                let response = await fetch(
+                    `${MLB_API_BASE}/standings?leagueId=104&season=2025&standingsTypes=regularSeason`
+                );
+                let data = await response.json();
+
+                // Find NL West division
+                let nlWest = data.records?.find(r => r.division.id === 203);
+
+                if (!nlWest || nlWest.teamRecords.length === 0) {
+                    // Fall back to 2024
+                    response = await fetch(
+                        `${MLB_API_BASE}/standings?leagueId=104&season=2024&standingsTypes=regularSeason`
+                    );
+                    data = await response.json();
+                    nlWest = data.records?.find(r => r.division.id === 203);
+                }
+
+                displayStandings(nlWest?.teamRecords || []);
+            } catch (error) {
+                console.error('Error fetching standings:', error);
+                displayFallbackStandings();
+            }
+        }
+
+        function displayStandings(teams) {
+            const tbody = document.getElementById('standings-body');
+            const table = document.getElementById('standings-table');
+            const loading = document.getElementById('standings-loading');
+
+            loading.style.display = 'none';
+            table.style.display = 'table';
+
+            if (teams.length === 0) {
+                displayFallbackStandings();
+                return;
+            }
+
+            teams.forEach(team => {
+                const row = document.createElement('tr');
+                const isDodgers = team.team.id === DODGERS_TEAM_ID;
+
+                row.innerHTML = `
+                    <td style="${isDodgers ? 'font-weight: 700; color: var(--dodger-blue);' : ''}">${team.team.name.replace('Los Angeles ', '')}</td>
+                    <td>${team.wins}</td>
+                    <td>${team.losses}</td>
+                    <td>${team.winningPercentage}</td>
+                    <td>${team.gamesBack === '-' ? '-' : team.gamesBack}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function displayFallbackStandings() {
+            const tbody = document.getElementById('standings-body');
+            const table = document.getElementById('standings-table');
+            const loading = document.getElementById('standings-loading');
+
+            loading.style.display = 'none';
+            table.style.display = 'table';
+
+            // 2025 Final standings
+            const fallbackStandings = [
+                { team: 'Dodgers 🏆🏆', w: 101, l: 61, pct: '.623', gb: '-' },
+                { team: 'Padres', w: 91, l: 71, pct: '.562', gb: '10.0' },
+                { team: 'D-backs', w: 86, l: 76, pct: '.531', gb: '15.0' },
+                { team: 'Giants', w: 78, l: 84, pct: '.481', gb: '23.0' },
+                { team: 'Rockies', w: 58, l: 104, pct: '.358', gb: '43.0' },
+            ];
+
+            fallbackStandings.forEach((team, index) => {
+                const row = document.createElement('tr');
+                const isDodgers = team.team.includes('Dodgers');
+
+                row.innerHTML = `
+                    <td style="${isDodgers ? 'font-weight: 700; color: var(--dodger-blue);' : ''}">${team.team}</td>
+                    <td>${team.w}</td>
+                    <td>${team.l}</td>
+                    <td>${team.pct}</td>
+                    <td>${team.gb}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Fetch standings on page load
+        fetchStandings();
+    </script>
+</body>
+</html>

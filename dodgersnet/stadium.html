@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodger Stadium - DodgersNet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            <span class="icon">⚾</span> DodgersNet
+        </a>
+        <form action="search.html" method="GET" class="navbar-search">
+            <input type="text" name="q" placeholder="Search...">
+            <button type="submit">Go</button>
+        </form>
+        <ul class="navbar-links">
+            <li><a href="roster.html">Roster</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="stadium.html" class="active">Stadium</a></li>
+            <li><a href="trivia.html">Trivia</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+        <div class="content-card">
+            <h1>🏟️ Dodger Stadium</h1>
+            <p>The third-oldest ballpark in Major League Baseball and the largest by seat capacity.</p>
+
+            <div style="margin: 1.5rem 0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                <img src="https://media.nbclosangeles.com/2025/08/GettyImages-1614505190.jpg?quality=85&strip=all&resize=1200%2C675" alt="Aerial view of Dodger Stadium with downtown Los Angeles skyline" style="width: 100%; display: block;">
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="number">56,000</div>
+                    <div class="label">Seating Capacity</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">1962</div>
+                    <div class="label">Year Opened</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">62</div>
+                    <div class="label">Years of History</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">9</div>
+                    <div class="label">World Series Hosted</div>
+                </div>
+            </div>
+
+            <h2>Quick Facts</h2>
+            <div class="info-box">
+                <strong>Official Name:</strong> Dodger Stadium<br>
+                <strong>Location:</strong> 1000 Vin Scully Avenue, Los Angeles, CA 90012<br>
+                <strong>Opened:</strong> April 10, 1962<br>
+                <strong>Surface:</strong> Grass<br>
+                <strong>Architect:</strong> Emil Praeger<br>
+                <strong>Cost:</strong> $23 million (1962) / ~$230 million adjusted for inflation
+            </div>
+
+            <h2>Field Dimensions</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>Distance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Left Field Line</td>
+                        <td>330 ft (101 m)</td>
+                    </tr>
+                    <tr>
+                        <td>Left-Center Field</td>
+                        <td>375 ft (114 m)</td>
+                    </tr>
+                    <tr>
+                        <td>Center Field</td>
+                        <td>395 ft (120 m)</td>
+                    </tr>
+                    <tr>
+                        <td>Right-Center Field</td>
+                        <td>375 ft (114 m)</td>
+                    </tr>
+                    <tr>
+                        <td>Right Field Line</td>
+                        <td>330 ft (101 m)</td>
+                    </tr>
+                    <tr>
+                        <td>Backstop</td>
+                        <td>54 ft (16 m)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Stadium Features</h2>
+            <div class="player-grid">
+                <div class="player-card">
+                    <div class="player-photo" style="background: var(--dodger-red);">🌴</div>
+                    <div class="player-name">Iconic Views</div>
+                    <div class="player-position">San Gabriel Mountains backdrop, palm trees, stunning sunsets</div>
+                </div>
+                <div class="player-card">
+                    <div class="player-photo" style="background: var(--dodger-red);">🌭</div>
+                    <div class="player-name">Dodger Dogs</div>
+                    <div class="player-position">Famous foot-long hot dogs served since 1962</div>
+                </div>
+                <div class="player-card">
+                    <div class="player-photo" style="background: var(--dodger-red);">🎤</div>
+                    <div class="player-name">Vin Scully Press Box</div>
+                    <div class="player-position">Named after legendary broadcaster (1927-2022)</div>
+                </div>
+                <div class="player-card">
+                    <div class="player-photo" style="background: var(--dodger-red);">🅿️</div>
+                    <div class="player-name">Massive Parking</div>
+                    <div class="player-position">16,000 parking spaces on-site</div>
+                </div>
+            </div>
+
+            <h2>Getting There</h2>
+            <div class="info-box">
+                <strong>Address:</strong> 1000 Vin Scully Avenue, Los Angeles, CA 90012<br><br>
+                <strong>By Car:</strong><br>
+                • From the 5 Freeway: Exit at Stadium Way<br>
+                • From the 110 Freeway: Exit at Dodger Stadium/Academy Road<br><br>
+                <strong>Parking:</strong><br>
+                • General Parking: $30-$50<br>
+                • Preferred Parking: $50-$75<br>
+                • Gates open 2 hours before first pitch<br><br>
+                <strong>Public Transit:</strong><br>
+                • Dodger Stadium Express: Free shuttle from Union Station and South Bay<br>
+                • LA Metro: Take Gold Line to Chinatown station, walk or shuttle to stadium
+            </div>
+
+            <h2>Seating Guide</h2>
+            <div class="info-box highlight">
+                <strong>Seating Levels:</strong><br>
+                • <strong>Field Level:</strong> Sections 1-59 (Closest to the action)<br>
+                • <strong>Loge Level:</strong> Sections 100-163 (Great sightlines)<br>
+                • <strong>Club Level:</strong> Sections 200-257 (Premium amenities)<br>
+                • <strong>Reserve Level:</strong> Sections 300-363 (Good value)<br>
+                • <strong>Top Deck:</strong> Sections 400-463 (Budget-friendly with great views)<br><br>
+                <strong>Pro Tip:</strong> Sections along the first base side (odd numbers) get shade earlier during day games!
+            </div>
+
+            <h2>Notable Events Hosted</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1962-2025</div>
+                    <div class="timeline-content">
+                        <strong>10 World Series Hosted:</strong> 1963, 1965, 1966, 1974, 1977, 1978, 1981, 1988, 2024, 2025
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <strong>18-Inning World Series Game 3</strong> - Freddie Freeman hits walk-off home run against the Blue Jays in the longest World Series game since 2018. First 18-inning game at Dodger Stadium in 7 years.
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <strong>Elton John's Farewell Concert</strong> performed to sold-out crowd.
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <strong>MLB All-Star Game</strong> returned to Dodger Stadium for the first time since 1980.
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2018</div>
+                    <div class="timeline-content">
+                        <strong>18-Inning World Series Game 3</strong> - Max Muncy hits walk-off home run against the Red Sox at 3:30 AM. Longest game in World Series history by time (7 hours, 20 minutes).
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1984</div>
+                    <div class="timeline-content">
+                        <strong>Summer Olympics</strong> baseball competition venue.
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1980</div>
+                    <div class="timeline-content">
+                        <strong>Pope John Paul II</strong> celebrated Mass for 50,000 people.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        DodgersNet &copy; 2025 | <a href="index.html">Home</a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,525 @@
+/* DodgersNet - Shared Styles */
+:root {
+    --dodger-blue: #005A9C;
+    --dodger-blue-dark: #003a6c;
+    --dodger-red: #EF3E42;
+    --dodger-white: #FFFFFF;
+    --gray-100: #f7f7f7;
+    --gray-200: #e5e5e5;
+    --gray-300: #d4d4d4;
+    --gray-600: #666;
+    --gray-800: #333;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--dodger-blue) 0%, var(--dodger-blue-dark) 100%);
+    min-height: 100vh;
+    margin: 0;
+    color: var(--gray-800);
+}
+
+.bebas { font-family: 'Bebas Neue', cursive; }
+
+/* Navbar */
+.navbar {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    text-shadow: 2px 2px 0px var(--dodger-red);
+}
+
+.navbar-brand .icon {
+    margin-right: 0.5rem;
+}
+
+.navbar-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+    background: var(--dodger-red);
+}
+
+/* Search Bar (in navbar) */
+.navbar-search {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 50px;
+    padding: 0.25rem;
+    max-width: 300px;
+    flex: 1;
+}
+
+.navbar-search input {
+    border: none;
+    outline: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    flex: 1;
+    background: transparent;
+    min-width: 100px;
+}
+
+.navbar-search button {
+    background: var(--dodger-blue);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+
+.navbar-search button:hover {
+    background: var(--dodger-red);
+}
+
+/* Page Container */
+.page-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Content Cards */
+.content-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+}
+
+.content-card h1 {
+    color: var(--dodger-blue);
+    margin-top: 0;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.content-card h2 {
+    color: var(--dodger-blue);
+    border-bottom: 3px solid var(--dodger-red);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+}
+
+.content-card h2:first-of-type {
+    margin-top: 0;
+}
+
+/* Player Cards Grid */
+.player-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.player-card {
+    background: var(--gray-100);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+}
+
+.player-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-color: var(--dodger-blue);
+}
+
+.player-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--dodger-blue);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 auto 1rem;
+    font-family: 'Bebas Neue', cursive;
+}
+
+.player-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--gray-800);
+    margin-bottom: 0.25rem;
+}
+
+.player-position {
+    color: var(--gray-600);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.player-number {
+    background: var(--dodger-red);
+    color: white;
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.stat-box {
+    background: var(--dodger-blue);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat-box .number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.stat-box .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+    margin-top: 0.5rem;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin: 2rem 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--dodger-blue);
+    border-radius: 2px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    background: var(--dodger-red);
+    border-radius: 50%;
+    transform: translateX(-6px);
+}
+
+.timeline-year {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.5rem;
+    color: var(--dodger-blue);
+}
+
+.timeline-content {
+    background: var(--gray-100);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+}
+
+/* Schedule Table */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.schedule-table th {
+    background: var(--dodger-blue);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.schedule-table tr:hover {
+    background: var(--gray-100);
+}
+
+.game-result {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.game-result.win {
+    background: #22c55e;
+    color: white;
+}
+
+.game-result.loss {
+    background: #ef4444;
+    color: white;
+}
+
+/* Search Results */
+.search-results {
+    margin-top: 1.5rem;
+}
+
+.search-result {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.search-result:last-child {
+    border-bottom: none;
+}
+
+.search-result-title {
+    font-size: 1.25rem;
+    color: var(--dodger-blue);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.search-result-title:hover {
+    text-decoration: underline;
+}
+
+.search-result-url {
+    color: #22c55e;
+    font-size: 0.85rem;
+    margin: 0.25rem 0;
+}
+
+.search-result-snippet {
+    color: var(--gray-600);
+    line-height: 1.6;
+}
+
+.search-result-snippet mark {
+    background: #fef08a;
+    padding: 0 2px;
+}
+
+/* Info Box */
+.info-box {
+    background: var(--gray-100);
+    border-left: 4px solid var(--dodger-blue);
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.info-box.highlight {
+    border-left-color: var(--dodger-red);
+    background: #fef2f2;
+}
+
+/* Live Score Badge */
+.live-badge {
+    background: var(--dodger-red);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Footer */
+.page-footer {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
+.page-footer a {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* News Cards */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.news-card {
+    background: var(--gray-100);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.news-card:hover {
+    transform: translateY(-4px);
+}
+
+.news-card-image {
+    height: 150px;
+    background: var(--dodger-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.news-card-content {
+    padding: 1.25rem;
+}
+
+.news-card-date {
+    color: var(--gray-600);
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-card-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--gray-800);
+    margin-bottom: 0.5rem;
+}
+
+.news-card-excerpt {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Loading Spinner */
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--gray-200);
+    border-top-color: var(--dodger-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .navbar-links {
+        justify-content: center;
+    }
+
+    .navbar-search {
+        max-width: 100%;
+    }
+
+    .page-container {
+        padding: 1rem;
+    }
+
+    .content-card {
+        padding: 1.5rem;
+    }
+
+    .player-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .schedule-table {
+        font-size: 0.85rem;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}

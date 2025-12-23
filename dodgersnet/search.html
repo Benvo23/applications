@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - DodgersNet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .external-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: var(--gray-100);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--gray-800);
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .external-link:hover {
+            border-color: var(--dodger-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .ext-icon {
+            font-size: 1.5rem;
+        }
+        .ext-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            <span class="icon">⚾</span> DodgersNet
+        </a>
+        <form action="search.html" method="GET" class="navbar-search">
+            <input type="text" name="q" id="search-input" placeholder="Search...">
+            <button type="submit">Go</button>
+        </form>
+        <ul class="navbar-links">
+            <li><a href="roster.html">Roster</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="stadium.html">Stadium</a></li>
+            <li><a href="trivia.html">Trivia</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+        <div class="content-card">
+            <h1>🔍 Search Results</h1>
+            <p id="search-query-display">Searching for: <strong id="query-text"></strong></p>
+
+            <div class="search-results" id="search-results">
+                <div class="loading" id="search-loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+
+            <!-- External Sports Links -->
+            <div id="external-links" style="display: none;">
+                <h2>Search on Sports Sites</h2>
+                <div class="external-links-grid">
+                    <a href="#" id="link-mlb" class="external-link" target="_blank">
+                        <span class="ext-icon">⚾</span>
+                        <span class="ext-name">MLB.com</span>
+                    </a>
+                    <a href="#" id="link-espn" class="external-link" target="_blank">
+                        <span class="ext-icon">📺</span>
+                        <span class="ext-name">ESPN</span>
+                    </a>
+                    <a href="#" id="link-br" class="external-link" target="_blank">
+                        <span class="ext-icon">📊</span>
+                        <span class="ext-name">Baseball Reference</span>
+                    </a>
+                    <a href="#" id="link-fangraphs" class="external-link" target="_blank">
+                        <span class="ext-icon">📈</span>
+                        <span class="ext-name">FanGraphs</span>
+                    </a>
+                    <a href="#" id="link-twitter" class="external-link" target="_blank">
+                        <span class="ext-icon">🐦</span>
+                        <span class="ext-name">X / Twitter</span>
+                    </a>
+                    <a href="#" id="link-youtube" class="external-link" target="_blank">
+                        <span class="ext-icon">▶️</span>
+                        <span class="ext-name">YouTube</span>
+                    </a>
+                    <a href="#" id="link-tiktok" class="external-link" target="_blank">
+                        <span class="ext-icon">🎵</span>
+                        <span class="ext-name">TikTok</span>
+                    </a>
+                    <a href="#" id="link-instagram" class="external-link" target="_blank">
+                        <span class="ext-icon">📷</span>
+                        <span class="ext-name">Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        DodgersNet &copy; 2025 | <a href="index.html">Home</a>
+    </footer>
+
+    <script>
+        // Search index - all searchable content from the site
+        const searchIndex = [
+            // Roster - Full Player List
+            {
+                title: "2025 Los Angeles Dodgers Roster",
+                url: "roster.html",
+                content: "Complete roster of the 2025 Los Angeles Dodgers. Pitchers: Yoshinobu Yamamoto, Roki Sasaki, Blake Snell, Tyler Glasnow, Gavin Stone, Landon Knack, Bobby Miller, River Ryan, Emmet Sheehan, Tanner Scott, Blake Treinen, Alex Vesia, Brusdar Graterol, Edwin Diaz, Will Klein, Anthony Banda, Ben Casparius, Jack Dreyer, Justin Wrobleski, Edgardo Henriquez, Kyle Hurt, Ronan Kopp, Brock Stewart, Paul Gervase. Catchers: Will Smith, Dalton Rushing. Infielders: Freddie Freeman, Hyeseong Kim, Tommy Edman, Mookie Betts, Alex Freeland, Max Muncy, Miguel Rojas. Outfielders: Teoscar Hernandez, Andy Pages, Michael Siani, Esteury Ruiz, Ryan Ward, Alex Call. DH: Shohei Ohtani.",
+                keywords: ["roster", "team", "players", "2025", "lineup", "pitchers", "catchers", "infielders", "outfielders"]
+            },
+            {
+                title: "Roki Sasaki - Starting Pitcher #11",
+                url: "roster.html",
+                content: "Roki Sasaki is the Dodgers' new ace, a Japanese phenom who throws 102+ mph. Signed as an international free agent in January 2025, joining Ohtani and Yamamoto to form an all-Japanese rotation.",
+                keywords: ["sasaki", "roki", "pitcher", "japanese", "2025", "fastball"]
+            },
+            {
+                title: "Blake Snell - Starting Pitcher #27",
+                url: "roster.html",
+                content: "Blake Snell is a two-time Cy Young Award winner who signed a 5-year, $182 million contract with the Dodgers in December 2024. Elite left-handed starting pitcher.",
+                keywords: ["snell", "blake", "pitcher", "cy young", "2025", "lefty"]
+            },
+            {
+                title: "Hyeseong Kim - Second Base #7",
+                url: "roster.html",
+                content: "Hyeseong Kim is a Korean star infielder who signed with the Dodgers from the KBO. Known for his excellent defense and contact hitting.",
+                keywords: ["kim", "hyeseong", "korean", "kbo", "2025", "infielder"]
+            },
+            {
+                title: "Shohei Ohtani - Designated Hitter #17",
+                url: "roster.html",
+                content: "Shohei Ohtani is the Dodgers' designated hitter wearing #17. In 2024, he became the first player in MLB history to achieve a 50-50 season with 54 home runs and 59 stolen bases. Signed to a historic $700 million contract.",
+                keywords: ["ohtani", "shohei", "dh", "designated hitter", "50-50", "japanese"]
+            },
+            {
+                title: "Mookie Betts - Shortstop #50",
+                url: "roster.html",
+                content: "Mookie Betts is the Dodgers' shortstop wearing #50. Former AL MVP with the Red Sox, moved to shortstop in 2024. One of the best all-around players in baseball.",
+                keywords: ["mookie", "betts", "shortstop", "mvp"]
+            },
+            {
+                title: "Freddie Freeman - First Base #5",
+                url: "roster.html",
+                content: "Freddie Freeman is the Dodgers' first baseman wearing #5. 2024 World Series MVP after hitting a walk-off grand slam in Game 1. Former NL MVP with the Braves.",
+                keywords: ["freddie", "freeman", "first base", "mvp", "grand slam"]
+            },
+            {
+                title: "Tommy Edman - Second Base #25",
+                url: "roster.html",
+                content: "Tommy Edman is a versatile infielder wearing #25. Acquired from the Cardinals, known for his excellent defense and ability to play multiple positions.",
+                keywords: ["tommy", "edman", "second base", "infielder", "utility"]
+            },
+            {
+                title: "Max Muncy - Third Base #13",
+                url: "roster.html",
+                content: "Max Muncy is the Dodgers' third baseman wearing #13. Power hitter known for his patience at the plate and walk-off heroics, including the 2018 World Series 18-inning walk-off homer.",
+                keywords: ["max", "muncy", "third base", "power", "walk-off"]
+            },
+            {
+                title: "Tyler Glasnow - Starting Pitcher #31",
+                url: "roster.html",
+                content: "Tyler Glasnow is a starting pitcher wearing #31. Elite fastball and curveball combination, one of the best strikeout pitchers in baseball.",
+                keywords: ["tyler", "glasnow", "pitcher", "starter", "strikeouts"]
+            },
+            {
+                title: "Emmet Sheehan - Starting Pitcher #80",
+                url: "roster.html",
+                content: "Emmet Sheehan is a young starting pitcher wearing #80. Promising arm in the Dodgers rotation with excellent stuff and pitchability.",
+                keywords: ["emmet", "sheehan", "pitcher", "starter", "prospect"]
+            },
+            {
+                title: "Will Smith - Catcher #16",
+                url: "roster.html",
+                content: "Will Smith is the Dodgers' starting catcher wearing #16. One of the best hitting catchers in baseball, All-Star caliber player.",
+                keywords: ["will", "smith", "catcher", "all-star"]
+            },
+            {
+                title: "Teoscar Hernandez - Right Field #37",
+                url: "roster.html",
+                content: "Teoscar Hernandez is an outfielder wearing #37. Power bat in the lineup, key contributor to the 2024 World Series championship.",
+                keywords: ["teoscar", "hernandez", "outfield", "right field", "power"]
+            },
+            // Stats
+            {
+                title: "Dodgers Stats & Standings",
+                url: "stats.html",
+                content: "Live standings and statistics for the Los Angeles Dodgers. 2024 season: 98 wins, 64 losses, .605 winning percentage. NL West Division Champions. Team batting and pitching leaders.",
+                keywords: ["stats", "statistics", "standings", "wins", "losses", "batting", "pitching"]
+            },
+            {
+                title: "2024 Season Statistics",
+                url: "stats.html",
+                content: "Ohtani led the team with .310 AVG, 54 HR, 130 RBI, 1.036 OPS. Mookie Betts hit .289 with 19 HR. Freddie Freeman hit .282 with 22 HR and 89 RBI.",
+                keywords: ["batting average", "home runs", "rbi", "ops", "era"]
+            },
+            // Schedule
+            {
+                title: "Dodgers Schedule",
+                url: "schedule.html",
+                content: "Upcoming games and live scores for the Los Angeles Dodgers. Home games at Dodger Stadium. TV broadcasts on SportsNet LA, ESPN, FOX.",
+                keywords: ["schedule", "games", "calendar", "upcoming", "live scores"]
+            },
+            // History
+            {
+                title: "Dodgers Franchise History",
+                url: "history.html",
+                content: "The Los Angeles Dodgers have won 8 World Series titles (1955, 1959, 1963, 1965, 1981, 1988, 2020, 2024) and 25 NL Pennants. Founded in Brooklyn in 1883, moved to LA in 1958.",
+                keywords: ["history", "championships", "world series", "pennants", "brooklyn"]
+            },
+            {
+                title: "2024 World Series Championship",
+                url: "history.html",
+                content: "The Dodgers won their 8th World Series title in 2024, defeating the New York Yankees 4-1. Freddie Freeman hit a walk-off grand slam in Game 1. Shohei Ohtani won his first championship.",
+                keywords: ["world series", "2024", "championship", "yankees", "title"]
+            },
+            {
+                title: "2020 World Series Championship",
+                url: "history.html",
+                content: "The Dodgers won their 7th World Series in 2020, defeating the Tampa Bay Rays 4-2. First title since 1988. Corey Seager named World Series MVP.",
+                keywords: ["world series", "2020", "championship", "rays", "seager"]
+            },
+            {
+                title: "Jackie Robinson - #42",
+                url: "history.html",
+                content: "Jackie Robinson broke the color barrier in 1947 as a Brooklyn Dodger, becoming the first African American to play in MLB in the modern era. His number 42 is retired across all of MLB.",
+                keywords: ["jackie robinson", "42", "color barrier", "brooklyn", "legend"]
+            },
+            {
+                title: "Sandy Koufax - #32",
+                url: "history.html",
+                content: "Sandy Koufax was one of the greatest pitchers in baseball history. Won 3 Cy Young Awards and 4 World Series with the Dodgers. Number 32 retired.",
+                keywords: ["sandy koufax", "pitcher", "cy young", "hall of fame", "legend"]
+            },
+            {
+                title: "Kirk Gibson's 1988 Walk-Off Home Run",
+                url: "history.html",
+                content: "Kirk Gibson hit one of the most iconic home runs in baseball history - a walk-off homer in Game 1 of the 1988 World Series against the Oakland Athletics. The Dodgers won the series.",
+                keywords: ["kirk gibson", "1988", "walk off", "home run", "iconic"]
+            },
+            // Stadium
+            {
+                title: "Dodger Stadium",
+                url: "stadium.html",
+                content: "Dodger Stadium is located at 1000 Vin Scully Avenue, Los Angeles. Opened in 1962, it seats 56,000 fans and is the third-oldest and largest capacity ballpark in MLB. Famous for Dodger Dogs and stunning views.",
+                keywords: ["stadium", "dodger stadium", "chavez ravine", "ballpark", "vin scully"]
+            },
+            {
+                title: "Getting to Dodger Stadium",
+                url: "stadium.html",
+                content: "Dodger Stadium parking costs $30-75. Dodger Stadium Express offers free shuttle from Union Station. Gates open 2 hours before first pitch. 16,000 parking spaces on-site.",
+                keywords: ["parking", "directions", "shuttle", "transportation", "union station"]
+            },
+            {
+                title: "Dodger Stadium Seating Guide",
+                url: "stadium.html",
+                content: "Dodger Stadium has 5 levels: Field Level, Loge Level, Club Level, Reserve Level, and Top Deck. First base side sections get shade earlier during day games.",
+                keywords: ["seating", "tickets", "sections", "levels", "field level"]
+            },
+            {
+                title: "Pope John Paul II at Dodger Stadium",
+                url: "stadium.html",
+                content: "In 1980, Pope John Paul II celebrated Mass for 50,000 people at Dodger Stadium. It was one of the most significant religious events in Los Angeles history.",
+                keywords: ["pope", "john paul", "mass", "catholic", "1980", "religious", "event"]
+            },
+            {
+                title: "Elton John Farewell Concert",
+                url: "stadium.html",
+                content: "In 2023, Elton John performed his Farewell Yellow Brick Road concert at Dodger Stadium to a sold-out crowd, marking one of his final performances.",
+                keywords: ["elton john", "concert", "music", "farewell", "2023", "yellow brick road"]
+            },
+            {
+                title: "1984 Summer Olympics at Dodger Stadium",
+                url: "stadium.html",
+                content: "Dodger Stadium served as the baseball competition venue for the 1984 Summer Olympics in Los Angeles.",
+                keywords: ["olympics", "1984", "summer games", "baseball", "los angeles"]
+            },
+            {
+                title: "2022 MLB All-Star Game",
+                url: "stadium.html",
+                content: "The 2022 MLB All-Star Game was held at Dodger Stadium, returning to LA for the first time since 1980. It featured the best players from the American and National Leagues.",
+                keywords: ["all-star", "game", "2022", "mlb", "midsummer classic"]
+            },
+            {
+                title: "18-Inning World Series Game",
+                url: "stadium.html",
+                content: "In 2018, Max Muncy hit a walk-off home run at 3:30 AM to end Game 3 of the World Series against the Red Sox. It was the longest World Series game in history at 7 hours and 20 minutes.",
+                keywords: ["18 inning", "world series", "2018", "muncy", "walk off", "longest game"]
+            },
+            // 2025 News
+            {
+                title: "Dodgers Win Back-to-Back World Series",
+                url: "news.html",
+                content: "The Los Angeles Dodgers are back-to-back World Series champions after winning in 2024 and 2025. They are now seeking a historic three-peat in 2026.",
+                keywords: ["news", "world series", "2025", "championship", "three-peat", "back-to-back"]
+            },
+            {
+                title: "Dodgers Hit Record $169M Luxury Tax",
+                url: "news.html",
+                content: "The Dodgers' 2025 payroll reached $417.3 million, resulting in a record $169.4 million luxury tax bill. Their two-year tax total of $272.4 million surpasses the Yankees.",
+                keywords: ["luxury tax", "payroll", "money", "2025", "record", "news"]
+            },
+            {
+                title: "Edwin Díaz Signs 3-Year, $69M Deal",
+                url: "news.html",
+                content: "The Dodgers signed elite closer Edwin Díaz to a 3-year, $69 million contract. Díaz said he chose LA because he's looking to win. Expect the trumpets at Dodger Stadium.",
+                keywords: ["diaz", "edwin", "closer", "signing", "2025", "trumpets", "news"]
+            },
+            {
+                title: "Postseason Shares Worth $484,748",
+                url: "news.html",
+                content: "Dodgers players received $484,747.57 each from the 2025 postseason pool, which totaled nearly $128.2 million after winning the World Series.",
+                keywords: ["postseason", "shares", "money", "bonus", "world series", "news"]
+            },
+            {
+                title: "Tyler Glasnow Trade Rumors",
+                url: "news.html",
+                content: "Tyler Glasnow has come up in trade conversations between the Dodgers and other teams. While a trade is considered a long shot, the Dodgers would not be opposed to moving him.",
+                keywords: ["glasnow", "trade", "rumors", "2025", "pitcher", "news"]
+            },
+            {
+                title: "Michael Siani Claimed Off Waivers",
+                url: "news.html",
+                content: "The Dodgers claimed outfielder Michael Siani off waivers from the Braves. Atlanta designated him for assignment when they signed Mike Yastrzemski.",
+                keywords: ["siani", "outfielder", "waivers", "2025", "news"]
+            },
+            {
+                title: "Best Rotation in Baseball for 2026",
+                url: "news.html",
+                content: "The Dodgers enter 2026 with an elite rotation: Shohei Ohtani, Yoshinobu Yamamoto, Blake Snell, Tyler Glasnow, and Roki Sasaki. Arguably the best starting staff in MLB history.",
+                keywords: ["rotation", "pitching", "ohtani", "yamamoto", "snell", "glasnow", "sasaki", "2026", "news"]
+            },
+            {
+                title: "Dodgers Deferred Obligations Pass $1 Billion",
+                url: "news.html",
+                content: "The Dodgers' commitment to deferred payments has exceeded $1 billion, a creative financial strategy that has helped build back-to-back championship rosters.",
+                keywords: ["deferred", "payments", "money", "billion", "contracts", "news"]
+            },
+            {
+                title: "2025 Season Opens in Tokyo",
+                url: "schedule.html",
+                content: "The Dodgers open the 2025 MLB season in Tokyo, Japan on March 18-19 against the Cubs. Home opener is March 27 vs Padres.",
+                keywords: ["tokyo", "2025", "japan", "schedule", "opening day", "cubs"]
+            },
+            // Marketplace
+            {
+                title: "Dodgers Marketplace",
+                url: "marketplace.html",
+                content: "Shop for official Dodgers merchandise, jerseys, hats, and apparel. Buy tickets to games and find autographed memorabilia and collectibles.",
+                keywords: ["shop", "store", "buy", "merchandise", "merch", "jerseys", "hats", "gear"]
+            },
+            {
+                title: "Dodgers Tickets",
+                url: "marketplace.html",
+                content: "Buy tickets to Dodgers games at Dodger Stadium. Official tickets, StubHub, and SeatGeek options available.",
+                keywords: ["tickets", "buy tickets", "stubhub", "seatgeek", "games"]
+            },
+            {
+                title: "Championship Merchandise",
+                url: "marketplace.html",
+                content: "World Series championship gear to celebrate the Dodgers' back-to-back titles in 2024 and 2025.",
+                keywords: ["championship", "world series", "gear", "merchandise", "champs"]
+            },
+            {
+                title: "Dodgers Autographs & Memorabilia",
+                url: "marketplace.html",
+                content: "Autographed baseballs, photos, trading cards, and collectibles from Dodgers players past and present.",
+                keywords: ["autograph", "memorabilia", "signed", "collectibles", "cards", "trading cards"]
+            },
+            {
+                title: "Dodger Stadium Tours",
+                url: "marketplace.html",
+                content: "Book a tour of Dodger Stadium. Go behind the scenes and visit the dugout, press box, and field.",
+                keywords: ["tour", "stadium tour", "behind the scenes", "visit"]
+            }
+        ];
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            const words = query.toLowerCase().split(/\s+/);
+            let result = text;
+            words.forEach(word => {
+                if (word.length > 2) {
+                    const regex = new RegExp(`(${word})`, 'gi');
+                    result = result.replace(regex, '<mark>$1</mark>');
+                }
+            });
+            return result;
+        }
+
+        function search(query) {
+            if (!query || query.trim() === '') {
+                return [];
+            }
+
+            const queryLower = query.toLowerCase();
+            const queryWords = queryLower.split(/\s+/).filter(w => w.length > 1);
+
+            const results = searchIndex.map(item => {
+                let score = 0;
+
+                // Check title
+                if (item.title.toLowerCase().includes(queryLower)) {
+                    score += 10;
+                }
+                queryWords.forEach(word => {
+                    if (item.title.toLowerCase().includes(word)) {
+                        score += 5;
+                    }
+                });
+
+                // Check content
+                queryWords.forEach(word => {
+                    if (item.content.toLowerCase().includes(word)) {
+                        score += 3;
+                    }
+                });
+
+                // Check keywords
+                item.keywords.forEach(keyword => {
+                    if (queryLower.includes(keyword) || keyword.includes(queryLower)) {
+                        score += 8;
+                    }
+                    queryWords.forEach(word => {
+                        if (keyword.includes(word)) {
+                            score += 4;
+                        }
+                    });
+                });
+
+                return { ...item, score };
+            });
+
+            return results
+                .filter(r => r.score > 0)
+                .sort((a, b) => b.score - a.score);
+        }
+
+        function displayResults(query, results) {
+            const container = document.getElementById('search-results');
+            const loading = document.getElementById('search-loading');
+            const queryText = document.getElementById('query-text');
+
+            loading.style.display = 'none';
+            queryText.textContent = query;
+
+            if (results.length === 0) {
+                container.innerHTML = `
+                    <div class="info-box">
+                        <strong>No results found for "${query}"</strong><br><br>
+                        Try searching for:
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Player names (Ohtani, Betts, Freeman)</li>
+                            <li>Topics (World Series, history, stadium)</li>
+                            <li>Stats (batting, pitching, standings)</li>
+                        </ul>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `<p style="color: #666; margin-bottom: 1rem;">Found ${results.length} result${results.length > 1 ? 's' : ''}</p>`;
+
+            results.forEach(result => {
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'search-result';
+                resultDiv.innerHTML = `
+                    <a href="${result.url}" class="search-result-title">${highlightText(result.title, query)}</a>
+                    <div class="search-result-url">${result.url}</div>
+                    <div class="search-result-snippet">${highlightText(result.content, query)}</div>
+                `;
+                container.appendChild(resultDiv);
+            });
+        }
+
+        function setupExternalLinks(query) {
+            if (!query) return;
+
+            const encodedQuery = encodeURIComponent(query + ' Dodgers');
+            const encodedQueryBase = encodeURIComponent(query);
+
+            // Set up external links
+            document.getElementById('link-mlb').href = `https://www.mlb.com/search?q=${encodedQueryBase}&teamId=119`;
+            document.getElementById('link-espn').href = `https://www.espn.com/search/_/q/${encodedQuery}`;
+            document.getElementById('link-br').href = `https://www.baseball-reference.com/search/search.fcgi?search=${encodedQuery}`;
+            document.getElementById('link-fangraphs').href = `https://www.fangraphs.com/players.aspx?search=${encodedQueryBase}`;
+            document.getElementById('link-twitter').href = `https://twitter.com/search?q=${encodedQuery}`;
+            document.getElementById('link-youtube').href = `https://www.youtube.com/results?search_query=${encodedQuery}`;
+            document.getElementById('link-tiktok').href = `https://www.tiktok.com/search?q=${encodedQuery}`;
+            document.getElementById('link-instagram').href = `https://www.instagram.com/explore/tags/${encodeURIComponent(query.replace(/\s+/g, ''))}dodgers/`;
+
+            // Show the external links section
+            document.getElementById('external-links').style.display = 'block';
+        }
+
+        // Initialize search
+        document.addEventListener('DOMContentLoaded', function() {
+            const query = getQueryParam('q');
+            const searchInput = document.getElementById('search-input');
+
+            if (query) {
+                searchInput.value = query;
+                const results = search(query);
+                displayResults(query, results);
+                setupExternalLinks(query);
+            } else {
+                document.getElementById('search-loading').style.display = 'none';
+                document.getElementById('search-query-display').innerHTML = 'Enter a search term above to find Dodgers information.';
+            }
+        });
+    </script>
+</body>
+</html>

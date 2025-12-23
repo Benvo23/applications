@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - DodgersNet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .shop-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .shop-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .shop-image {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        .shop-image.blue { background: linear-gradient(135deg, #005A9C, #003a6c); }
+        .shop-image.gold { background: linear-gradient(135deg, #d4af37, #f4e4a6); }
+        .shop-image.red { background: linear-gradient(135deg, #EF3E42, #c62828); }
+        .shop-image.gray { background: linear-gradient(135deg, #666, #333); }
+        .shop-content {
+            padding: 1.25rem;
+        }
+        .shop-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .shop-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .shop-btn {
+            display: inline-block;
+            background: var(--dodger-blue);
+            color: white;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+        .shop-btn:hover {
+            background: var(--dodger-red);
+        }
+        .shop-btn.gold {
+            background: linear-gradient(135deg, #d4af37, #b8962e);
+        }
+        .shop-btn.gold:hover {
+            background: linear-gradient(135deg, #c9a227, #a8861e);
+        }
+        .section-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--dodger-blue);
+            margin: 2rem 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .section-title:first-of-type {
+            margin-top: 1rem;
+        }
+        .big-shop-btn {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: linear-gradient(135deg, #005A9C, #003a6c);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0,90,156,0.3);
+        }
+        .big-shop-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,90,156,0.4);
+        }
+        .big-shop-icon {
+            font-size: 3rem;
+        }
+        .big-shop-text {
+            flex: 1;
+        }
+        .big-shop-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.75rem;
+            letter-spacing: 0.02em;
+        }
+        .big-shop-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .big-shop-arrow {
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+        .disclaimer {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            <span class="icon">⚾</span> DodgersNet
+        </a>
+        <form action="search.html" method="GET" class="navbar-search">
+            <input type="text" name="q" placeholder="Search...">
+            <button type="submit">Go</button>
+        </form>
+        <ul class="navbar-links">
+            <li><a href="roster.html">Roster</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="stadium.html">Stadium</a></li>
+            <li><a href="marketplace.html" class="active">Shop</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+        <div class="content-card">
+            <h1>🛒 Dodgers Marketplace</h1>
+            <p>Official gear, tickets, and memorabilia to show your Dodger pride!</p>
+
+            <div class="section-title">👕 Official Merchandise</div>
+            <a href="https://www.mlbshop.com/los-angeles-dodgers/t-25999800+z-9904333-3863247963" target="_blank" class="big-shop-btn">
+                <div class="big-shop-icon">🧢</div>
+                <div class="big-shop-text">
+                    <div class="big-shop-title">Official MLB Shop</div>
+                    <div class="big-shop-desc">Jerseys, hats, championship gear, and more!</div>
+                </div>
+                <div class="big-shop-arrow">→</div>
+            </a>
+
+            <div class="section-title">🎟️ Tickets</div>
+            <div class="shop-grid">
+                <div class="shop-card">
+                    <div class="shop-image blue">🏟️</div>
+                    <div class="shop-content">
+                        <div class="shop-title">Official Dodgers Tickets</div>
+                        <div class="shop-desc">Buy tickets directly from the Dodgers. Best prices, guaranteed authentic.</div>
+                        <a href="https://www.mlb.com/dodgers/tickets" target="_blank" class="shop-btn">Buy Tickets</a>
+                    </div>
+                </div>
+                <div class="shop-card">
+                    <div class="shop-image gray">🎫</div>
+                    <div class="shop-content">
+                        <div class="shop-title">StubHub</div>
+                        <div class="shop-desc">Resale tickets for all games. Great for sold-out games and premium seats.</div>
+                        <a href="https://www.stubhub.com/los-angeles-dodgers-tickets" target="_blank" class="shop-btn">Browse StubHub</a>
+                    </div>
+                </div>
+                <div class="shop-card">
+                    <div class="shop-image gray">🎟️</div>
+                    <div class="shop-content">
+                        <div class="shop-title">SeatGeek</div>
+                        <div class="shop-desc">Compare ticket prices across multiple sellers. Find the best deals.</div>
+                        <a href="https://seatgeek.com/los-angeles-dodgers-tickets" target="_blank" class="shop-btn">Browse SeatGeek</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">⭐ Memorabilia & Collectibles</div>
+            <div class="shop-grid">
+                <div class="shop-card">
+                    <div class="shop-image red">✍️</div>
+                    <div class="shop-content">
+                        <div class="shop-title">Autographed Items</div>
+                        <div class="shop-desc">Signed baseballs, photos, and equipment from Dodgers legends and current stars.</div>
+                        <a href="https://www.ebay.com/sch/i.html?_nkw=los+angeles+dodgers+autographed" target="_blank" class="shop-btn">Shop eBay</a>
+                    </div>
+                </div>
+                <div class="shop-card">
+                    <div class="shop-image gold">🃏</div>
+                    <div class="shop-content">
+                        <div class="shop-title">Trading Cards</div>
+                        <div class="shop-desc">Baseball cards featuring Ohtani, Betts, rookie cards, vintage, and more.</div>
+                        <a href="https://www.ebay.com/sch/i.html?_nkw=los+angeles+dodgers+baseball+cards" target="_blank" class="shop-btn">Browse eBay</a>
+                    </div>
+                </div>
+                <div class="shop-card">
+                    <div class="shop-image blue">🖼️</div>
+                    <div class="shop-content">
+                        <div class="shop-title">Photos & Wall Art</div>
+                        <div class="shop-desc">Framed photos, canvas prints, and posters of iconic Dodgers moments.</div>
+                        <a href="https://www.amazon.com/s?k=los+angeles+dodgers+wall+art" target="_blank" class="shop-btn">Shop Amazon</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">🎁 Dodger Stadium</div>
+            <div class="shop-grid">
+                <div class="shop-card">
+                    <div class="shop-image blue">🏟️</div>
+                    <div class="shop-content">
+                        <div class="shop-title">Stadium Tours</div>
+                        <div class="shop-desc">Go behind the scenes at Dodger Stadium. Visit the dugout, press box, and more!</div>
+                        <a href="https://www.mlb.com/dodgers/ballpark/tours" target="_blank" class="shop-btn">Book Tour</a>
+                    </div>
+                </div>
+                <div class="shop-card">
+                    <div class="shop-image red">🌭</div>
+                    <div class="shop-content">
+                        <div class="shop-title">Dodger Dogs & Food</div>
+                        <div class="shop-desc">The famous Dodger Dog! Check out all the food options at the stadium.</div>
+                        <a href="https://www.mlb.com/dodgers/ballpark/information" target="_blank" class="shop-btn">View Menu</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                <strong>Disclaimer:</strong> DodgersNet is a fan site and is not affiliated with the Los Angeles Dodgers or Major League Baseball. Links lead to third-party websites. Shop responsibly!
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        DodgersNet &copy; 2025 | <a href="index.html">Home</a>
+    </footer>
+</body>
+</html>

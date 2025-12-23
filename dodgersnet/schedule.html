@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Schedule - DodgersNet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .calendar-nav button {
+            background: var(--dodger-blue);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .calendar-nav button:hover:not(:disabled) {
+            background: var(--dodger-red);
+            transform: scale(1.05);
+        }
+        .calendar-nav button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .month-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dodger-blue);
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            margin: 1rem 0;
+        }
+        .calendar-header {
+            background: var(--dodger-blue);
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 6px;
+        }
+        .calendar-day {
+            background: #f5f5f5;
+            min-height: 110px;
+            padding: 0.75rem;
+            border-radius: 8px;
+            position: relative;
+            transition: all 0.2s;
+        }
+        .calendar-day:hover:not(.empty) {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .calendar-day.empty {
+            background: #e8e8e8;
+            opacity: 0.4;
+        }
+        .calendar-day .day-number {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .calendar-day.home-game {
+            background: linear-gradient(135deg, #e8f4fd 0%, #cce5ff 100%);
+            border-left: 4px solid var(--dodger-blue);
+        }
+        .calendar-day.away-game {
+            background: linear-gradient(135deg, #fff8e8 0%, #ffefcc 100%);
+            border-left: 4px solid #f5a623;
+        }
+        .calendar-day.special-game {
+            background: linear-gradient(135deg, #ffe8e8 0%, #ffcccc 100%);
+            border-left: 4px solid var(--dodger-red);
+        }
+        .calendar-day.opening-day {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe066 100%);
+            border-left: 4px solid gold;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+        }
+        .calendar-day.off-day {
+            background: #f0f0f0;
+        }
+        .calendar-day.off-day .day-number {
+            color: #999;
+        }
+        .calendar-day .game-info {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+        .calendar-day .opponent {
+            font-weight: 700;
+            color: var(--dodger-blue);
+        }
+        .calendar-day .location {
+            color: #666;
+            font-size: 0.75rem;
+        }
+        .calendar-day .time {
+            color: #888;
+            font-size: 0.7rem;
+            margin-top: 0.25rem;
+        }
+        .calendar-day .badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--dodger-red);
+            margin-top: 0.25rem;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            justify-content: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .legend-color.home { background: #cce5ff; border-left: 4px solid var(--dodger-blue); }
+        .legend-color.away { background: #ffefcc; border-left: 4px solid #f5a623; }
+        .legend-color.special { background: #ffcccc; border-left: 4px solid var(--dodger-red); }
+        .legend-color.opening { background: #ffe066; border-left: 4px solid gold; }
+        .month-select {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        .month-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--dodger-blue);
+            background: white;
+            color: var(--dodger-blue);
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+        .month-btn:hover, .month-btn.active {
+            background: var(--dodger-blue);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            <span class="icon">⚾</span> DodgersNet
+        </a>
+        <form action="search.html" method="GET" class="navbar-search">
+            <input type="text" name="q" placeholder="Search...">
+            <button type="submit">Go</button>
+        </form>
+        <ul class="navbar-links">
+            <li><a href="roster.html">Roster</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="schedule.html" class="active">Schedule</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="stadium.html">Stadium</a></li>
+            <li><a href="trivia.html">Trivia</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+        <div class="content-card">
+            <h1>📅 2026 Dodgers Schedule</h1>
+            <p>Spring Training & Regular Season schedule for the back-to-back World Series Champions!</p>
+
+            <div class="info-box highlight" style="margin: 1rem 0;">
+                <strong>🏆 Three-Peat Quest Begins!</strong><br>
+                The Dodgers open Spring Training on February 21 and Opening Day is March 26 vs the Diamondbacks.
+            </div>
+
+            <div class="legend">
+                <div class="legend-item"><div class="legend-color home"></div> Home</div>
+                <div class="legend-item"><div class="legend-color away"></div> Away</div>
+                <div class="legend-item"><div class="legend-color special"></div> Special Event</div>
+                <div class="legend-item"><div class="legend-color opening"></div> Opening Day</div>
+            </div>
+
+            <!-- Month Quick Select -->
+            <div class="month-select" id="month-select"></div>
+
+            <!-- Calendar Navigation -->
+            <div class="calendar-nav">
+                <button id="prev-btn" onclick="changeMonth(-1)">← Previous</button>
+                <h2 class="month-title" id="month-title">February 2026</h2>
+                <button id="next-btn" onclick="changeMonth(1)">Next →</button>
+            </div>
+
+            <!-- Calendar Grid -->
+            <div class="calendar" id="calendar"></div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <strong>Spring Training:</strong> Camelback Ranch, 10710 W Camelback Rd, Phoenix, AZ<br>
+                <strong>Regular Season:</strong> Dodger Stadium, 1000 Vin Scully Avenue, Los Angeles, CA<br>
+                <strong>TV:</strong> SportsNet LA, ESPN, FOX, TBS (postseason)
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        DodgersNet &copy; 2026 | <a href="index.html">Home</a> | Schedule from <a href="https://www.mlb.com/dodgers/schedule">MLB.com</a>
+    </footer>
+
+    <script>
+        // Game data for 2026 season
+        const games = {
+            // February 2026 - Spring Training
+            '2026-02-21': { opponent: '@ Angels', location: 'Tempe, AZ', type: 'away', badge: 'ST OPENER' },
+            '2026-02-22': { opponent: '@ Padres', location: 'Peoria, AZ', type: 'away' },
+            '2026-02-23': { opponent: 'vs Mariners', location: 'Camelback Ranch', type: 'home', badge: 'HOME OPENER' },
+            '2026-02-25': { opponent: 'vs Reds', location: 'Camelback Ranch', type: 'home' },
+            '2026-02-26': { opponent: '@ Cubs', location: 'Mesa, AZ', type: 'away' },
+            '2026-02-27': { opponent: 'vs Giants', location: 'Camelback Ranch', type: 'home' },
+            '2026-02-28': { opponent: 'vs Cubs', location: 'Camelback Ranch', type: 'home' },
+
+            // March 2026 - Spring Training + Opening Day
+            '2026-03-01': { opponent: 'vs Angels', location: 'Camelback Ranch', type: 'home' },
+            '2026-03-02': { opponent: '@ Brewers', location: 'Phoenix, AZ', type: 'away' },
+            '2026-03-03': { opponent: 'vs White Sox', location: 'Camelback Ranch', type: 'home' },
+            '2026-03-04': { opponent: 'vs Mexico', location: 'Camelback Ranch', type: 'special', badge: 'WBC EXHIBITION 🇲🇽' },
+            '2026-03-05': { opponent: '@ Rangers', location: 'Surprise, AZ', type: 'away' },
+            '2026-03-06': { opponent: 'vs Royals', location: 'Camelback Ranch', type: 'home' },
+            '2026-03-07': { opponent: 'vs Rockies', location: 'Camelback Ranch', type: 'home' },
+            '2026-03-08': { opponent: '@ Guardians', location: 'Goodyear, AZ', type: 'away' },
+            '2026-03-09': { opponent: 'vs D-backs', location: 'Camelback Ranch', type: 'home' },
+            '2026-03-10': { opponent: '@ Athletics', location: 'Mesa, AZ', type: 'away' },
+            '2026-03-12': { opponent: 'vs Padres', location: 'Camelback Ranch', type: 'home' },
+            '2026-03-13': { opponent: '@ Reds', location: 'Goodyear, AZ', type: 'away' },
+            '2026-03-14': { opponent: '@ White Sox', location: 'Camelback Ranch', type: 'away' },
+            '2026-03-15': { opponent: 'vs Rangers', location: 'Camelback Ranch', type: 'home' },
+            '2026-03-16': { opponent: '@ Giants', location: 'Scottsdale, AZ', type: 'away' },
+            '2026-03-17': { opponent: 'vs Brewers', location: 'Camelback Ranch', type: 'home' },
+            '2026-03-18': { opponent: '@ D-backs', location: 'Scottsdale, AZ', type: 'away' },
+            '2026-03-20': { opponent: 'vs Padres', location: 'Camelback Ranch', type: 'home' },
+            '2026-03-21': { opponent: 'vs Athletics', location: 'Camelback Ranch', type: 'home', badge: 'LAST AZ GAME' },
+            '2026-03-22': { opponent: '@ Angels', location: 'Angel Stadium', type: 'away', badge: 'FREEWAY SERIES' },
+            '2026-03-23': { opponent: 'vs Angels', location: 'Dodger Stadium', type: 'home', badge: 'FREEWAY SERIES' },
+            '2026-03-24': { opponent: 'vs Angels', location: 'Dodger Stadium', type: 'home', badge: 'FREEWAY SERIES' },
+            '2026-03-26': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'opening', badge: '🏆 OPENING DAY' },
+            '2026-03-27': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'home' },
+            '2026-03-28': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'home' },
+            '2026-03-29': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'home' },
+            '2026-03-31': { opponent: '@ Rockies', location: 'Coors Field', type: 'away' },
+
+            // April 2026
+            '2026-04-01': { opponent: '@ Rockies', location: 'Coors Field', type: 'away' },
+            '2026-04-02': { opponent: '@ Rockies', location: 'Coors Field', type: 'away' },
+            '2026-04-03': { opponent: '@ Giants', location: 'Oracle Park', type: 'away' },
+            '2026-04-04': { opponent: '@ Giants', location: 'Oracle Park', type: 'away' },
+            '2026-04-05': { opponent: '@ Giants', location: 'Oracle Park', type: 'away' },
+            '2026-04-07': { opponent: 'vs Mets', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-08': { opponent: 'vs Mets', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-09': { opponent: 'vs Mets', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-10': { opponent: 'vs Cubs', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-11': { opponent: 'vs Cubs', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-12': { opponent: 'vs Cubs', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-14': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-04-15': { opponent: '@ Padres', location: 'Petco Park', type: 'away', badge: 'JACKIE ROBINSON DAY' },
+            '2026-04-16': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-04-17': { opponent: '@ D-backs', location: 'Chase Field', type: 'away' },
+            '2026-04-18': { opponent: '@ D-backs', location: 'Chase Field', type: 'away' },
+            '2026-04-19': { opponent: '@ D-backs', location: 'Chase Field', type: 'away' },
+            '2026-04-21': { opponent: 'vs Phillies', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-22': { opponent: 'vs Phillies', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-23': { opponent: 'vs Phillies', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-24': { opponent: 'vs Giants', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-25': { opponent: 'vs Giants', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-26': { opponent: 'vs Giants', location: 'Dodger Stadium', type: 'home' },
+            '2026-04-28': { opponent: '@ Braves', location: 'Truist Park', type: 'away' },
+            '2026-04-29': { opponent: '@ Braves', location: 'Truist Park', type: 'away' },
+            '2026-04-30': { opponent: '@ Braves', location: 'Truist Park', type: 'away' },
+
+            // May 2026
+            '2026-05-01': { opponent: '@ Marlins', location: 'loanDepot Park', type: 'away' },
+            '2026-05-02': { opponent: '@ Marlins', location: 'loanDepot Park', type: 'away' },
+            '2026-05-03': { opponent: '@ Marlins', location: 'loanDepot Park', type: 'away' },
+            '2026-05-05': { opponent: 'vs Padres', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-06': { opponent: 'vs Padres', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-07': { opponent: 'vs Padres', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-08': { opponent: 'vs Cardinals', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-09': { opponent: 'vs Cardinals', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-10': { opponent: 'vs Cardinals', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-12': { opponent: '@ Yankees', location: 'Yankee Stadium', type: 'away' },
+            '2026-05-13': { opponent: '@ Yankees', location: 'Yankee Stadium', type: 'away' },
+            '2026-05-14': { opponent: '@ Yankees', location: 'Yankee Stadium', type: 'away' },
+            '2026-05-15': { opponent: '@ Red Sox', location: 'Fenway Park', type: 'away' },
+            '2026-05-16': { opponent: '@ Red Sox', location: 'Fenway Park', type: 'away' },
+            '2026-05-17': { opponent: '@ Red Sox', location: 'Fenway Park', type: 'away' },
+            '2026-05-19': { opponent: 'vs Rockies', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-20': { opponent: 'vs Rockies', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-21': { opponent: 'vs Rockies', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-22': { opponent: 'vs Astros', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-23': { opponent: 'vs Astros', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-24': { opponent: 'vs Astros', location: 'Dodger Stadium', type: 'home' },
+            '2026-05-26': { opponent: '@ Cubs', location: 'Wrigley Field', type: 'away' },
+            '2026-05-27': { opponent: '@ Cubs', location: 'Wrigley Field', type: 'away' },
+            '2026-05-28': { opponent: '@ Cubs', location: 'Wrigley Field', type: 'away' },
+            '2026-05-29': { opponent: '@ Brewers', location: 'American Family Field', type: 'away' },
+            '2026-05-30': { opponent: '@ Brewers', location: 'American Family Field', type: 'away' },
+            '2026-05-31': { opponent: '@ Brewers', location: 'American Family Field', type: 'away' },
+
+            // June 2026
+            '2026-06-02': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-03': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-04': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-05': { opponent: 'vs Pirates', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-06': { opponent: 'vs Pirates', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-07': { opponent: 'vs Pirates', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-09': { opponent: '@ Angels', location: 'Angel Stadium', type: 'away', badge: 'FREEWAY SERIES' },
+            '2026-06-10': { opponent: '@ Angels', location: 'Angel Stadium', type: 'away', badge: 'FREEWAY SERIES' },
+            '2026-06-12': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-06-13': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-06-14': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-06-16': { opponent: 'vs Rangers', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-17': { opponent: 'vs Rangers', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-18': { opponent: 'vs Rangers', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-19': { opponent: 'vs Reds', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-20': { opponent: 'vs Reds', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-21': { opponent: 'vs Reds', location: 'Dodger Stadium', type: 'home' },
+            '2026-06-23': { opponent: '@ Rockies', location: 'Coors Field', type: 'away' },
+            '2026-06-24': { opponent: '@ Rockies', location: 'Coors Field', type: 'away' },
+            '2026-06-25': { opponent: '@ Rockies', location: 'Coors Field', type: 'away' },
+            '2026-06-26': { opponent: '@ Giants', location: 'Oracle Park', type: 'away' },
+            '2026-06-27': { opponent: '@ Giants', location: 'Oracle Park', type: 'away' },
+            '2026-06-28': { opponent: '@ Giants', location: 'Oracle Park', type: 'away' },
+            '2026-06-30': { opponent: 'vs Nationals', location: 'Dodger Stadium', type: 'home' },
+
+            // July 2026
+            '2026-07-01': { opponent: 'vs Nationals', location: 'Dodger Stadium', type: 'home' },
+            '2026-07-02': { opponent: 'vs Nationals', location: 'Dodger Stadium', type: 'home' },
+            '2026-07-03': { opponent: 'vs Angels', location: 'Dodger Stadium', type: 'home', badge: 'FREEWAY SERIES' },
+            '2026-07-04': { opponent: 'vs Angels', location: 'Dodger Stadium', type: 'home', badge: '🎆 JULY 4TH' },
+            '2026-07-05': { opponent: 'vs Angels', location: 'Dodger Stadium', type: 'home', badge: 'FREEWAY SERIES' },
+            '2026-07-07': { opponent: '@ D-backs', location: 'Chase Field', type: 'away' },
+            '2026-07-08': { opponent: '@ D-backs', location: 'Chase Field', type: 'away' },
+            '2026-07-09': { opponent: '@ D-backs', location: 'Chase Field', type: 'away' },
+            '2026-07-10': { opponent: '@ Astros', location: 'Minute Maid Park', type: 'away' },
+            '2026-07-11': { opponent: '@ Astros', location: 'Minute Maid Park', type: 'away' },
+            '2026-07-12': { opponent: '@ Astros', location: 'Minute Maid Park', type: 'away' },
+            '2026-07-14': { opponent: 'ALL-STAR BREAK', location: 'Philadelphia', type: 'special', badge: '⭐ ALL-STAR GAME' },
+            '2026-07-17': { opponent: 'vs Padres', location: 'Dodger Stadium', type: 'home' },
+            '2026-07-18': { opponent: 'vs Padres', location: 'Dodger Stadium', type: 'home' },
+            '2026-07-19': { opponent: 'vs Padres', location: 'Dodger Stadium', type: 'home' },
+            '2026-07-21': { opponent: 'vs Giants', location: 'Dodger Stadium', type: 'home' },
+            '2026-07-22': { opponent: 'vs Giants', location: 'Dodger Stadium', type: 'home' },
+            '2026-07-23': { opponent: 'vs Giants', location: 'Dodger Stadium', type: 'home' },
+            '2026-07-24': { opponent: '@ Mets', location: 'Citi Field', type: 'away' },
+            '2026-07-25': { opponent: '@ Mets', location: 'Citi Field', type: 'away' },
+            '2026-07-26': { opponent: '@ Mets', location: 'Citi Field', type: 'away' },
+            '2026-07-28': { opponent: '@ Phillies', location: 'Citizens Bank Park', type: 'away' },
+            '2026-07-29': { opponent: '@ Phillies', location: 'Citizens Bank Park', type: 'away' },
+            '2026-07-30': { opponent: '@ Phillies', location: 'Citizens Bank Park', type: 'away' },
+            '2026-07-31': { opponent: '@ Nationals', location: 'Nationals Park', type: 'away' },
+
+            // August 2026
+            '2026-08-01': { opponent: '@ Nationals', location: 'Nationals Park', type: 'away' },
+            '2026-08-02': { opponent: '@ Nationals', location: 'Nationals Park', type: 'away' },
+            '2026-08-04': { opponent: 'vs Braves', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-05': { opponent: 'vs Braves', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-06': { opponent: 'vs Braves', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-07': { opponent: 'vs Marlins', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-08': { opponent: 'vs Marlins', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-09': { opponent: 'vs Marlins', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-11': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-08-12': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-08-13': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-08-14': { opponent: '@ Mariners', location: 'T-Mobile Park', type: 'away' },
+            '2026-08-15': { opponent: '@ Mariners', location: 'T-Mobile Park', type: 'away' },
+            '2026-08-16': { opponent: '@ Mariners', location: 'T-Mobile Park', type: 'away' },
+            '2026-08-18': { opponent: 'vs Rockies', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-19': { opponent: 'vs Rockies', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-20': { opponent: 'vs Rockies', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-21': { opponent: 'vs Twins', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-22': { opponent: 'vs Twins', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-23': { opponent: 'vs Twins', location: 'Dodger Stadium', type: 'home' },
+            '2026-08-25': { opponent: '@ Cardinals', location: 'Busch Stadium', type: 'away' },
+            '2026-08-26': { opponent: '@ Cardinals', location: 'Busch Stadium', type: 'away' },
+            '2026-08-27': { opponent: '@ Cardinals', location: 'Busch Stadium', type: 'away' },
+            '2026-08-28': { opponent: '@ Pirates', location: 'PNC Park', type: 'away' },
+            '2026-08-29': { opponent: '@ Pirates', location: 'PNC Park', type: 'away' },
+            '2026-08-30': { opponent: '@ Pirates', location: 'PNC Park', type: 'away' },
+
+            // September 2026
+            '2026-09-01': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-02': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-03': { opponent: 'vs D-backs', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-04': { opponent: 'vs Giants', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-05': { opponent: 'vs Giants', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-06': { opponent: 'vs Giants', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-08': { opponent: '@ Rockies', location: 'Coors Field', type: 'away' },
+            '2026-09-09': { opponent: '@ Rockies', location: 'Coors Field', type: 'away' },
+            '2026-09-10': { opponent: '@ Rockies', location: 'Coors Field', type: 'away' },
+            '2026-09-11': { opponent: '@ D-backs', location: 'Chase Field', type: 'away' },
+            '2026-09-12': { opponent: '@ D-backs', location: 'Chase Field', type: 'away' },
+            '2026-09-13': { opponent: '@ D-backs', location: 'Chase Field', type: 'away' },
+            '2026-09-15': { opponent: 'vs Padres', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-16': { opponent: 'vs Padres', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-17': { opponent: 'vs Padres', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-18': { opponent: 'vs Athletics', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-19': { opponent: 'vs Athletics', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-20': { opponent: 'vs Athletics', location: 'Dodger Stadium', type: 'home' },
+            '2026-09-22': { opponent: '@ Giants', location: 'Oracle Park', type: 'away' },
+            '2026-09-23': { opponent: '@ Giants', location: 'Oracle Park', type: 'away' },
+            '2026-09-24': { opponent: '@ Giants', location: 'Oracle Park', type: 'away' },
+            '2026-09-25': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-09-26': { opponent: '@ Padres', location: 'Petco Park', type: 'away' },
+            '2026-09-27': { opponent: '@ Padres', location: 'Petco Park', type: 'away', badge: 'REGULAR SEASON ENDS' },
+
+            // October 2026 - Postseason
+            '2026-10-01': { opponent: 'POSTSEASON', location: 'TBD', type: 'special', badge: '🏆 PLAYOFFS BEGIN' },
+
+            // November 2026 - Offseason
+            '2026-11-01': { opponent: 'OFFSEASON', location: '', type: 'off', badge: 'World Series ends' },
+
+            // December 2026 - Offseason
+            '2026-12-25': { opponent: 'Happy Holidays!', location: '', type: 'special', badge: '🎄' },
+        };
+
+        const months = [
+            { name: 'February', year: 2026, month: 1 },
+            { name: 'March', year: 2026, month: 2 },
+            { name: 'April', year: 2026, month: 3 },
+            { name: 'May', year: 2026, month: 4 },
+            { name: 'June', year: 2026, month: 5 },
+            { name: 'July', year: 2026, month: 6 },
+            { name: 'August', year: 2026, month: 7 },
+            { name: 'September', year: 2026, month: 8 },
+            { name: 'October', year: 2026, month: 9 },
+            { name: 'November', year: 2026, month: 10 },
+            { name: 'December', year: 2026, month: 11 }
+        ];
+
+        let currentMonthIndex = 0;
+
+        function renderMonthSelect() {
+            const container = document.getElementById('month-select');
+            container.innerHTML = months.map((m, i) =>
+                `<button class="month-btn ${i === currentMonthIndex ? 'active' : ''}" onclick="goToMonth(${i})">${m.name.substring(0, 3)}</button>`
+            ).join('');
+        }
+
+        function goToMonth(index) {
+            currentMonthIndex = index;
+            renderCalendar();
+            renderMonthSelect();
+            updateNavButtons();
+        }
+
+        function changeMonth(delta) {
+            currentMonthIndex += delta;
+            if (currentMonthIndex < 0) currentMonthIndex = 0;
+            if (currentMonthIndex >= months.length) currentMonthIndex = months.length - 1;
+            renderCalendar();
+            renderMonthSelect();
+            updateNavButtons();
+        }
+
+        function updateNavButtons() {
+            document.getElementById('prev-btn').disabled = currentMonthIndex === 0;
+            document.getElementById('next-btn').disabled = currentMonthIndex === months.length - 1;
+        }
+
+        function renderCalendar() {
+            const month = months[currentMonthIndex];
+            const calendar = document.getElementById('calendar');
+            const title = document.getElementById('month-title');
+
+            title.textContent = `${month.name} ${month.year}`;
+
+            // Get first day of month and number of days
+            const firstDay = new Date(month.year, month.month, 1).getDay();
+            const daysInMonth = new Date(month.year, month.month + 1, 0).getDate();
+
+            let html = `
+                <div class="calendar-header">Sun</div>
+                <div class="calendar-header">Mon</div>
+                <div class="calendar-header">Tue</div>
+                <div class="calendar-header">Wed</div>
+                <div class="calendar-header">Thu</div>
+                <div class="calendar-header">Fri</div>
+                <div class="calendar-header">Sat</div>
+            `;
+
+            // Empty cells before first day
+            for (let i = 0; i < firstDay; i++) {
+                html += '<div class="calendar-day empty"></div>';
+            }
+
+            // Days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${month.year}-${String(month.month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const game = games[dateStr];
+
+                let dayClass = 'calendar-day';
+                let gameHtml = '';
+
+                if (game) {
+                    if (game.type === 'opening') {
+                        dayClass += ' opening-day';
+                    } else if (game.type === 'home') {
+                        dayClass += ' home-game';
+                    } else if (game.type === 'away') {
+                        dayClass += ' away-game';
+                    } else if (game.type === 'special') {
+                        dayClass += ' special-game';
+                    } else if (game.type === 'off') {
+                        dayClass += ' off-day';
+                    }
+
+                    gameHtml = `
+                        <div class="game-info">
+                            <div class="opponent">${game.opponent}</div>
+                            ${game.location ? `<div class="location">${game.location}</div>` : ''}
+                            ${game.badge ? `<div class="badge">${game.badge}</div>` : ''}
+                        </div>
+                    `;
+                }
+
+                html += `
+                    <div class="${dayClass}">
+                        <div class="day-number">${day}</div>
+                        ${gameHtml}
+                    </div>
+                `;
+            }
+
+            // Empty cells after last day
+            const totalCells = firstDay + daysInMonth;
+            const remainingCells = (7 - (totalCells % 7)) % 7;
+            for (let i = 0; i < remainingCells; i++) {
+                html += '<div class="calendar-day empty"></div>';
+            }
+
+            calendar.innerHTML = html;
+        }
+
+        // Initialize
+        renderMonthSelect();
+        renderCalendar();
+        updateNavButtons();
+    </script>
+</body>
+</html>
