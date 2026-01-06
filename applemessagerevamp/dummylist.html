@@ -1,0 +1,3942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .iphone-frame {
+            width: 390px;
+            height: 844px;
+            background: #000;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 0 3px #1a1a1a, 0 0 0 6px #0d0d0d, 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 100;
+        }
+
+        .status-bar {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .status-time {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-icons svg {
+            height: 12px;
+            fill: #fff;
+        }
+
+        .battery {
+            width: 25px;
+            height: 12px;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 1px;
+        }
+
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -3px;
+            width: 2px;
+            height: 6px;
+            background: #fff;
+            border-radius: 0 1px 1px 0;
+        }
+
+        .battery-fill {
+            width: 80%;
+            height: 100%;
+            background: #f8c832;
+            border-radius: 1px;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            padding: 10px 20px 0;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .pill-btn {
+            background: #2c2c2e;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-btn {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .filter-btn {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+        }
+
+        .filter-btn svg {
+            width: 20px;
+            height: 14px;
+        }
+
+        .filter-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .filter-line {
+            height: 2.5px;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        .filter-line:nth-child(1) { width: 20px; }
+        .filter-line:nth-child(2) { width: 14px; }
+        .filter-line:nth-child(3) { width: 8px; }
+
+        .header-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .header-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .delete-all-btn {
+            background: rgba(255, 59, 48, 0.15);
+            border: none;
+            color: #ff3b30;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 18px;
+            display: none;
+            transition: all 0.2s ease;
+        }
+
+        .delete-all-btn:hover {
+            background: rgba(255, 59, 48, 0.25);
+        }
+
+        .delete-all-btn:active {
+            background: rgba(255, 59, 48, 0.35);
+            transform: scale(0.96);
+        }
+
+        .delete-all-btn.visible {
+            display: block;
+        }
+
+        .recover-all-btn {
+            background: rgba(52, 199, 89, 0.15);
+            border: none;
+            color: #34c759;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 18px;
+            display: none;
+            transition: all 0.2s ease;
+        }
+
+        .recover-all-btn:hover {
+            background: rgba(52, 199, 89, 0.25);
+        }
+
+        .recover-all-btn:active {
+            background: rgba(52, 199, 89, 0.35);
+            transform: scale(0.96);
+        }
+
+        .recover-all-btn.visible {
+            display: block;
+        }
+
+        .refresh-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            z-index: 100;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(3px);
+        }
+
+        .refresh-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Dark/Light Mode Toggle */
+        .theme-toggle-container {
+            position: fixed;
+            top: 70px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .theme-toggle-label {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border-radius: 50%;
+            top: 1px;
+            left: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .theme-toggle.light-mode {
+            background: #007AFF;
+        }
+
+        .theme-toggle.light-mode::before {
+            left: 25px;
+        }
+
+        .theme-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-icon {
+            font-size: 16px;
+        }
+
+        /* Light Mode Styles */
+        body.light-mode {
+            background: #f2f2f7;
+        }
+
+        body.light-mode .iphone-frame {
+            background: #fff;
+            box-shadow: 0 0 0 3px #e5e5ea, 0 0 0 6px #d1d1d6, 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        body.light-mode .screen {
+            background: #fff;
+        }
+
+        body.light-mode .header-title {
+            color: #000;
+        }
+
+        body.light-mode .status-time {
+            color: #000;
+        }
+
+        body.light-mode .contact-name {
+            color: #000;
+        }
+
+        body.light-mode .contact-item {
+            background: #fff;
+        }
+
+        body.light-mode .contact-item:active {
+            background: #e5e5ea;
+        }
+
+        body.light-mode .message-preview {
+            color: #8e8e93;
+        }
+
+        body.light-mode .bottom-bar {
+            background: #f2f2f7;
+        }
+
+        body.light-mode .compose-btn {
+            background: #e5e5ea;
+        }
+
+        body.light-mode .compose-btn svg {
+            stroke: #000;
+        }
+
+        /* Search highlight */
+        .search-highlight {
+            background: #007AFF;
+            color: #fff;
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+
+        body.light-mode .search-highlight {
+            background: #007AFF;
+            color: #fff;
+        }
+
+        body.light-mode .search-bar {
+            background: #e5e5ea;
+        }
+
+        body.light-mode .search-bar input {
+            color: #000;
+        }
+
+        body.light-mode .profile-card {
+            background: #e5e5ea;
+        }
+
+        body.light-mode .profile-name {
+            color: #000;
+        }
+
+        body.light-mode .pill-btn {
+            background: #e5e5ea;
+        }
+
+        body.light-mode .edit-btn {
+            color: #000;
+        }
+
+        body.light-mode .filter-line {
+            background: #000;
+        }
+
+        body.light-mode .external-back-btn,
+        body.light-mode .refresh-btn {
+            background: rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.2);
+            color: #000;
+        }
+
+        body.light-mode .external-back-btn:hover,
+        body.light-mode .refresh-btn:hover {
+            background: rgba(0,0,0,0.15);
+        }
+
+        body.light-mode .theme-toggle-label {
+            color: #000;
+        }
+
+        body.light-mode .theme-toggle {
+            background: rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+
+        body.light-mode .filter-tabs {
+            background: #e5e5ea;
+        }
+
+        body.light-mode .filter-tab {
+            color: #8e8e93;
+        }
+
+        body.light-mode .filter-tab.active {
+            background: #fff;
+            color: #000;
+        }
+
+        body.light-mode .status-icons svg {
+            fill: #000;
+        }
+
+        body.light-mode .battery {
+            border-color: #000;
+        }
+
+        body.light-mode .battery::after {
+            background: #000;
+        }
+
+        body.light-mode .battery-fill {
+            background: #000;
+        }
+
+        body.light-mode .search-bar svg {
+            fill: #8e8e93;
+        }
+
+        body.light-mode .dynamic-island {
+            background: #000;
+        }
+
+        body.light-mode .stats-modal {
+            background: #fff;
+        }
+
+        body.light-mode .stats-header {
+            border-bottom-color: #e5e5ea;
+        }
+
+        body.light-mode .stats-close-btn {
+            background: #e5e5ea;
+        }
+
+        body.light-mode .stats-title {
+            color: #000;
+        }
+
+        body.light-mode .overall-stat-card {
+            background: linear-gradient(135deg, #f2f2f7 0%, #e5e5ea 100%);
+        }
+
+        body.light-mode .contact-stat-item {
+            background: #f2f2f7;
+        }
+
+        body.light-mode .contact-stat-name {
+            color: #000;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: #8e8e93;
+            margin-bottom: 12px;
+        }
+
+        .profile-card {
+            background: #1c1c1e;
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            margin: 0 20px 15px;
+            cursor: pointer;
+        }
+
+        .profile-card .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 12px;
+            background: linear-gradient(135deg, #5ac8fa, #007AFF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .profile-subtitle {
+            font-size: 14px;
+            color: #007AFF;
+        }
+
+        .profile-card .chevron {
+            width: 8px;
+            height: 14px;
+            stroke: #48484a;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .conversations {
+            padding: 0;
+        }
+
+        .conversation-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .conversation-item:active {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .conversation-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 85px;
+            right: 20px;
+            height: 0.5px;
+            background: #38383a;
+        }
+
+        .unread-dot {
+            width: 10px;
+            height: 10px;
+            background: #007AFF;
+            border-radius: 50%;
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 500;
+            color: #fff;
+            position: relative;
+        }
+
+        .avatar.gradient-1, .pinned-avatar.gradient-1, .avatar-gradient-1 { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
+        .avatar.gradient-2, .pinned-avatar.gradient-2, .avatar-gradient-2 { background: linear-gradient(135deg, #007AFF, #5856D6); }
+        .avatar.gradient-3, .pinned-avatar.gradient-3, .avatar-gradient-3 { background: linear-gradient(135deg, #34c759, #30d158); }
+        .avatar.gradient-4, .pinned-avatar.gradient-4, .avatar-gradient-4 { background: linear-gradient(135deg, #ff9500, #ff9f0a); }
+        .avatar.gradient-5, .pinned-avatar.gradient-5, .avatar-gradient-5 { background: linear-gradient(135deg, #af52de, #bf5af2); }
+        .avatar.gradient-6, .pinned-avatar.gradient-6, .avatar-gradient-6 { background: linear-gradient(135deg, #ff2d55, #ff375f); }
+        .avatar.gradient-7, .pinned-avatar.gradient-7, .avatar-gradient-7 { background: linear-gradient(135deg, #5ac8fa, #64d2ff); }
+        .avatar.gray, .pinned-avatar.gray { background: #636366; }
+        .avatar.scam {
+            background: #ff453a;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .scam-name {
+            color: #ff453a !important;
+        }
+
+        .deleted-item {
+            opacity: 0.7;
+            position: relative;
+        }
+
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .unread-bubble {
+            width: 40px;
+            height: 40px;
+            background: #007AFF;
+            border-radius: 50%;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+        }
+
+        .spam-bubble {
+            background: linear-gradient(135deg, #ff453a, #ff6b6b);
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 20px;
+            border-bottom-left-radius: 6px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(255, 69, 58, 0.3);
+        }
+
+        .empty-state-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .empty-state-subtitle {
+            font-size: 15px;
+            color: #8e8e93;
+            max-width: 250px;
+            line-height: 1.4;
+        }
+
+        .deleted-bubble {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff453a, #ff3b30);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(255, 59, 48, 0.3);
+        }
+
+        .deleted-bubble svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .messages-bubble {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #007AFF, #5856d6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+        }
+
+        .messages-bubble svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        /* Page Transition Animation */
+        .screen-content {
+            position: absolute;
+            top: 55px;
+            left: 0;
+            right: 0;
+            bottom: 90px;
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        opacity 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        .screen-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .screen-content.slide-in-left {
+            animation: slideInFromLeft 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .screen-content.slide-out-left {
+            transform: translateX(-30%);
+            opacity: 0;
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                transform: translateX(-30%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .conversation-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .conversation-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 3px;
+        }
+
+        .contact-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .notification-silenced {
+            font-size: 12px;
+            color: #007AFF;
+            font-weight: 500;
+            display: none;
+            margin-left: 6px;
+        }
+
+        .notification-silenced.visible {
+            display: inline;
+        }
+
+        .muted-bell-small {
+            width: 12px;
+            height: 12px;
+            display: none;
+            color: #ff3b30;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+
+        .muted-bell-small.visible {
+            display: inline-flex;
+        }
+
+        .muted-bell-small svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+        }
+
+        .message-time {
+            font-size: 15px;
+            color: #8e8e93;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+
+        .message-time .chevron {
+            width: 7px;
+            height: 12px;
+            stroke: #48484a;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .message-preview {
+            font-size: 15px;
+            color: #8e8e93;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.35;
+            margin-bottom: 4px;
+        }
+
+        .location-time {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #636366;
+        }
+
+        .location-time svg {
+            width: 10px;
+            height: 10px;
+            fill: #636366;
+        }
+
+        .location-time .local-time {
+            color: #8e8e93;
+            font-weight: 500;
+        }
+
+        .bottom-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            padding: 10px 16px 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-bar {
+            flex: 1;
+            background: #1c1c1e;
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-bar svg {
+            width: 18px;
+            height: 18px;
+            fill: #8e8e93;
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 17px;
+            width: 100%;
+        }
+
+        .search-bar input::placeholder {
+            color: #8e8e93;
+        }
+
+        .mic-icon {
+            width: 18px;
+            height: 18px;
+            fill: #8e8e93;
+        }
+
+        .compose-btn {
+            width: 44px;
+            height: 44px;
+            background: #2c2c2e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .compose-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .home-indicator {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background: #fff;
+            border-radius: 3px;
+            opacity: 0.6;
+        }
+
+        /* Filter Menu Styles */
+        .filter-menu-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        .filter-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .filter-menu {
+            position: absolute;
+            top: 95px;
+            right: 16px;
+            background: #2c2c2e;
+            border-radius: 14px;
+            width: 220px;
+            overflow: hidden;
+            transform: scale(0.9) translateY(-10px);
+            opacity: 0;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            z-index: 201;
+        }
+
+        .filter-menu-overlay.active .filter-menu {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .filter-menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 17px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            border-bottom: 0.5px solid #48484a;
+        }
+
+        .filter-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .filter-menu-item:active {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .filter-menu-item.selected {
+            color: #fff;
+        }
+
+        .filter-menu-item .checkmark {
+            width: 18px;
+            height: 18px;
+            fill: #007AFF;
+            opacity: 0;
+        }
+
+        .filter-menu-item.selected .checkmark {
+            opacity: 1;
+        }
+
+        .filter-menu-item .item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .filter-menu-item .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-menu-item .menu-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #007AFF;
+        }
+
+        .filter-menu-item.destructive .menu-icon svg {
+            fill: #ff453a;
+        }
+
+        .filter-menu-item.destructive {
+            color: #ff453a;
+        }
+
+        .filter-menu-item .stats-icon svg {
+            fill: #007AFF;
+        }
+
+        .filter-menu-item .gallery-icon svg {
+            fill: #34c759;
+        }
+
+        .filter-menu-divider {
+            height: 8px;
+            background: #1c1c1e;
+        }
+
+        .filter-menu-item .badge {
+            background: #007AFF;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+
+        /* Edit Menu Styles */
+        .edit-menu-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        .edit-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .edit-menu {
+            position: absolute;
+            top: 95px;
+            left: 16px;
+            background: #2c2c2e;
+            border-radius: 14px;
+            width: 220px;
+            overflow: hidden;
+            transform: scale(0.9) translateY(-10px);
+            opacity: 0;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            z-index: 201;
+        }
+
+        .edit-menu-overlay.active .edit-menu {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .edit-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 17px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            border-bottom: 0.5px solid #48484a;
+            gap: 12px;
+        }
+
+        .edit-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .edit-menu-item:active {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .edit-menu-item .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-menu-item .menu-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #007AFF;
+        }
+
+        /* Selection Mode Styles */
+        .select-circle {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #48484a;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .select-circle.selected {
+            background: #007AFF;
+            border-color: #007AFF;
+        }
+
+        .select-circle svg {
+            width: 14px;
+            height: 14px;
+            fill: #fff;
+            opacity: 0;
+        }
+
+        .select-circle.selected svg {
+            opacity: 1;
+        }
+
+        .selection-mode .select-circle {
+            display: flex;
+        }
+
+        .selection-mode .conversation-item {
+            padding-left: 16px;
+        }
+
+        .selection-mode .unread-dot {
+            display: none;
+        }
+
+        /* Selection Toolbar */
+        .selection-toolbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1c1c1e;
+            padding: 12px 20px 30px;
+            display: none;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 0.5px solid #38383a;
+            z-index: 50;
+        }
+
+        .selection-toolbar.active {
+            display: flex;
+        }
+
+        .toolbar-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 16px;
+        }
+
+        .toolbar-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #007AFF;
+        }
+
+        .toolbar-btn span {
+            font-size: 12px;
+            color: #007AFF;
+        }
+
+        .toolbar-btn.destructive svg {
+            fill: #ff453a;
+        }
+
+        .toolbar-btn.destructive span {
+            color: #ff453a;
+        }
+
+        .toolbar-btn.select-all-btn svg {
+            fill: #34c759;
+        }
+
+        .toolbar-btn.select-all-btn span {
+            color: #34c759;
+        }
+
+        .toolbar-btn:disabled svg {
+            fill: #48484a;
+        }
+
+        .toolbar-btn:disabled span {
+            color: #48484a;
+        }
+
+        /* Hide bottom bar in selection mode */
+        .selection-mode .bottom-bar {
+            display: none;
+        }
+
+        .selection-count {
+            font-size: 17px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Pinned Contacts Section */
+        .pinned-section {
+            display: flex;
+            gap: 16px;
+            padding: 10px 20px 15px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .pinned-section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .pinned-section:empty {
+            display: none;
+        }
+
+        .pinned-contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .pinned-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 500;
+            color: #fff;
+            transition: transform 0.2s ease;
+        }
+
+        .pinned-contact:active .pinned-avatar {
+            transform: scale(0.95);
+        }
+
+        .pinned-name {
+            font-size: 12px;
+            color: #fff;
+            text-align: center;
+            max-width: 70px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .pin-remove-btn {
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 22px;
+            height: 22px;
+            background: #636366;
+            border: none;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .pin-remove-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: #fff;
+        }
+
+        /* Edit Pins Mode */
+        .edit-pins-mode .pin-remove-btn {
+            display: flex;
+        }
+
+        .edit-pins-mode .pinned-contact {
+            animation: jiggle 0.3s ease-in-out infinite;
+        }
+
+        .edit-pins-mode .pinned-contact:nth-child(even) {
+            animation-delay: 0.15s;
+        }
+
+        @keyframes jiggle {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+
+        /* Pin indicator on conversation items */
+        .pin-indicator {
+            width: 24px;
+            height: 24px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .pin-indicator svg {
+            width: 16px;
+            height: 16px;
+            fill: #8e8e93;
+        }
+
+        .edit-pins-mode .pin-indicator {
+            display: flex;
+        }
+
+        .edit-pins-mode .conversation-item {
+            padding-left: 12px;
+        }
+
+        .conversation-item.is-pinned .pin-indicator svg {
+            fill: #007AFF;
+        }
+
+        /* Hide pinned section in selection mode */
+        .selection-mode .pinned-section {
+            display: none;
+        }
+
+        /* Edit Profile Modal */
+        .profile-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .profile-modal {
+            background: #1c1c1e;
+            border-radius: 20px;
+            width: 340px;
+            padding: 24px;
+            transform: scale(0.9) translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .profile-modal-overlay.active .profile-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .profile-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .profile-modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .profile-modal-close {
+            background: #3a3a3c;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .profile-modal-close svg {
+            width: 14px;
+            height: 14px;
+            fill: #8e8e93;
+        }
+
+        .profile-avatar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .profile-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 44px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar-edit-label {
+            font-size: 14px;
+            color: #007AFF;
+            cursor: pointer;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 16px;
+            padding: 16px;
+            background: #2c2c2e;
+            border-radius: 12px;
+        }
+
+        .color-option {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: #fff;
+        }
+
+        .color-option.color-1 { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
+        .color-option.color-2 { background: linear-gradient(135deg, #007AFF, #5856D6); }
+        .color-option.color-3 { background: linear-gradient(135deg, #34c759, #30d158); }
+        .color-option.color-4 { background: linear-gradient(135deg, #ff9500, #ff9f0a); }
+        .color-option.color-5 { background: linear-gradient(135deg, #af52de, #bf5af2); }
+        .color-option.color-6 { background: linear-gradient(135deg, #ff2d55, #ff375f); }
+        .color-option.color-7 { background: linear-gradient(135deg, #5ac8fa, #64d2ff); }
+
+        .profile-input-group {
+            margin-bottom: 16px;
+        }
+
+        .profile-input-label {
+            font-size: 13px;
+            color: #8e8e93;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .profile-input {
+            width: 100%;
+            background: #2c2c2e;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 16px;
+            font-size: 17px;
+            color: #fff;
+            outline: none;
+        }
+
+        .profile-input:focus {
+            box-shadow: 0 0 0 2px #007AFF;
+        }
+
+        .profile-input::placeholder {
+            color: #636366;
+        }
+
+        .profile-save-btn {
+            width: 100%;
+            background: #007AFF;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .profile-save-btn:active {
+            background: #0056b3;
+        }
+
+        /* Group Chat Avatar */
+        .group-avatar {
+            position: relative;
+            background: transparent !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .group-avatar .mini-avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            border: 2px solid #000;
+            position: absolute;
+        }
+
+        .group-avatar .mini-avatar:nth-child(1) {
+            top: 3px;
+            left: 13px;
+            z-index: 3;
+        }
+
+        .group-avatar .mini-avatar:nth-child(2) {
+            bottom: 3px;
+            left: 0;
+            z-index: 2;
+        }
+
+        .group-avatar .mini-avatar:nth-child(3) {
+            bottom: 3px;
+            right: 0;
+            z-index: 1;
+        }
+
+        /* Cycling location animation */
+        .cycling-location {
+            position: relative;
+            height: 16px;
+            overflow: hidden;
+        }
+
+        .cycling-location .location-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0;
+            animation: cycleLocation 18s infinite;
+        }
+
+        .cycling-location .location-item:nth-child(1) { animation-delay: 0s; }
+        .cycling-location .location-item:nth-child(2) { animation-delay: 3s; }
+        .cycling-location .location-item:nth-child(3) { animation-delay: 6s; }
+        .cycling-location .location-item:nth-child(4) { animation-delay: 9s; }
+        .cycling-location .location-item:nth-child(5) { animation-delay: 12s; }
+        .cycling-location .location-item:nth-child(6) { animation-delay: 15s; }
+
+        @keyframes cycleLocation {
+            0%, 13% { opacity: 1; }
+            16.67%, 100% { opacity: 0; }
+        }
+
+        /* External back button */
+        .external-back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .external-back-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(-3px);
+        }
+
+        .external-back-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Stats Modal */
+        .stats-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .stats-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .stats-modal {
+            background: #1c1c1e;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 380px;
+            max-height: 85vh;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .stats-overlay.active .stats-modal {
+            transform: scale(1);
+        }
+
+        .stats-header {
+            padding: 16px 20px;
+            border-bottom: 0.5px solid #38383a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .stats-close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #2c2c2e;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .stats-close-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: #8e8e93;
+        }
+
+        .stats-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .stats-title svg {
+            width: 20px;
+            height: 20px;
+            fill: #007AFF;
+        }
+
+        .stats-content {
+            padding: 16px 20px;
+            overflow-y: auto;
+            max-height: calc(85vh - 80px);
+        }
+
+        .stats-section-title {
+            font-size: 13px;
+            color: #8e8e93;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            margin-top: 16px;
+        }
+
+        .stats-section-title:first-child {
+            margin-top: 0;
+        }
+
+        .overall-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .overall-stat-card {
+            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .overall-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .overall-stat-card:nth-child(3) .overall-stat-value {
+            background: linear-gradient(135deg, #34c759, #30d158);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .overall-stat-card:nth-child(4) .overall-stat-value {
+            background: linear-gradient(135deg, #ff9500, #ff6b00);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .overall-stat-label {
+            font-size: 12px;
+            color: #8e8e93;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .contact-stats-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-stat-item {
+            background: #2c2c2e;
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-stat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .contact-stat-info {
+            flex: 1;
+        }
+
+        .contact-stat-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .contact-stat-detail {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+
+        .contact-stat-count {
+            font-size: 17px;
+            font-weight: 600;
+            color: #007AFF;
+        }
+
+        /* Gallery Modal */
+        .gallery-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .gallery-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gallery-modal {
+            background: #1c1c1e;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 380px;
+            max-height: 85vh;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-overlay.active .gallery-modal {
+            transform: scale(1);
+        }
+
+        .gallery-header {
+            padding: 16px 20px;
+            border-bottom: 0.5px solid #38383a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .gallery-close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #2c2c2e;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .gallery-close-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: #8e8e93;
+        }
+
+        .gallery-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .gallery-title svg {
+            width: 20px;
+            height: 20px;
+            fill: #34c759;
+        }
+
+        .gallery-content {
+            padding: 16px 20px;
+            overflow-y: auto;
+            max-height: calc(85vh - 80px);
+        }
+
+        .gallery-contact-section {
+            margin-bottom: 20px;
+        }
+
+        .gallery-contact-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .gallery-contact-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .gallery-contact-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .gallery-photo-count {
+            font-size: 13px;
+            color: #8e8e93;
+            margin-left: auto;
+        }
+
+        .gallery-photos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .gallery-photo-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        body.light-mode .gallery-modal {
+            background: #fff;
+        }
+
+        body.light-mode .gallery-header {
+            border-bottom-color: #e5e5ea;
+        }
+
+        body.light-mode .gallery-close-btn {
+            background: #e5e5ea;
+        }
+
+        body.light-mode .gallery-title {
+            color: #000;
+        }
+
+        body.light-mode .gallery-contact-name {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- External Refresh button -->
+    <button class="refresh-btn" id="refreshBtn" onclick="refreshList()">
+        <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        Refresh
+    </button>
+
+    <!-- External back button to homepage -->
+    <a href="index.html" class="external-back-btn">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Back to Home
+    </a>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-container">
+        <span class="theme-icon">🌙</span>
+        <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()"></div>
+        <span class="theme-icon">☀️</span>
+    </div>
+    <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+
+        <!-- Edit Menu Overlay -->
+        <div class="edit-menu-overlay" id="editOverlay" onclick="closeEditMenu()">
+            <div class="edit-menu" onclick="event.stopPropagation()">
+                <div class="edit-menu-item" onclick="selectEditOption('select')">
+                    <div class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                        </svg>
+                    </div>
+                    <span>Select Messages</span>
+                </div>
+                <div class="edit-menu-item" onclick="selectEditOption('pins')">
+                    <div class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+                        </svg>
+                    </div>
+                    <span>Edit Pins</span>
+                </div>
+                <div class="edit-menu-item" onclick="selectEditOption('profile')">
+                    <div class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </div>
+                    <span>Edit Name & Photo</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Edit Modal -->
+        <div class="profile-modal-overlay" id="profileModalOverlay" onclick="closeProfileModal()">
+            <div class="profile-modal" onclick="event.stopPropagation()">
+                <div class="profile-modal-header">
+                    <span class="profile-modal-title">Edit Name & Photo</span>
+                    <button class="profile-modal-close" onclick="closeProfileModal()">
+                        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+                    </button>
+                </div>
+
+                <div class="profile-avatar-section">
+                    <div class="profile-avatar-large" id="profileAvatarLarge" style="background: linear-gradient(135deg, #5ac8fa, #007AFF);">B</div>
+                    <span class="profile-avatar-edit-label">Choose a color</span>
+                    <div class="color-picker">
+                        <div class="color-option color-1" onclick="selectProfileColor(1)"></div>
+                        <div class="color-option color-2 selected" onclick="selectProfileColor(2)"></div>
+                        <div class="color-option color-3" onclick="selectProfileColor(3)"></div>
+                        <div class="color-option color-4" onclick="selectProfileColor(4)"></div>
+                        <div class="color-option color-5" onclick="selectProfileColor(5)"></div>
+                        <div class="color-option color-6" onclick="selectProfileColor(6)"></div>
+                        <div class="color-option color-7" onclick="selectProfileColor(7)"></div>
+                    </div>
+                </div>
+
+                <div class="profile-input-group">
+                    <label class="profile-input-label">First Name</label>
+                    <input type="text" class="profile-input" id="profileFirstName" value="Ben" placeholder="First Name">
+                </div>
+
+                <div class="profile-input-group">
+                    <label class="profile-input-label">Last Name</label>
+                    <input type="text" class="profile-input" id="profileLastName" value="Vo" placeholder="Last Name">
+                </div>
+
+                <button class="profile-save-btn" onclick="saveProfile()">Save</button>
+            </div>
+        </div>
+
+        <!-- Filter Menu Overlay -->
+        <div class="filter-menu-overlay" id="filterOverlay" onclick="closeFilterMenu()">
+            <div class="filter-menu" onclick="event.stopPropagation()">
+                <div class="filter-menu-item selected" onclick="selectFilter(this, 'messages')">
+                    <div class="item-left">
+                        <div class="menu-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                            </svg>
+                        </div>
+                        <span>All Messages</span>
+                    </div>
+                    <svg class="checkmark" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    </svg>
+                </div>
+                <div class="filter-menu-item" onclick="selectFilter(this, 'unread')">
+                    <div class="item-left">
+                        <div class="menu-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                            </svg>
+                        </div>
+                        <span>Unread</span>
+                        <span class="badge">1</span>
+                    </div>
+                    <svg class="checkmark" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    </svg>
+                </div>
+                <div class="filter-menu-divider"></div>
+                <div class="filter-menu-item destructive" onclick="selectFilter(this, 'spam')">
+                    <div class="item-left">
+                        <div class="menu-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                            </svg>
+                        </div>
+                        <span>Spam</span>
+                    </div>
+                    <svg class="checkmark" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    </svg>
+                </div>
+                <div class="filter-menu-item destructive" onclick="selectFilter(this, 'deleted')">
+                    <div class="item-left">
+                        <div class="menu-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                            </svg>
+                        </div>
+                        <span>Recently Deleted</span>
+                    </div>
+                    <svg class="checkmark" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    </svg>
+                </div>
+                <div class="filter-menu-divider"></div>
+                <div class="filter-menu-item" onclick="closeFilterMenu()">
+                    <div class="item-left">
+                        <div class="menu-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
+                            </svg>
+                        </div>
+                        <span>Manage Filters</span>
+                    </div>
+                </div>
+                <div class="filter-menu-item" onclick="closeFilterMenu(); openStatsModal();">
+                    <div class="item-left">
+                        <div class="menu-icon stats-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 13h2v8H3v-8zm4-6h2v14H7V7zm4-4h2v18h-2V3zm4 8h2v10h-2V11zm4-4h2v14h-2V7z"/>
+                            </svg>
+                        </div>
+                        <span>Stats</span>
+                    </div>
+                </div>
+                <div class="filter-menu-item" onclick="closeFilterMenu(); openGalleryModal();">
+                    <div class="item-left">
+                        <div class="menu-icon gallery-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/>
+                            </svg>
+                        </div>
+                        <span>Gallery</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <span class="status-time" id="phoneTime">10:58 AM</span>
+            <div class="status-icons">
+                <svg viewBox="0 0 18 12">
+                    <rect x="0" y="5" width="3" height="7" rx="1"/>
+                    <rect x="5" y="3" width="3" height="9" rx="1"/>
+                    <rect x="10" y="1" width="3" height="11" rx="1"/>
+                    <rect x="15" y="0" width="3" height="12" rx="1" fill-opacity="0.3"/>
+                </svg>
+                <svg viewBox="0 0 16 12">
+                    <path d="M8 2C4.5 2 1.5 4 0 7c1.5 3 4.5 5 8 5s6.5-2 8-5c-1.5-3-4.5-5-8-5z" fill-opacity="0.9"/>
+                </svg>
+                <div class="battery">
+                    <div class="battery-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen">
+            <div class="screen-content" id="screenContent">
+                <div class="header">
+                    <div class="header-top">
+                        <button class="pill-btn edit-btn" onclick="toggleEditMenu()">Edit</button>
+                    <button class="pill-btn filter-btn" onclick="toggleFilterMenu()">
+                        <div class="filter-lines">
+                            <div class="filter-line"></div>
+                            <div class="filter-line"></div>
+                            <div class="filter-line"></div>
+                        </div>
+                    </button>
+                </div>
+                <div class="header-title-row">
+                    <h1 class="header-title">Messages</h1>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="recover-all-btn" id="recoverAllBtn" onclick="recoverAllRecent()">Recover</button>
+                        <button class="delete-all-btn" id="deleteAllBtn" onclick="deleteAllRecent()">Permanently Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="avatar">B</div>
+                <div class="profile-info">
+                    <div class="profile-name">Ben Vo</div>
+                    <div class="profile-subtitle">Los Angeles · Share Your Name & Photo</div>
+                </div>
+                <svg class="chevron" viewBox="0 0 8 14">
+                    <path d="M1 1l6 6-6 6"/>
+                </svg>
+            </div>
+
+            <!-- Pinned Contacts Section -->
+            <div class="pinned-section" id="pinnedSection">
+            </div>
+
+            <div class="conversations">
+                <a href="dummychat.html?contact=theboys" class="conversation-item" data-filter="messages" data-contact="theboys">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div style="width: 52px; height: 52px; position: relative; margin-right: 12px; flex-shrink: 0;">
+                        <div style="position: absolute; top: 5px; left: 50%; transform: translateX(-50%); width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #34c759, #30d158); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #fff; border: 2px solid #000; z-index: 3;">J</div>
+                        <div style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-85%); width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #ff2d55, #ff375f); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #fff; border: 2px solid #000; z-index: 2;">A</div>
+                        <div style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-15%); width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #007AFF, #5856D6); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #fff; border: 2px solid #000; z-index: 1;">R</div>
+                    </div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">The Boys 🏀</span><span class="notification-silenced" data-mute-contact="theboys">Notification Silenced</span>
+                            <span class="message-time">
+                                11:45 AM
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">Bryan: LET'S GOOOO 🔥🔥🔥</div>
+                        <div class="cycling-location">
+                            <div class="location-item">
+                                <svg viewBox="0 0 24 24" style="width: 10px; height: 10px; fill: #636366;">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                                <span style="color: #636366; font-size: 12px;">Jake · Chicago · <span style="color: #8e8e93; font-weight: 500;">12:45 PM CST</span></span>
+                            </div>
+                            <div class="location-item">
+                                <svg viewBox="0 0 24 24" style="width: 10px; height: 10px; fill: #636366;">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                                <span style="color: #636366; font-size: 12px;">Alex · Sydney · <span style="color: #8e8e93; font-weight: 500;">5:45 AM AEDT</span></span>
+                            </div>
+                            <div class="location-item">
+                                <svg viewBox="0 0 24 24" style="width: 10px; height: 10px; fill: #636366;">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                                <span style="color: #636366; font-size: 12px;">Ryan · Dubai · <span style="color: #8e8e93; font-weight: 500;">10:45 PM GST</span></span>
+                            </div>
+                            <div class="location-item">
+                                <svg viewBox="0 0 24 24" style="width: 10px; height: 10px; fill: #636366;">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                                <span style="color: #636366; font-size: 12px;">Marcus · Atlanta · <span style="color: #8e8e93; font-weight: 500;">1:45 PM EST</span></span>
+                            </div>
+                            <div class="location-item">
+                                <svg viewBox="0 0 24 24" style="width: 10px; height: 10px; fill: #636366;">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                                <span style="color: #636366; font-size: 12px;">Tyler · Miami · <span style="color: #8e8e93; font-weight: 500;">1:45 PM EST</span></span>
+                            </div>
+                            <div class="location-item">
+                                <svg viewBox="0 0 24 24" style="width: 10px; height: 10px; fill: #636366;">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                                <span style="color: #636366; font-size: 12px;">You · Los Angeles · <span style="color: #8e8e93; font-weight: 500;">10:45 AM PST</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=sarah" class="conversation-item" data-filter="messages" data-contact="sarah">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="avatar gradient-2">S</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">Sarah</span><span class="notification-silenced" data-mute-contact="sarah">Notification Silenced</span>
+                            <span class="message-time">
+                                9:41 AM
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">Sounds good! Let me know when you're free</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            San Francisco · <span class="local-time" data-timezone="PST">10:58 AM PST</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=mom" class="conversation-item" data-filter="messages" data-contact="mom">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="avatar gradient-1">M</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">Mom</span><span class="notification-silenced" data-mute-contact="mom">Notification Silenced</span>
+                            <span class="message-time">
+                                Yesterday
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">Love you too Mom!</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            New York · <span class="local-time" data-timezone="EST">1:58 PM EST</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=jake" class="conversation-item" data-filter="messages unread" data-contact="jake">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="unread-dot"></div>
+                    <div class="avatar gradient-3">J</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">Jake</span><span class="notification-silenced" data-mute-contact="jake">Notification Silenced</span>
+                            <span class="message-time">
+                                Yesterday
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">For sure! Let me check the schedule</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Chicago · <span class="local-time" data-timezone="CST">12:58 PM CST</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=emma" class="conversation-item" data-filter="messages" data-contact="emma">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="avatar gradient-5">E</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">Emma</span><span class="notification-silenced" data-mute-contact="emma">Notification Silenced</span>
+                            <span class="message-time">
+                                Tuesday
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">Glad you liked it! Their pastries are great too</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            London · <span class="local-time" data-timezone="GMT">6:58 PM GMT</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=david" class="conversation-item" data-filter="messages" data-contact="david">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="avatar gradient-4">D</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">David</span><span class="notification-silenced" data-mute-contact="david">Notification Silenced</span>
+                            <span class="message-time">
+                                Monday
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">Sounds good</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Tokyo · <span class="local-time" data-timezone="JST">3:58 AM JST</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=alex" class="conversation-item" data-filter="messages" data-contact="alex">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="avatar gradient-6">A</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">Alex</span><span class="notification-silenced" data-mute-contact="alex">Notification Silenced</span>
+                            <span class="message-time">
+                                Sunday
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">Can't wait!</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Sydney · <span class="local-time" data-timezone="AEDT">5:58 AM AEDT</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=lisa" class="conversation-item" data-filter="messages" data-contact="lisa">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="avatar gradient-7">L</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">Lisa</span><span class="notification-silenced" data-mute-contact="lisa">Notification Silenced</span>
+                            <span class="message-time">
+                                Sunday
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">Happy holidays! Miss you</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Paris · <span class="local-time" data-timezone="CET">7:58 PM CET</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=ryan" class="conversation-item" data-filter="messages" data-contact="ryan">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="avatar gradient-2">R</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">Ryan</span><span class="notification-silenced" data-mute-contact="ryan">Notification Silenced</span>
+                            <span class="message-time">
+                                Sunday
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">Got the tickets!</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Dubai · <span class="local-time" data-timezone="GST">10:58 PM GST</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=scam" class="conversation-item deleted-item" data-filter="deleted" data-contact="scam" style="display: none;">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="avatar scam">!</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name scam-name">Scam Likely</span><span class="notification-silenced" data-mute-contact="scam">Notification Silenced</span>
+                            <span class="message-time">
+                                12/19
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">You've won a $1000 gift card! Click here to...</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Unknown · <span class="local-time">Deleted</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="dummychat.html?contact=brad" class="conversation-item deleted-item" data-filter="deleted" data-contact="brad" style="display: none;">
+                    <div class="select-circle">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="pin-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                    </div>
+                    <div class="avatar gray">B</div>
+                    <div class="conversation-content">
+                        <div class="conversation-top">
+                            <span class="contact-name">Brad</span><span class="notification-silenced" data-mute-contact="brad">Notification Silenced</span>
+                            <span class="message-time">
+                                12/20
+                                <svg class="chevron" viewBox="0 0 8 14">
+                                    <path d="M1 1l6 6-6 6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="message-preview">I appreciate that. But I think it's best we go our separate ways.</div>
+                        <div class="location-time">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Los Angeles · <span class="local-time">Deleted</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Messages Empty State -->
+                <div class="empty-state" id="messagesEmptyState" data-filter="messages-empty" style="display: none;">
+                    <div class="messages-bubble">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+                        </svg>
+                    </div>
+                    <div class="empty-state-title">No Messages</div>
+                    <div class="empty-state-subtitle">Add contacts to see them here</div>
+                </div>
+
+                <!-- Unread Empty State -->
+                <div class="empty-state" id="unreadEmptyState" data-filter="unread-empty" style="display: none;">
+                    <div class="unread-bubble"></div>
+                    <div class="empty-state-title">No Messages</div>
+                    <div class="empty-state-subtitle">Messages unread will appear here</div>
+                </div>
+
+                <!-- Spam Empty State -->
+                <div class="empty-state" id="spamEmptyState" data-filter="spam" style="display: none;">
+                    <div class="spam-bubble">SPAM!!!</div>
+                    <div class="empty-state-title">No Messages</div>
+                    <div class="empty-state-subtitle">Messages filtered as spam will appear here</div>
+                </div>
+
+                <!-- Recently Deleted Empty State -->
+                <div class="empty-state" id="deletedEmptyState" data-filter="deleted-empty" style="display: none;">
+                    <div class="deleted-bubble">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </div>
+                    <div class="empty-state-title">No Messages</div>
+                    <div class="empty-state-subtitle">Messages recently deleted will appear here</div>
+                </div>
+            </div>
+            </div>
+
+            <div class="bottom-bar">
+            <div class="search-bar">
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <input type="text" placeholder="Search" id="searchInput" oninput="searchContacts(this.value)">
+                <svg class="mic-icon" viewBox="0 0 24 24">
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/>
+                </svg>
+            </div>
+            <div class="compose-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Selection Toolbar -->
+        <div class="selection-toolbar" id="selectionToolbar">
+            <button class="toolbar-btn destructive" id="deleteBtn" disabled onclick="deleteSelected()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+                <span>Delete</span>
+            </button>
+            <button class="toolbar-btn select-all-btn" id="selectAllBtn" onclick="selectAll()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M18 7l-1.41-1.41-6.34 6.34 1.41 1.41L18 7zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12-1.42-1.41zM.41 13.41L6 19l1.41-1.41L1.83 12 .41 13.41z"/>
+                </svg>
+                <span>Select All</span>
+            </button>
+            <span class="selection-count" id="selectionCount">0 Selected</span>
+            <button class="toolbar-btn" id="readBtn" disabled onclick="markAsRead()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <span>Read</span>
+            </button>
+        </div>
+
+        <div class="home-indicator"></div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="stats-overlay" id="statsOverlay" onclick="closeStatsModal()">
+        <div class="stats-modal" onclick="event.stopPropagation()">
+            <div class="stats-header">
+                <button class="stats-close-btn" onclick="closeStatsModal()">
+                    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+                </button>
+                <div class="stats-title">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v8H3v-8zm4-6h2v14H7V7zm4-4h2v18h-2V3zm4 8h2v10h-2V11zm4-4h2v14h-2V7z"/></svg>
+                    <span>Messaging Stats</span>
+                </div>
+            </div>
+            <div class="stats-content">
+                <div class="stats-section-title">Overall</div>
+                <div class="overall-stats-grid">
+                    <div class="overall-stat-card">
+                        <div class="overall-stat-value" id="totalMessagesAll">12,847</div>
+                        <div class="overall-stat-label">Total Messages</div>
+                    </div>
+                    <div class="overall-stat-card">
+                        <div class="overall-stat-value" id="totalContactsAll">8</div>
+                        <div class="overall-stat-label">Conversations</div>
+                    </div>
+                    <div class="overall-stat-card">
+                        <div class="overall-stat-value" id="longestStreak">45</div>
+                        <div class="overall-stat-label">Longest Streak</div>
+                    </div>
+                    <div class="overall-stat-card">
+                        <div class="overall-stat-value" id="avgResponseAll">3m</div>
+                        <div class="overall-stat-label">Avg Response</div>
+                    </div>
+                </div>
+
+                <div class="stats-section-title">By Contact</div>
+                <div class="contact-stats-list" id="contactStatsList">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div class="gallery-overlay" id="galleryOverlay" onclick="closeGalleryModal()">
+        <div class="gallery-modal" onclick="event.stopPropagation()">
+            <div class="gallery-header">
+                <button class="gallery-close-btn" onclick="closeGalleryModal()">
+                    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+                </button>
+                <div class="gallery-title">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+                    <span>Shared Photos</span>
+                </div>
+            </div>
+            <div class="gallery-content" id="galleryContent">
+                <!-- Dynamically populated by contact -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Contact data for pinning
+        const contactData = {
+            sarah: { name: 'Sarah', gradient: 'gradient-2', initial: 'S' },
+            mom: { name: 'Mom', gradient: 'gradient-1', initial: 'M' },
+            jake: { name: 'Jake', gradient: 'gradient-3', initial: 'J' },
+            emma: { name: 'Emma', gradient: 'gradient-5', initial: 'E' },
+            david: { name: 'David', gradient: 'gradient-4', initial: 'D' },
+            alex: { name: 'Alex', gradient: 'gradient-6', initial: 'A' },
+            lisa: { name: 'Lisa', gradient: 'gradient-7', initial: 'L' },
+            ryan: { name: 'Ryan', gradient: 'gradient-2', initial: 'R' },
+            theboys: { name: 'The Boys 🏀', gradient: 'gradient-3', initial: '🏀' }
+        };
+
+        // Messaging stats data
+        const contactStats = {
+            sarah: { total: 1247, streak: 45, avgResponse: '2m' },
+            mom: { total: 2341, streak: 120, avgResponse: '5m' },
+            jake: { total: 876, streak: 23, avgResponse: '8m' },
+            emma: { total: 1589, streak: 67, avgResponse: '15m' },
+            david: { total: 432, streak: 12, avgResponse: '1h' },
+            alex: { total: 2156, streak: 34, avgResponse: '3m' },
+            lisa: { total: 1823, streak: 56, avgResponse: '10m' },
+            ryan: { total: 2383, streak: 89, avgResponse: '4m' },
+            theboys: { total: 4872, streak: 156, avgResponse: '1m' }
+        };
+
+        // Stats Modal Functions
+        function openStatsModal() {
+            // Calculate totals
+            let totalMessages = 0;
+            let longestStreak = 0;
+            Object.values(contactStats).forEach(stat => {
+                totalMessages += stat.total;
+                if (stat.streak > longestStreak) longestStreak = stat.streak;
+            });
+
+            document.getElementById('totalMessagesAll').textContent = totalMessages.toLocaleString();
+            document.getElementById('totalContactsAll').textContent = Object.keys(contactStats).length;
+            document.getElementById('longestStreak').textContent = longestStreak;
+
+            // Populate contact list
+            const contactList = document.getElementById('contactStatsList');
+            contactList.innerHTML = '';
+
+            // Sort contacts by message count
+            const sortedContacts = Object.entries(contactStats)
+                .sort((a, b) => b[1].total - a[1].total);
+
+            sortedContacts.forEach(([id, stats]) => {
+                const contact = contactData[id];
+                if (!contact) return;
+
+                const item = document.createElement('div');
+                item.className = 'contact-stat-item';
+                item.innerHTML = `
+                    <div class="contact-stat-avatar avatar-${contact.gradient}">${contact.initial}</div>
+                    <div class="contact-stat-info">
+                        <div class="contact-stat-name">${contact.name}</div>
+                        <div class="contact-stat-detail">${stats.streak} day streak · ${stats.avgResponse} avg</div>
+                    </div>
+                    <div class="contact-stat-count">${stats.total.toLocaleString()}</div>
+                `;
+                contactList.appendChild(item);
+            });
+
+            document.getElementById('statsOverlay').classList.add('active');
+        }
+
+        function closeStatsModal() {
+            document.getElementById('statsOverlay').classList.remove('active');
+        }
+
+        // Gallery photos data by contact
+        const contactGalleryPhotos = {
+            sarah: [
+                'https://picsum.photos/seed/sarah1/200',
+                'https://picsum.photos/seed/sarah2/200',
+                'https://picsum.photos/seed/sarah3/200',
+                'https://picsum.photos/seed/sarah4/200',
+                'https://picsum.photos/seed/sarah5/200',
+                'https://picsum.photos/seed/sarah6/200'
+            ],
+            emma: [
+                'https://picsum.photos/seed/emma1/200',
+                'https://picsum.photos/seed/emma2/200',
+                'https://picsum.photos/seed/emma3/200',
+                'https://picsum.photos/seed/emma4/200'
+            ],
+            lisa: [
+                'https://picsum.photos/seed/lisa1/200',
+                'https://picsum.photos/seed/lisa2/200',
+                'https://picsum.photos/seed/lisa3/200'
+            ],
+            mom: [
+                'https://picsum.photos/seed/mom1/200',
+                'https://picsum.photos/seed/mom2/200'
+            ],
+            theboys: [
+                'https://picsum.photos/seed/boys1/200',
+                'https://picsum.photos/seed/boys2/200',
+                'https://picsum.photos/seed/boys3/200',
+                'https://picsum.photos/seed/boys4/200',
+                'https://picsum.photos/seed/boys5/200'
+            ]
+        };
+
+        function openGalleryModal() {
+            const galleryContent = document.getElementById('galleryContent');
+            galleryContent.innerHTML = '';
+
+            // Sort contacts by photo count
+            const sortedContacts = Object.entries(contactGalleryPhotos)
+                .sort((a, b) => b[1].length - a[1].length);
+
+            sortedContacts.forEach(([id, photos]) => {
+                const contact = contactData[id];
+                if (!contact || photos.length === 0) return;
+
+                const section = document.createElement('div');
+                section.className = 'gallery-contact-section';
+
+                let photosHTML = photos.map(src => `
+                    <div class="gallery-photo-item">
+                        <img src="${src}" alt="Photo">
+                    </div>
+                `).join('');
+
+                section.innerHTML = `
+                    <div class="gallery-contact-header">
+                        <div class="gallery-contact-avatar avatar-${contact.gradient}">${contact.initial}</div>
+                        <div class="gallery-contact-name">${contact.name}</div>
+                        <div class="gallery-photo-count">${photos.length} photos</div>
+                    </div>
+                    <div class="gallery-photos-grid">
+                        ${photosHTML}
+                    </div>
+                `;
+                galleryContent.appendChild(section);
+            });
+
+            document.getElementById('galleryOverlay').classList.add('active');
+        }
+
+        function closeGalleryModal() {
+            document.getElementById('galleryOverlay').classList.remove('active');
+        }
+
+        // Navigation with slide animation
+        function navigateToChat(event, url) {
+            event.preventDefault();
+            const screenContent = document.getElementById('screenContent');
+            screenContent.classList.add('slide-out-left');
+            sessionStorage.setItem('fromChat', 'navigating');
+            setTimeout(() => {
+                window.location.href = url;
+            }, 350);
+        }
+
+        function navigateToPinnedChat(contact) {
+            if (isEditPinsMode) return;
+            const screenContent = document.getElementById('screenContent');
+            screenContent.classList.add('slide-out-left');
+            sessionStorage.setItem('fromChat', 'navigating');
+            setTimeout(() => {
+                window.location.href = `dummychat.html?contact=${contact}`;
+            }, 350);
+        }
+
+        // Add click handlers to all conversation items
+        document.addEventListener('DOMContentLoaded', function() {
+            const screenContent = document.getElementById('screenContent');
+
+            // localStorage persists until Refresh button is clicked
+
+            if (sessionStorage.getItem('fromChat') === 'returning') {
+                screenContent.classList.add('slide-in-left');
+                sessionStorage.removeItem('fromChat');
+            }
+
+            // Handle muted chats - show "Notification Silenced" text
+            const mutedChats = JSON.parse(localStorage.getItem('mutedChats') || '{}');
+            Object.keys(mutedChats).forEach(contactId => {
+                if (mutedChats[contactId]) {
+                    const indicator = document.querySelector(`[data-mute-contact="${contactId}"]`);
+                    if (indicator) {
+                        indicator.classList.add('visible');
+                    }
+                }
+            });
+
+            // Handle recently deleted contacts - move them to "deleted" filter
+            const recentlyDeleted = JSON.parse(localStorage.getItem('recentlyDeleted') || '[]');
+            const originalTimes = JSON.parse(localStorage.getItem('originalTimes') || '{}');
+
+            recentlyDeleted.forEach(contactId => {
+                const item = document.querySelector(`.conversation-item[data-contact="${contactId}"]`);
+                if (item) {
+                    // Change the filter from "messages" to "deleted"
+                    item.setAttribute('data-filter', 'deleted');
+                    item.classList.add('deleted-item');
+                    item.style.display = 'none'; // Hide from main messages view
+
+                    // Store original time and change to "Deleted"
+                    const localTimeSpan = item.querySelector('.local-time');
+                    if (localTimeSpan && localTimeSpan.textContent !== 'Deleted') {
+                        originalTimes[contactId] = localTimeSpan.textContent;
+                        localStorage.setItem('originalTimes', JSON.stringify(originalTimes));
+                        localTimeSpan.textContent = 'Deleted';
+                    }
+                }
+            });
+
+            // Handle permanently deleted contacts - completely hide them
+            const permanentlyDeleted = JSON.parse(localStorage.getItem('permanentlyDeleted') || '[]');
+            permanentlyDeleted.forEach(contactId => {
+                const item = document.querySelector(`.conversation-item[data-contact="${contactId}"]`);
+                if (item) {
+                    item.remove();
+                }
+            });
+
+            // Handle recovered pre-deleted contacts (scam, brad)
+            const recoveredPreDeleted = JSON.parse(localStorage.getItem('recoveredPreDeleted') || '[]');
+            const defaultTimes = {
+                'scam': 'Unknown',
+                'brad': '10:58 AM'
+            };
+
+            recoveredPreDeleted.forEach(contactId => {
+                const item = document.querySelector(`.conversation-item[data-contact="${contactId}"]`);
+                if (item) {
+                    // Change filter to messages
+                    item.setAttribute('data-filter', 'messages');
+                    item.classList.remove('deleted-item');
+                    item.style.display = '';
+
+                    // Set the proper time
+                    const localTimeSpan = item.querySelector('.local-time');
+                    if (localTimeSpan && defaultTimes[contactId]) {
+                        localTimeSpan.textContent = defaultTimes[contactId];
+                    }
+                }
+            });
+
+            // Handle read chats - remove unread status
+            const readChats = JSON.parse(localStorage.getItem('readChats') || '[]');
+            readChats.forEach(contactId => {
+                const item = document.querySelector(`.conversation-item[data-contact="${contactId}"]`);
+                if (item) {
+                    // Remove unread from filter
+                    const currentFilter = item.getAttribute('data-filter');
+                    if (currentFilter && currentFilter.includes('unread')) {
+                        item.setAttribute('data-filter', currentFilter.replace(' unread', '').replace('unread ', '').replace('unread', 'messages'));
+                    }
+
+                    // Hide unread dot
+                    const unreadDot = item.querySelector('.unread-dot');
+                    if (unreadDot) {
+                        unreadDot.style.display = 'none';
+                    }
+                }
+            });
+
+            // Check if we should return to Recently Deleted view
+            const returnToFilter = sessionStorage.getItem('returnToFilter');
+            if (returnToFilter === 'deleted') {
+                sessionStorage.removeItem('returnToFilter');
+
+                // Switch to Recently Deleted view
+                const headerTitle = document.querySelector('.header-title');
+                headerTitle.textContent = 'Recently Deleted';
+
+                const deleteAllBtn = document.getElementById('deleteAllBtn');
+                const recoverAllBtn = document.getElementById('recoverAllBtn');
+
+                // Update filter menu selection
+                document.querySelectorAll('.filter-menu-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                const deletedFilterItem = document.querySelector('.filter-menu-item[onclick*="deleted"]');
+                if (deletedFilterItem) {
+                    deletedFilterItem.classList.add('selected');
+                }
+
+                // Show deleted items, hide others
+                const allConvs = document.querySelectorAll('.conversation-item');
+                let hasDeletedItems = false;
+                allConvs.forEach(conv => {
+                    const filters = conv.getAttribute('data-filter');
+                    if (filters && filters.includes('deleted')) {
+                        conv.style.display = 'flex';
+                        hasDeletedItems = true;
+                    } else {
+                        conv.style.display = 'none';
+                    }
+                });
+
+                // Show/hide empty state and buttons
+                if (hasDeletedItems) {
+                    deleteAllBtn.classList.add('visible');
+                    recoverAllBtn.classList.add('visible');
+                } else {
+                    deleteAllBtn.classList.remove('visible');
+                    recoverAllBtn.classList.remove('visible');
+                    const deletedEmpty = document.getElementById('deletedEmptyState');
+                    if (deletedEmpty) {
+                        deletedEmpty.style.display = 'flex';
+                    }
+                }
+            }
+
+            const conversations = document.querySelectorAll('.conversation-item');
+            conversations.forEach(conv => {
+                conv.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Check if in selection mode
+                    if (isSelectionMode) {
+                        const contactId = this.getAttribute('data-contact');
+                        if (contactId) {
+                            toggleSelection(this, contactId);
+                        }
+                        return;
+                    }
+
+                    // Check if in edit pins mode
+                    if (isEditPinsMode) {
+                        const contactId = this.getAttribute('data-contact');
+                        if (contactId) {
+                            togglePin(contactId);
+                        }
+                        return;
+                    }
+
+                    const url = this.getAttribute('href');
+                    if (url && url !== '#') {
+                        // Mark as read if it has unread status
+                        const contactId = this.getAttribute('data-contact');
+                        const filters = this.getAttribute('data-filter');
+                        if (contactId && filters && filters.includes('unread')) {
+                            const readChats = JSON.parse(localStorage.getItem('readChats') || '[]');
+                            if (!readChats.includes(contactId)) {
+                                readChats.push(contactId);
+                                localStorage.setItem('readChats', JSON.stringify(readChats));
+                            }
+                        }
+                        navigateToChat(e, url);
+                    }
+                });
+            });
+        });
+
+        // Edit Menu Functions
+        function toggleEditMenu() {
+            const overlay = document.getElementById('editOverlay');
+            overlay.classList.toggle('active');
+        }
+
+        function closeEditMenu() {
+            const overlay = document.getElementById('editOverlay');
+            overlay.classList.remove('active');
+        }
+
+        // Selection Mode Variables
+        let isSelectionMode = false;
+        let selectedItems = new Set();
+
+        // Edit Pins Mode Variables
+        let isEditPinsMode = false;
+
+        function selectEditOption(option) {
+            switch(option) {
+                case 'select':
+                    toggleSelectionMode();
+                    break;
+                case 'pins':
+                    toggleEditPinsMode();
+                    break;
+                case 'profile':
+                    openProfileModal();
+                    break;
+            }
+            closeEditMenu();
+        }
+
+        function toggleSelectionMode() {
+            isSelectionMode = !isSelectionMode;
+            const screenContent = document.getElementById('screenContent');
+            const toolbar = document.getElementById('selectionToolbar');
+            const editBtn = document.querySelector('.edit-btn');
+
+            if (isSelectionMode) {
+                screenContent.classList.add('selection-mode');
+                toolbar.classList.add('active');
+                editBtn.textContent = 'Done';
+                editBtn.onclick = exitSelectionMode;
+                selectedItems.clear();
+                updateSelectionCount();
+            } else {
+                exitSelectionMode();
+            }
+        }
+
+        function exitSelectionMode() {
+            isSelectionMode = false;
+            const screenContent = document.getElementById('screenContent');
+            const toolbar = document.getElementById('selectionToolbar');
+            const editBtn = document.querySelector('.edit-btn');
+
+            screenContent.classList.remove('selection-mode');
+            toolbar.classList.remove('active');
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = toggleEditMenu;
+
+            selectedItems.clear();
+            document.querySelectorAll('.select-circle').forEach(circle => {
+                circle.classList.remove('selected');
+            });
+            updateSelectionCount();
+        }
+
+        function toggleSelection(element, contactId) {
+            const circle = element.querySelector('.select-circle');
+
+            if (selectedItems.has(contactId)) {
+                selectedItems.delete(contactId);
+                circle.classList.remove('selected');
+            } else {
+                selectedItems.add(contactId);
+                circle.classList.add('selected');
+            }
+            updateSelectionCount();
+        }
+
+        function updateSelectionCount() {
+            const count = selectedItems.size;
+            const countEl = document.getElementById('selectionCount');
+            const deleteBtn = document.getElementById('deleteBtn');
+            const readBtn = document.getElementById('readBtn');
+
+            countEl.textContent = count === 0 ? '0 Selected' :
+                                  count === 1 ? '1 Selected' :
+                                  `${count} Selected`;
+
+            deleteBtn.disabled = count === 0;
+            readBtn.disabled = count === 0;
+        }
+
+        function selectAll() {
+            // Get all visible conversation items
+            const conversations = document.querySelectorAll('.conversation-item');
+
+            conversations.forEach(conv => {
+                // Only select visible items
+                if (conv.style.display !== 'none') {
+                    const contactId = conv.getAttribute('data-contact');
+                    const circle = conv.querySelector('.select-circle');
+
+                    if (contactId && !selectedItems.has(contactId)) {
+                        selectedItems.add(contactId);
+                        if (circle) {
+                            circle.classList.add('selected');
+                        }
+                    }
+                }
+            });
+
+            updateSelectionCount();
+        }
+
+        function deleteSelected() {
+            if (selectedItems.size === 0) return;
+
+            // Check if we're in Recently Deleted view
+            const headerTitle = document.querySelector('.header-title');
+            const isDeletedView = headerTitle && headerTitle.textContent === 'Recently Deleted';
+
+            selectedItems.forEach(contactId => {
+                const item = document.querySelector(`.conversation-item[data-contact="${contactId}"]`);
+                if (item) {
+                    if (isDeletedView) {
+                        // If in deleted view, add to permanently deleted
+                        const permanentlyDeleted = JSON.parse(localStorage.getItem('permanentlyDeleted') || '[]');
+                        if (!permanentlyDeleted.includes(contactId)) {
+                            permanentlyDeleted.push(contactId);
+                            localStorage.setItem('permanentlyDeleted', JSON.stringify(permanentlyDeleted));
+                        }
+                    } else {
+                        // If in messages view, move to recently deleted
+                        const recentlyDeleted = JSON.parse(localStorage.getItem('recentlyDeleted') || '[]');
+                        if (!recentlyDeleted.includes(contactId)) {
+                            recentlyDeleted.push(contactId);
+                            localStorage.setItem('recentlyDeleted', JSON.stringify(recentlyDeleted));
+                        }
+
+                        // Store original time and change to "Deleted"
+                        const localTimeSpan = item.querySelector('.local-time');
+                        if (localTimeSpan && localTimeSpan.textContent !== 'Deleted') {
+                            const originalTimes = JSON.parse(localStorage.getItem('originalTimes') || '{}');
+                            originalTimes[contactId] = localTimeSpan.textContent;
+                            localStorage.setItem('originalTimes', JSON.stringify(originalTimes));
+                            localTimeSpan.textContent = 'Deleted';
+                        }
+
+                        // Change filter to deleted
+                        item.setAttribute('data-filter', 'deleted');
+                        item.classList.add('deleted-item');
+                    }
+                    item.style.display = 'none';
+                }
+            });
+
+            exitSelectionMode();
+
+            // If in deleted view, check if we should show empty state
+            if (isDeletedView) {
+                const deletedItems = document.querySelectorAll('.conversation-item[data-filter*="deleted"]');
+                let hasVisibleItems = false;
+                deletedItems.forEach(item => {
+                    if (item.style.display !== 'none') {
+                        hasVisibleItems = true;
+                    }
+                });
+
+                if (!hasVisibleItems) {
+                    const deletedEmpty = document.getElementById('deletedEmptyState');
+                    if (deletedEmpty) {
+                        deletedEmpty.style.display = 'flex';
+                    }
+                    // Hide delete all button
+                    document.getElementById('deleteAllBtn').classList.remove('visible');
+                }
+            } else {
+                // If in messages view, check if we should show empty state
+                const messageItems = document.querySelectorAll('.conversation-item[data-filter*="messages"]');
+                let hasVisibleMessages = false;
+                messageItems.forEach(item => {
+                    if (item.style.display !== 'none') {
+                        hasVisibleMessages = true;
+                    }
+                });
+
+                if (!hasVisibleMessages) {
+                    const messagesEmpty = document.getElementById('messagesEmptyState');
+                    if (messagesEmpty) {
+                        messagesEmpty.style.display = 'flex';
+                    }
+                }
+            }
+        }
+
+        function deleteAllRecent() {
+            // Get all items in Recently Deleted
+            const deletedItems = document.querySelectorAll('.conversation-item[data-filter*="deleted"]');
+            let hasItems = false;
+
+            deletedItems.forEach(item => {
+                if (item.style.display !== 'none') {
+                    hasItems = true;
+                    const contactId = item.getAttribute('data-contact');
+
+                    // Add to permanently deleted
+                    const permanentlyDeleted = JSON.parse(localStorage.getItem('permanentlyDeleted') || '[]');
+                    if (!permanentlyDeleted.includes(contactId)) {
+                        permanentlyDeleted.push(contactId);
+                        localStorage.setItem('permanentlyDeleted', JSON.stringify(permanentlyDeleted));
+                    }
+
+                    // Animate removal
+                    item.style.transition = 'all 0.3s ease';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(-100%)';
+
+                    setTimeout(() => {
+                        item.remove();
+                    }, 300);
+                }
+            });
+
+            if (hasItems) {
+                showToast('All messages permanently deleted');
+
+                // Show empty state after animation
+                setTimeout(() => {
+                    const deletedEmpty = document.getElementById('deletedEmptyState');
+                    if (deletedEmpty) {
+                        deletedEmpty.style.display = 'flex';
+                    }
+                    // Hide buttons
+                    document.getElementById('deleteAllBtn').classList.remove('visible');
+                    document.getElementById('recoverAllBtn').classList.remove('visible');
+                }, 350);
+            }
+        }
+
+        function recoverAllRecent() {
+            // Get all items in Recently Deleted
+            const deletedItems = document.querySelectorAll('.conversation-item[data-filter*="deleted"]');
+            let hasItems = false;
+
+            deletedItems.forEach(item => {
+                if (item.style.display !== 'none') {
+                    hasItems = true;
+                    const contactId = item.getAttribute('data-contact');
+
+                    // Remove from recentlyDeleted localStorage
+                    let recentlyDeleted = JSON.parse(localStorage.getItem('recentlyDeleted') || '[]');
+                    recentlyDeleted = recentlyDeleted.filter(id => id !== contactId);
+                    localStorage.setItem('recentlyDeleted', JSON.stringify(recentlyDeleted));
+
+                    // Restore original time
+                    const originalTimes = JSON.parse(localStorage.getItem('originalTimes') || '{}');
+                    const localTimeSpan = item.querySelector('.local-time');
+
+                    // Default times for pre-deleted contacts
+                    const defaultTimes = {
+                        'scam': 'Unknown',
+                        'brad': '10:58 AM'
+                    };
+
+                    if (localTimeSpan) {
+                        if (originalTimes[contactId]) {
+                            localTimeSpan.textContent = originalTimes[contactId];
+                            // Remove from originalTimes
+                            delete originalTimes[contactId];
+                            localStorage.setItem('originalTimes', JSON.stringify(originalTimes));
+                        } else if (defaultTimes[contactId]) {
+                            // Use default time for pre-deleted contacts
+                            localTimeSpan.textContent = defaultTimes[contactId];
+
+                            // Track this pre-deleted contact as recovered
+                            const recoveredPreDeleted = JSON.parse(localStorage.getItem('recoveredPreDeleted') || '[]');
+                            if (!recoveredPreDeleted.includes(contactId)) {
+                                recoveredPreDeleted.push(contactId);
+                                localStorage.setItem('recoveredPreDeleted', JSON.stringify(recoveredPreDeleted));
+                            }
+                        }
+                    }
+
+                    // Change filter back to messages
+                    item.setAttribute('data-filter', 'messages');
+                    item.classList.remove('deleted-item');
+
+                    // Animate removal from this view
+                    item.style.transition = 'all 0.3s ease';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(100%)';
+
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+
+            if (hasItems) {
+                showToast('All contacts recovered');
+
+                // After animation, show empty state (stay on Recently Deleted view)
+                setTimeout(() => {
+                    // Hide buttons
+                    document.getElementById('deleteAllBtn').classList.remove('visible');
+                    document.getElementById('recoverAllBtn').classList.remove('visible');
+
+                    // Reset any lingering styles from animations on recovered items
+                    const allConvs = document.querySelectorAll('.conversation-item');
+                    allConvs.forEach(conv => {
+                        conv.style.opacity = '';
+                        conv.style.transform = '';
+                        conv.style.transition = '';
+                    });
+
+                    // Show empty state
+                    const deletedEmpty = document.getElementById('deletedEmptyState');
+                    if (deletedEmpty) {
+                        deletedEmpty.style.display = 'flex';
+                    }
+                }, 400);
+            }
+        }
+
+        function refreshList() {
+            // Clear all localStorage data - reset everything to normal
+            localStorage.removeItem('recentlyDeleted');
+            localStorage.removeItem('permanentlyDeleted');
+            localStorage.removeItem('mutedChats');
+            localStorage.removeItem('originalTimes');
+            localStorage.removeItem('recoveredPreDeleted');
+            localStorage.removeItem('readChats');
+
+            // Reload the page to reset everything
+            window.location.reload();
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const toggle = document.getElementById('themeToggle');
+
+            body.classList.toggle('light-mode');
+            toggle.classList.toggle('light-mode');
+
+            // Save preference
+            const isLightMode = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+        }
+
+        // Apply saved theme on load
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').classList.add('light-mode');
+            }
+        }
+
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            applySavedTheme();
+
+            // Start real-time clock
+            updatePhoneTime();
+            setInterval(updatePhoneTime, 1000);
+
+            // Start real-time contact location times
+            updateContactTimes();
+            setInterval(updateContactTimes, 60000); // Update every minute
+        });
+
+        // Real-time clock function
+        function updatePhoneTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            const timeStr = `${hours}:${minutes} ${ampm}`;
+
+            const phoneTimeEl = document.getElementById('phoneTime');
+            if (phoneTimeEl) {
+                phoneTimeEl.textContent = timeStr;
+            }
+        }
+
+        // Timezone offsets
+        const timezones = {
+            'PST': -8,   // Pacific Standard Time
+            'EST': -5,   // Eastern Standard Time
+            'CST': -6,   // Central Standard Time
+            'GMT': 0,    // Greenwich Mean Time
+            'JST': 9,    // Japan Standard Time
+            'AEDT': 11,  // Australian Eastern Daylight Time
+            'CET': 1,    // Central European Time
+            'GST': 4     // Gulf Standard Time
+        };
+
+        function getTimeForTimezone(timezone) {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const offset = timezones[timezone] || 0;
+            const locationTime = new Date(utc + (offset * 3600000));
+
+            let hours = locationTime.getHours();
+            const minutes = locationTime.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+
+            return `${hours}:${minutes} ${ampm} ${timezone}`;
+        }
+
+        function updateContactTimes() {
+            const localTimeSpans = document.querySelectorAll('.local-time[data-timezone]');
+            localTimeSpans.forEach(span => {
+                const timezone = span.getAttribute('data-timezone');
+                if (timezone && timezones.hasOwnProperty(timezone)) {
+                    span.textContent = getTimeForTimezone(timezone);
+                }
+            });
+        }
+
+        // Store original text for resetting highlights
+        const originalTexts = new Map();
+
+        function searchContacts(query) {
+            const searchTerm = query.toLowerCase().trim();
+            const contacts = document.querySelectorAll('.conversation-item');
+
+            contacts.forEach(contact => {
+                // Only search in non-deleted contacts (messages filter)
+                const filter = contact.getAttribute('data-filter');
+                if (filter && filter.includes('deleted')) {
+                    return; // Skip deleted contacts
+                }
+
+                const nameEl = contact.querySelector('.contact-name');
+                const previewEl = contact.querySelector('.message-preview');
+
+                if (!nameEl || !previewEl) return;
+
+                // Store original text if not already stored
+                if (!originalTexts.has(nameEl)) {
+                    originalTexts.set(nameEl, nameEl.textContent);
+                }
+                if (!originalTexts.has(previewEl)) {
+                    originalTexts.set(previewEl, previewEl.textContent);
+                }
+
+                const originalName = originalTexts.get(nameEl);
+                const originalPreview = originalTexts.get(previewEl);
+
+                if (searchTerm === '') {
+                    // Reset to original text and show all non-deleted contacts
+                    nameEl.innerHTML = originalName;
+                    previewEl.innerHTML = originalPreview;
+                    contact.style.display = '';
+                } else {
+                    const nameLower = originalName.toLowerCase();
+                    const previewLower = originalPreview.toLowerCase();
+
+                    // Check if name or message matches search
+                    if (nameLower.includes(searchTerm) || previewLower.includes(searchTerm)) {
+                        contact.style.display = '';
+
+                        // Highlight matching text in name
+                        nameEl.innerHTML = highlightText(originalName, searchTerm);
+
+                        // Highlight matching text in preview
+                        previewEl.innerHTML = highlightText(originalPreview, searchTerm);
+                    } else {
+                        contact.style.display = 'none';
+                        // Reset text for hidden contacts
+                        nameEl.innerHTML = originalName;
+                        previewEl.innerHTML = originalPreview;
+                    }
+                }
+            });
+        }
+
+        function highlightText(text, searchTerm) {
+            if (!searchTerm) return text;
+
+            const regex = new RegExp(`(${escapeRegex(searchTerm)})`, 'gi');
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function showToast(message) {
+            // Create toast if it doesn't exist
+            let toast = document.getElementById('toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast';
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 100px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: rgba(60, 60, 60, 0.95);
+                    color: #fff;
+                    padding: 12px 24px;
+                    border-radius: 20px;
+                    font-size: 14px;
+                    z-index: 9999;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                `;
+                document.body.appendChild(toast);
+            }
+
+            toast.textContent = message;
+            toast.style.opacity = '1';
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 2000);
+        }
+
+        function markAsRead() {
+            if (selectedItems.size === 0) return;
+
+            const headerTitle = document.querySelector('.header-title');
+            const isViewingUnread = headerTitle && headerTitle.textContent === 'Unread';
+
+            selectedItems.forEach(contactId => {
+                const item = document.querySelector(`.conversation-item[data-contact="${contactId}"]`);
+                if (item) {
+                    const unreadDot = item.querySelector('.unread-dot');
+                    if (unreadDot) {
+                        unreadDot.style.display = 'none';
+                    }
+
+                    const currentFilter = item.getAttribute('data-filter');
+                    if (currentFilter && currentFilter.includes('unread')) {
+                        item.setAttribute('data-filter', currentFilter.replace('unread', '').trim());
+                    }
+
+                    if (isViewingUnread) {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+
+            updateUnreadBadge();
+
+            if (isViewingUnread) {
+                const remainingUnread = document.querySelectorAll('.conversation-item[data-filter*="unread"]');
+                if (remainingUnread.length === 0) {
+                    const unreadEmpty = document.getElementById('unreadEmptyState');
+                    if (unreadEmpty) {
+                        unreadEmpty.style.display = 'flex';
+                    }
+                }
+            }
+
+            exitSelectionMode();
+        }
+
+        function updateUnreadBadge() {
+            const unreadItems = document.querySelectorAll('.conversation-item[data-filter*="unread"]');
+            const badge = document.querySelector('.filter-menu-item .badge');
+            if (badge) {
+                const count = unreadItems.length;
+                if (count > 0) {
+                    badge.textContent = count;
+                    badge.style.display = 'inline';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+
+        // Edit Pins Mode Functions
+        function toggleEditPinsMode() {
+            isEditPinsMode = !isEditPinsMode;
+            const screenContent = document.getElementById('screenContent');
+            const editBtn = document.querySelector('.edit-btn');
+
+            if (isEditPinsMode) {
+                screenContent.classList.add('edit-pins-mode');
+                editBtn.textContent = 'Done';
+                editBtn.onclick = exitEditPinsMode;
+            } else {
+                exitEditPinsMode();
+            }
+        }
+
+        function exitEditPinsMode() {
+            isEditPinsMode = false;
+            const screenContent = document.getElementById('screenContent');
+            const editBtn = document.querySelector('.edit-btn');
+
+            screenContent.classList.remove('edit-pins-mode');
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = toggleEditMenu;
+        }
+
+        function togglePin(contactId) {
+            const item = document.querySelector(`.conversation-item[data-contact="${contactId}"]`);
+            const pinnedSection = document.getElementById('pinnedSection');
+            const existingPin = pinnedSection.querySelector(`.pinned-contact[data-contact="${contactId}"]`);
+
+            if (existingPin) {
+                // Unpin
+                existingPin.remove();
+                if (item) {
+                    item.classList.remove('is-pinned');
+                }
+            } else {
+                // Pin
+                const data = contactData[contactId];
+                if (data && item) {
+                    const pinHtml = `
+                        <div class="pinned-contact" data-contact="${contactId}" onclick="navigateToPinnedChat('${contactId}')">
+                            <div class="pinned-avatar ${data.gradient}">${data.initial}</div>
+                            <div class="pinned-name">${data.name}</div>
+                            <button class="pin-remove-btn" onclick="event.stopPropagation(); unpinContact('${contactId}')">
+                                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+                            </button>
+                        </div>
+                    `;
+                    pinnedSection.insertAdjacentHTML('beforeend', pinHtml);
+                    item.classList.add('is-pinned');
+                }
+            }
+        }
+
+        function unpinContact(contactId) {
+            const pinnedSection = document.getElementById('pinnedSection');
+            const pin = pinnedSection.querySelector(`.pinned-contact[data-contact="${contactId}"]`);
+            const item = document.querySelector(`.conversation-item[data-contact="${contactId}"]`);
+
+            if (pin) {
+                pin.remove();
+            }
+            if (item) {
+                item.classList.remove('is-pinned');
+            }
+        }
+
+        // Filter Menu Functions
+        function toggleFilterMenu() {
+            const overlay = document.getElementById('filterOverlay');
+            overlay.classList.toggle('active');
+        }
+
+        function closeFilterMenu() {
+            const overlay = document.getElementById('filterOverlay');
+            overlay.classList.remove('active');
+        }
+
+        function selectFilter(element, filterType) {
+            document.querySelectorAll('.filter-menu-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            element.classList.add('selected');
+
+            const headerTitle = document.querySelector('.header-title');
+            const deleteAllBtn = document.getElementById('deleteAllBtn');
+            const recoverAllBtn = document.getElementById('recoverAllBtn');
+
+            // Hide buttons by default
+            deleteAllBtn.classList.remove('visible');
+            recoverAllBtn.classList.remove('visible');
+
+            switch(filterType) {
+                case 'messages':
+                    headerTitle.textContent = 'Messages';
+                    break;
+                case 'unread':
+                    headerTitle.textContent = 'Unread';
+                    break;
+                case 'spam':
+                    headerTitle.textContent = 'Spam';
+                    break;
+                case 'deleted':
+                    headerTitle.textContent = 'Recently Deleted';
+                    deleteAllBtn.classList.add('visible');
+                    recoverAllBtn.classList.add('visible');
+                    break;
+            }
+
+            const conversations = document.querySelectorAll('.conversation-item');
+            const emptyStates = document.querySelectorAll('.empty-state');
+
+            emptyStates.forEach(state => {
+                state.style.display = 'none';
+            });
+
+            conversations.forEach(conv => {
+                const filters = conv.getAttribute('data-filter');
+                if (filters) {
+                    if (filters.includes(filterType)) {
+                        conv.style.display = 'flex';
+                    } else {
+                        conv.style.display = 'none';
+                    }
+                }
+            });
+
+            // Show empty state for spam
+            if (filterType === 'spam') {
+                const spamEmpty = document.getElementById('spamEmptyState');
+                if (spamEmpty) {
+                    spamEmpty.style.display = 'flex';
+                }
+            }
+
+            // Show empty state for messages if no messages
+            if (filterType === 'messages') {
+                const messageItems = document.querySelectorAll('.conversation-item[data-filter*="messages"]');
+                let hasVisibleMessages = false;
+                messageItems.forEach(item => {
+                    if (item.style.display !== 'none') {
+                        hasVisibleMessages = true;
+                    }
+                });
+
+                if (!hasVisibleMessages) {
+                    const messagesEmpty = document.getElementById('messagesEmptyState');
+                    if (messagesEmpty) {
+                        messagesEmpty.style.display = 'flex';
+                    }
+                }
+            }
+
+            // Show empty state for unread if no unread messages
+            if (filterType === 'unread') {
+                const unreadItems = document.querySelectorAll('.conversation-item[data-filter*="unread"]');
+                let hasVisibleUnread = false;
+                unreadItems.forEach(item => {
+                    if (item.style.display !== 'none') {
+                        hasVisibleUnread = true;
+                    }
+                });
+
+                if (!hasVisibleUnread) {
+                    const unreadEmpty = document.getElementById('unreadEmptyState');
+                    if (unreadEmpty) {
+                        unreadEmpty.style.display = 'flex';
+                    }
+                }
+            }
+
+            // Show empty state for deleted if no deleted messages
+            if (filterType === 'deleted') {
+                const deletedItems = document.querySelectorAll('.conversation-item[data-filter*="deleted"]');
+                let hasVisibleDeleted = false;
+                deletedItems.forEach(item => {
+                    if (item.style.display !== 'none') {
+                        hasVisibleDeleted = true;
+                    }
+                });
+
+                if (!hasVisibleDeleted) {
+                    const deletedEmpty = document.getElementById('deletedEmptyState');
+                    if (deletedEmpty) {
+                        deletedEmpty.style.display = 'flex';
+                    }
+                    // Hide buttons when no items
+                    deleteAllBtn.classList.remove('visible');
+                    recoverAllBtn.classList.remove('visible');
+                }
+            }
+
+            setTimeout(() => {
+                closeFilterMenu();
+            }, 150);
+        }
+
+        // Profile Modal Functions
+        const colorGradients = {
+            1: 'linear-gradient(135deg, #ff6b6b, #ee5a5a)',
+            2: 'linear-gradient(135deg, #5ac8fa, #007AFF)',
+            3: 'linear-gradient(135deg, #34c759, #30d158)',
+            4: 'linear-gradient(135deg, #ff9500, #ff9f0a)',
+            5: 'linear-gradient(135deg, #af52de, #bf5af2)',
+            6: 'linear-gradient(135deg, #ff2d55, #ff375f)',
+            7: 'linear-gradient(135deg, #5ac8fa, #64d2ff)'
+        };
+
+        let selectedColorIndex = 2;
+
+        function openProfileModal() {
+            const overlay = document.getElementById('profileModalOverlay');
+            overlay.classList.add('active');
+        }
+
+        function closeProfileModal() {
+            const overlay = document.getElementById('profileModalOverlay');
+            overlay.classList.remove('active');
+        }
+
+        function selectProfileColor(colorIndex) {
+            selectedColorIndex = colorIndex;
+
+            // Update selected state
+            document.querySelectorAll('.color-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.querySelector(`.color-option.color-${colorIndex}`).classList.add('selected');
+
+            // Update avatar preview
+            const avatar = document.getElementById('profileAvatarLarge');
+            avatar.style.background = colorGradients[colorIndex];
+        }
+
+        function saveProfile() {
+            const firstName = document.getElementById('profileFirstName').value.trim();
+            const lastName = document.getElementById('profileLastName').value.trim();
+            const fullName = `${firstName} ${lastName}`.trim();
+            const initial = firstName.charAt(0).toUpperCase() || 'B';
+
+            // Update profile card
+            const profileName = document.querySelector('.profile-card .profile-name');
+            const profileAvatar = document.querySelector('.profile-card .avatar');
+
+            if (profileName) {
+                profileName.textContent = fullName || 'Ben Vo';
+            }
+
+            if (profileAvatar) {
+                profileAvatar.textContent = initial;
+                profileAvatar.style.background = colorGradients[selectedColorIndex];
+            }
+
+            // Update modal avatar initial
+            const modalAvatar = document.getElementById('profileAvatarLarge');
+            modalAvatar.textContent = initial;
+
+            closeProfileModal();
+        }
+
+        // Update modal avatar when typing first name
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstNameInput = document.getElementById('profileFirstName');
+            if (firstNameInput) {
+                firstNameInput.addEventListener('input', function() {
+                    const initial = this.value.charAt(0).toUpperCase() || 'B';
+                    document.getElementById('profileAvatarLarge').textContent = initial;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
