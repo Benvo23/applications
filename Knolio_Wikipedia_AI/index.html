@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowlio - AI-Powered Wikipedia Explorer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/220px-Wikipedia-logo-v2.svg.png" alt="Knowlio" class="logo-img">
+                    <span class="logo-text">Knowlio</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle" title="Collapse sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <button class="new-chat-btn" id="newChatBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>New Chat</span>
+            </button>
+
+            <div class="history-section">
+                <div id="pinnedSection" class="chat-group hidden">
+                    <h3>Pinned</h3>
+                    <ul id="pinnedList" class="history-list">
+                        <!-- Pinned chats will be added here -->
+                    </ul>
+                </div>
+                <div class="chat-group">
+                    <h3>Recent Chats</h3>
+                    <ul id="chatList" class="history-list">
+                        <!-- Chat items will be added here -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Chat Menu Dropdown (hidden by default) -->
+            <div id="chatMenu" class="chat-menu hidden">
+                <button class="chat-menu-item" data-action="rename">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    </svg>
+                    Rename
+                </button>
+                <button class="chat-menu-item" data-action="pin">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="17" x2="12" y2="22"/>
+                        <path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>
+                    </svg>
+                    <span id="pinText">Pin</span>
+                </button>
+                <button class="chat-menu-item delete" data-action="delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 6h18"/>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                    </svg>
+                    Delete
+                </button>
+            </div>
+
+            <!-- Rename Modal -->
+            <div id="renameModal" class="modal hidden">
+                <div class="modal-content">
+                    <h3>Rename Chat</h3>
+                    <input type="text" id="renameInput" placeholder="Enter new name...">
+                    <div class="modal-buttons">
+                        <button id="cancelRename" class="btn-secondary">Cancel</button>
+                        <button id="confirmRename" class="btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="themeToggle" class="theme-toggle" title="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <p>Powered by Wikipedia API</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="welcome-screen">
+                <div class="welcome-content">
+                    <div class="welcome-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/220px-Wikipedia-logo-v2.svg.png" alt="Knowlio">
+                    </div>
+                    <h1>Welcome to Knowlio</h1>
+                    <p>Your intelligent Wikipedia explorer. Ask any question and get instant answers from the world's largest encyclopedia.</p>
+
+                    <!-- Did You Know Section -->
+                    <div class="did-you-know" id="didYouKnow">
+                        <div class="dyk-header">
+                            <h3>Did you know?</h3>
+                            <button class="dyk-refresh" id="dykRefresh" title="Get new fact">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                    <path d="M3 3v5h5"/>
+                                    <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+                                    <path d="M16 21h5v-5"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="dyk-content" id="dykContent">
+                            <div class="dyk-loading">
+                                <div class="loading-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="suggestions">
+                        <h3>Try asking about:</h3>
+                        <div class="suggestion-chips">
+                            <button class="suggestion-chip" data-query="What is quantum computing?">Quantum Computing</button>
+                            <button class="suggestion-chip" data-query="Tell me about the Roman Empire">Roman Empire</button>
+                            <button class="suggestion-chip" data-query="How does photosynthesis work?">Photosynthesis</button>
+                            <button class="suggestion-chip" data-query="Who was Albert Einstein?">Albert Einstein</button>
+                            <button class="suggestion-chip" data-query="What is machine learning?">Machine Learning</button>
+                            <button class="suggestion-chip" data-query="History of the Internet">History of Internet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Container -->
+            <div id="chatContainer" class="chat-container hidden">
+                <div id="messagesArea" class="messages-area">
+                    <!-- Messages will be added here -->
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <form id="searchForm" class="search-form">
+                    <div class="input-wrapper">
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Ask anything... (e.g., 'What is black hole?')"
+                            autocomplete="off"
+                        >
+                        <button type="submit" id="submitBtn" class="submit-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="input-hint">WikiMind searches Wikipedia in real-time to find accurate information</p>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
