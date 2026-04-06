@@ -1,0 +1,604 @@
+/* ============================================
+   AI Now — Podcast & About Page Styles
+   ============================================ */
+
+/* Active link in top bar */
+.active-link {
+    color: #e2e8f0 !important;
+    font-weight: 600;
+}
+
+/* --- Page Hero --- */
+.page-hero {
+    padding: 60px 0 48px;
+}
+
+.page-hero-grid {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+}
+
+.page-hero-content {
+    flex: 1;
+}
+
+.page-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    padding: 5px 14px;
+    background: var(--accent-subtle);
+    border-radius: 100px;
+}
+
+.page-hero h1 {
+    font-family: var(--font-serif);
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.18;
+    color: var(--text);
+    margin-bottom: 16px;
+    max-width: 620px;
+}
+
+.page-hero-content > p {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 540px;
+    margin-bottom: 28px;
+}
+
+/* Podcast platforms */
+.podcast-platforms {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.platforms-label {
+    font-size: 0.82rem;
+    color: var(--text-tertiary);
+    font-weight: 600;
+}
+
+.platform-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+    transition: all 0.2s;
+}
+
+.platform-badge:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-subtle);
+}
+
+/* Podcast art (large) */
+.podcast-art-large {
+    width: 280px;
+    height: 280px;
+    flex-shrink: 0;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--accent) 0%, #4f46e5 50%, #7c3aed 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 50px rgba(99,102,241,0.25);
+}
+
+.podcast-art-inner-large {
+    text-align: center;
+    color: #fff;
+}
+
+.podcast-art-inner-large span {
+    display: block;
+    margin-top: 14px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+/* --- Page Sections --- */
+.page-section {
+    padding: 56px 0;
+}
+
+.page-section.bg-subtle {
+    background: var(--bg-subtle);
+}
+
+.page-section .section-title {
+    margin-bottom: 32px;
+}
+
+/* --- Featured Episode --- */
+.episode-featured {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.episode-player {
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border);
+}
+
+.ep-player-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 28px;
+}
+
+.ep-play-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.ep-play-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(99,102,241,0.3);
+}
+
+.ep-play-btn.playing {
+    background: #10b981;
+    box-shadow: 0 0 0 4px rgba(16,185,129,0.2);
+    animation: pulseGreen 2s ease infinite;
+}
+
+@keyframes pulseGreen {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(16,185,129,0.2); }
+    50% { box-shadow: 0 0 0 8px rgba(16,185,129,0.1); }
+}
+
+.ep-player-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ep-player-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.ep-player-waveform {
+    height: 40px;
+    margin-bottom: 6px;
+}
+
+.waveform-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 100%;
+}
+
+.waveform-bar {
+    flex: 1;
+    background: var(--accent);
+    opacity: 0.35;
+    border-radius: 2px 2px 0 0;
+    min-width: 3px;
+    transition: opacity 0.2s;
+}
+
+.waveform-bar:nth-child(3n) { opacity: 0.5; }
+.waveform-bar:nth-child(5n) { opacity: 0.25; }
+
+.ep-player-time {
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+}
+
+.episode-details {
+    padding: 32px;
+}
+
+.episode-date {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.episode-details h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    line-height: 1.3;
+    color: var(--text);
+    margin-bottom: 14px;
+}
+
+.episode-details p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.episode-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+/* --- Episode List --- */
+.episodes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.episode-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 28px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.25s;
+}
+
+.episode-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(99,102,241,0.08);
+    transform: translateY(-2px);
+}
+
+.episode-number {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.4;
+    flex-shrink: 0;
+    width: 48px;
+    text-align: center;
+}
+
+.episode-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.episode-info h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+    margin-bottom: 6px;
+}
+
+.episode-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+.ep-card-play {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.ep-card-play:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+}
+
+.ep-card-play.playing {
+    border-color: #10b981;
+    background: #10b981;
+    color: #fff;
+}
+
+/* ============================================
+   About Page
+   ============================================ */
+
+.about-hero {
+    padding-bottom: 32px;
+}
+
+.about-hero-content {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.about-hero h1 {
+    max-width: 100%;
+}
+
+.about-hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.about-narrow {
+    max-width: 860px;
+}
+
+/* Mission Cards */
+.about-mission-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.about-mission-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px 28px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.about-mission-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(99,102,241,0.08);
+    transform: translateY(-3px);
+}
+
+.about-mission-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.about-mission-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.about-mission-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Our Story */
+.about-story {
+    max-width: 680px;
+}
+
+.about-story p {
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 1.4em;
+}
+
+.about-story blockquote {
+    border-left: 4px solid var(--accent);
+    margin: 2em 0;
+    padding: 20px 28px;
+    background: var(--bg-subtle);
+    border-radius: 0 14px 14px 0;
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text);
+}
+
+.about-story blockquote cite {
+    display: block;
+    margin-top: 12px;
+    font-style: normal;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* Team Grid */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.team-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.team-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(99,102,241,0.08);
+}
+
+.team-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 14px;
+    border: 3px solid var(--border);
+}
+
+.team-card:hover .team-avatar {
+    border-color: var(--accent);
+}
+
+.team-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.team-role {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+}
+
+.team-card p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Stats */
+.about-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.about-stat {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.about-stat:hover {
+    border-color: var(--accent);
+}
+
+.about-stat-num {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.about-stat-label {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+/* Contact */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.contact-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: all 0.2s;
+}
+
+.contact-card:hover {
+    border-color: var(--accent);
+}
+
+.contact-card h4 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.contact-card p {
+    font-size: 0.88rem;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .page-hero h1 { font-size: 2rem; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .page-hero-grid { flex-direction: column; text-align: center; }
+    .page-hero-content > p { max-width: 100%; }
+    .podcast-platforms { justify-content: center; }
+    .podcast-art-large { width: 200px; height: 200px; }
+    .podcast-art-large svg { width: 48px; height: 48px; }
+    .page-hero h1 { font-size: 1.6rem; }
+    .about-hero-content { text-align: center; }
+    .about-mission-grid { grid-template-columns: 1fr; }
+    .ep-player-bar { flex-direction: column; align-items: flex-start; }
+    .episode-card { flex-direction: column; align-items: flex-start; text-align: left; }
+    .episode-number { width: auto; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .page-hero h1 { font-size: 1.35rem; }
+    .about-stats-grid { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+}

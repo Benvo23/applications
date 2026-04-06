@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About AI Now — Independent AI Journalism</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="top-bar-left">
+                <span class="pulse-dot"></span>
+                <span class="top-bar-live">LIVE</span>
+                <span class="top-bar-clock" id="liveClock"></span>
+            </div>
+            <div class="top-bar-right">
+                <a href="index.html">Home</a>
+                <a href="podcast.html">Podcast</a>
+                <a href="about.html" class="active-link">About</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header" id="siteHeader">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-mark">
+                    <span class="logo-a">A</span><span class="logo-i">I</span>
+                </div>
+                <div class="logo-wordmark">
+                    <span class="logo-main">AI Now</span>
+                    <span class="logo-sub">Intelligence Delivered</span>
+                </div>
+            </a>
+            <nav class="main-nav" id="mainNav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="podcast.html" class="nav-link">Podcast</a>
+                <a href="about.html" class="nav-link active">About</a>
+            </nav>
+            <div class="header-actions">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- About Hero -->
+        <section class="page-hero about-hero">
+            <div class="container">
+                <div class="about-hero-content">
+                    <span class="page-eyebrow">About AI Now</span>
+                    <h1>Independent AI journalism for those who build, deploy, and regulate artificial intelligence</h1>
+                    <p class="about-hero-sub">We cut through the noise to bring you the stories that matter — no hype, no fear, just clarity. AI Now is read by over 150,000 researchers, engineers, executives, and policymakers every day.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission -->
+        <section class="page-section">
+            <div class="container about-narrow">
+                <div class="about-mission-grid">
+                    <div class="about-mission-card">
+                        <div class="about-mission-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                        </div>
+                        <h3>Accuracy First</h3>
+                        <p>Every story is fact-checked and technically reviewed. We don't publish rumors, and we correct mistakes publicly and promptly.</p>
+                    </div>
+                    <div class="about-mission-card">
+                        <div class="about-mission-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h3>Independent</h3>
+                        <p>We are not owned by, affiliated with, or funded by any AI company. Our editorial decisions are made independently, always.</p>
+                    </div>
+                    <div class="about-mission-card">
+                        <div class="about-mission-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        </div>
+                        <h3>Depth Over Speed</h3>
+                        <p>We'd rather be right than first. Our deep dives and analysis pieces go beyond the headline to explain what really matters and why.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Story -->
+        <section class="page-section bg-subtle">
+            <div class="container about-narrow">
+                <h2 class="section-title"><span class="title-accent">//</span> Our Story</h2>
+                <div class="about-story">
+                    <p>AI Now was founded in 2024 by a small group of journalists and engineers who believed the AI conversation needed better information. At the time, AI coverage was split between breathless hype and unfounded panic — with very little in between.</p>
+                    <p>We set out to build the publication we wanted to read ourselves: technically informed, editorially independent, and accessible to anyone — whether you're training models or trying to understand what they mean for your industry.</p>
+                    <p>Today, AI Now reaches over 150,000 daily readers across 80 countries. Our team includes former researchers from leading AI labs, investigative journalists from major newsrooms, and policy analysts who've worked in government.</p>
+
+                    <blockquote>
+                        "The AI story is too important to be told only by the companies building it. That's why we exist."
+                        <cite>— The AI Now Editorial Team</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Team -->
+        <section class="page-section">
+            <div class="container about-narrow">
+                <h2 class="section-title"><span class="title-accent">//</span> The Team</h2>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <img src="https://i.pravatar.cc/200?img=12" alt="Jane Doe, Editor-in-Chief" class="team-avatar">
+                        <h4>Jane Doe</h4>
+                        <span class="team-role">Editor-in-Chief</span>
+                        <p>Former tech reporter. Covers AI strategy and industry trends.</p>
+                    </div>
+                    <div class="team-card">
+                        <img src="https://i.pravatar.cc/200?img=3" alt="Alex Johnson, Senior Reporter" class="team-avatar">
+                        <h4>Alex Johnson</h4>
+                        <span class="team-role">Senior Reporter, Industry</span>
+                        <p>Tracks the business of AI — chips, cloud, and enterprise adoption.</p>
+                    </div>
+                    <div class="team-card">
+                        <img src="https://i.pravatar.cc/200?img=5" alt="Maria Lopez, Policy Correspondent" class="team-avatar">
+                        <h4>Maria Lopez</h4>
+                        <span class="team-role">Policy Correspondent</span>
+                        <p>Covers AI regulation and governance across the US, EU, and Asia.</p>
+                    </div>
+                    <div class="team-card">
+                        <img src="https://i.pravatar.cc/200?img=8" alt="Sam Writer, Research Editor" class="team-avatar">
+                        <h4>Sam Writer</h4>
+                        <span class="team-role">Research Editor</span>
+                        <p>PhD in machine learning. Translates papers into stories that matter.</p>
+                    </div>
+                    <div class="team-card">
+                        <img src="https://i.pravatar.cc/200?img=15" alt="Robin Lee, Robotics Reporter" class="team-avatar">
+                        <h4>Robin Lee</h4>
+                        <span class="team-role">Robotics & Hardware</span>
+                        <p>Former robotics engineer. Covers embodied AI and autonomous systems.</p>
+                    </div>
+                    <div class="team-card">
+                        <img src="https://i.pravatar.cc/200?img=22" alt="Dr. A. Researcher, Science Correspondent" class="team-avatar">
+                        <h4>Dr. A. Researcher</h4>
+                        <span class="team-role">Science Correspondent</span>
+                        <p>Reports on breakthroughs in AI for healthcare, materials, and climate.</p>
+                    </div>
+                    <div class="team-card">
+                        <img src="https://i.pravatar.cc/200?img=30" alt="Prof. J. Analyst, Opinion Editor" class="team-avatar">
+                        <h4>Prof. J. Analyst</h4>
+                        <span class="team-role">Opinion & Analysis</span>
+                        <p>Philosophy of technology professor. Writes our opinion and ethics columns.</p>
+                    </div>
+                    <div class="team-card">
+                        <img src="https://i.pravatar.cc/200?img=26" alt="Chris Martin, Startups Reporter" class="team-avatar">
+                        <h4>Chris Martin</h4>
+                        <span class="team-role">Startups Reporter</span>
+                        <p>Covers AI startups, funding rounds, and the venture capital landscape.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- By the Numbers -->
+        <section class="page-section bg-subtle">
+            <div class="container about-narrow">
+                <h2 class="section-title"><span class="title-accent">//</span> By the Numbers</h2>
+                <div class="about-stats-grid">
+                    <div class="about-stat">
+                        <span class="about-stat-num">150K+</span>
+                        <span class="about-stat-label">Daily readers</span>
+                    </div>
+                    <div class="about-stat">
+                        <span class="about-stat-num">80</span>
+                        <span class="about-stat-label">Countries reached</span>
+                    </div>
+                    <div class="about-stat">
+                        <span class="about-stat-num">2,400+</span>
+                        <span class="about-stat-label">Articles published</span>
+                    </div>
+                    <div class="about-stat">
+                        <span class="about-stat-num">147</span>
+                        <span class="about-stat-label">Podcast episodes</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="page-section">
+            <div class="container about-narrow">
+                <h2 class="section-title"><span class="title-accent">//</span> Get in Touch</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h4>General Inquiries</h4>
+                        <p>hello@ainow.example.com</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Press & Media</h4>
+                        <p>press@ainow.example.com</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Advertising</h4>
+                        <p>ads@ainow.example.com</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Tips & Story Ideas</h4>
+                        <p>tips@ainow.example.com</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-mark"><span class="logo-a">A</span><span class="logo-i">I</span></div>
+                        <span class="logo-main footer-logo-text">AI Now</span>
+                    </a>
+                    <p>Independent AI journalism for those who build, deploy, and regulate artificial intelligence.</p>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Site</h4>
+                    <a href="index.html">Home</a>
+                    <a href="podcast.html">Podcast</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Connect</h4>
+                    <a href="#">Twitter / X</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">RSS Feed</a>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI Now. Independent publication. Not affiliated with any AI company.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme persistence
+        const saved = localStorage.getItem('ainow-settings');
+        if (saved) {
+            try {
+                const s = JSON.parse(saved);
+                if (s.theme === 'dark' || (s.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+                if (s.accentColor) {
+                    document.documentElement.style.setProperty('--accent', s.accentColor);
+                    document.documentElement.style.setProperty('--accent-light', s.accentColor + 'cc');
+                    document.documentElement.style.setProperty('--accent-subtle', s.accentColor + '18');
+                }
+                if (s.fontSize) document.documentElement.setAttribute('data-font-size', s.fontSize);
+            } catch(e) {}
+        }
+
+        // Live clock
+        const clockEl = document.getElementById('liveClock');
+        function tick() {
+            clockEl.textContent = new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+        }
+        tick(); setInterval(tick, 1000);
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+        }, { passive: true });
+
+        // Mobile menu
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const nav = document.getElementById('mainNav');
+        menuBtn.addEventListener('click', () => { nav.classList.toggle('open'); menuBtn.classList.toggle('active'); });
+    </script>
+</body>
+</html>

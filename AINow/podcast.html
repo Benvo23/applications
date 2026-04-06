@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Now Podcast — Weekly Conversations on Artificial Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="top-bar-left">
+                <span class="pulse-dot"></span>
+                <span class="top-bar-live">LIVE</span>
+                <span class="top-bar-clock" id="liveClock"></span>
+            </div>
+            <div class="top-bar-right">
+                <a href="index.html">Home</a>
+                <a href="podcast.html" class="active-link">Podcast</a>
+                <a href="about.html">About</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header" id="siteHeader">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-mark">
+                    <span class="logo-a">A</span><span class="logo-i">I</span>
+                </div>
+                <div class="logo-wordmark">
+                    <span class="logo-main">AI Now</span>
+                    <span class="logo-sub">Intelligence Delivered</span>
+                </div>
+            </a>
+            <nav class="main-nav" id="mainNav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="podcast.html" class="nav-link active">Podcast</a>
+                <a href="about.html" class="nav-link">About</a>
+            </nav>
+            <div class="header-actions">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Podcast Hero -->
+        <section class="page-hero podcast-hero">
+            <div class="container">
+                <div class="page-hero-grid">
+                    <div class="page-hero-content">
+                        <span class="page-eyebrow">The AI Now Podcast</span>
+                        <h1>Weekly conversations with the people building the future of AI</h1>
+                        <p>Every week, we sit down with researchers, founders, policymakers, and engineers shaping the AI landscape. No hype — just honest, in-depth conversations about what's really happening.</p>
+                        <div class="podcast-platforms">
+                            <span class="platforms-label">Listen on:</span>
+                            <a href="#" class="platform-badge">Apple Podcasts</a>
+                            <a href="#" class="platform-badge">Spotify</a>
+                            <a href="#" class="platform-badge">YouTube</a>
+                            <a href="#" class="platform-badge">RSS</a>
+                        </div>
+                    </div>
+                    <div class="page-hero-art podcast-art-large">
+                        <div class="podcast-art-inner-large">
+                            <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                            <span>AI Now Podcast</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Episode (Featured) -->
+        <section class="page-section">
+            <div class="container">
+                <h2 class="section-title"><span class="title-accent">//</span> Latest Episode</h2>
+                <div class="episode-featured">
+                    <div class="episode-player">
+                        <div class="ep-player-bar">
+                            <button class="ep-play-btn" aria-label="Play">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </button>
+                            <div class="ep-player-info">
+                                <div class="ep-player-title">Ep. 147: "Is Open Source AI Winning?"</div>
+                                <div class="ep-player-waveform">
+                                    <div class="waveform-bars" id="waveformBars"></div>
+                                </div>
+                                <div class="ep-player-time">0:00 / 52:14</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="episode-details">
+                        <span class="episode-date">March 27, 2026 &middot; 52 min</span>
+                        <h3>Ep. 147: "Is Open Source AI Winning?"</h3>
+                        <p>In this episode, we explore the rapid rise of open-weight models and what it means for the industry. Our guest — a senior AI researcher at a major tech company — argues that open source has already won the developer mindset, and that closed labs need to find new moats beyond model weights.</p>
+                        <p>We cover: the economics of open vs. closed models, why inference cost matters more than training cost, the regulatory implications of freely available frontier models, and whether "open source AI" is even the right term.</p>
+                        <div class="episode-tags">
+                            <span class="av-tag">Open Source</span>
+                            <span class="av-tag">LLMs</span>
+                            <span class="av-tag">Industry</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Episodes -->
+        <section class="page-section bg-subtle">
+            <div class="container">
+                <h2 class="section-title"><span class="title-accent">//</span> All Episodes</h2>
+                <div class="episodes-list">
+
+                    <div class="episode-card">
+                        <div class="episode-number">146</div>
+                        <div class="episode-info">
+                            <span class="episode-date">March 20, 2026 &middot; 48 min</span>
+                            <h4>The AI Chip Wars: Who's Really Winning?</h4>
+                            <p>A deep dive into the semiconductor race powering AI, with an industry analyst who tracks every major chipmaker.</p>
+                        </div>
+                        <button class="ep-card-play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">145</div>
+                        <div class="episode-info">
+                            <span class="episode-date">March 13, 2026 &middot; 55 min</span>
+                            <h4>Regulating AI Without Killing Innovation</h4>
+                            <p>A former tech policy advisor breaks down the global regulatory landscape and where it's heading next.</p>
+                        </div>
+                        <button class="ep-card-play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">144</div>
+                        <div class="episode-info">
+                            <span class="episode-date">March 6, 2026 &middot; 44 min</span>
+                            <h4>Inside an AI Startup: From Zero to Series B</h4>
+                            <p>A founder shares the unfiltered story of building an AI company — the fundraising, the pivots, the near-death moments.</p>
+                        </div>
+                        <button class="ep-card-play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">143</div>
+                        <div class="episode-info">
+                            <span class="episode-date">February 27, 2026 &middot; 61 min</span>
+                            <h4>AI in Medicine: Hype vs. Reality</h4>
+                            <p>A practicing radiologist and an ML researcher debate what AI can and can't do in clinical settings today.</p>
+                        </div>
+                        <button class="ep-card-play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">142</div>
+                        <div class="episode-info">
+                            <span class="episode-date">February 20, 2026 &middot; 50 min</span>
+                            <h4>The Interpretability Problem: Can We Ever Understand What Models Think?</h4>
+                            <p>A leading interpretability researcher explains why understanding AI reasoning is both harder and more important than most people realize.</p>
+                        </div>
+                        <button class="ep-card-play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">141</div>
+                        <div class="episode-info">
+                            <span class="episode-date">February 13, 2026 &middot; 47 min</span>
+                            <h4>Robotics Is Having Its ChatGPT Moment</h4>
+                            <p>Why humanoid robots went from sci-fi to factory floors in under two years, and what comes next.</p>
+                        </div>
+                        <button class="ep-card-play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">140</div>
+                        <div class="episode-info">
+                            <span class="episode-date">February 6, 2026 &middot; 53 min</span>
+                            <h4>The $100B Question: Is AI Infrastructure Overbuilt?</h4>
+                            <p>An infrastructure investor argues that the current buildout is rational — and a skeptic explains why it might be the next bubble.</p>
+                        </div>
+                        <button class="ep-card-play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">139</div>
+                        <div class="episode-info">
+                            <span class="episode-date">January 30, 2026 &middot; 42 min</span>
+                            <h4>AI and Education: Teaching in the Age of Language Models</h4>
+                            <p>Two professors discuss how AI is changing the classroom — for better and worse — and what universities should do about it.</p>
+                        </div>
+                        <button class="ep-card-play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-mark"><span class="logo-a">A</span><span class="logo-i">I</span></div>
+                        <span class="logo-main footer-logo-text">AI Now</span>
+                    </a>
+                    <p>Independent AI journalism for those who build, deploy, and regulate artificial intelligence.</p>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Site</h4>
+                    <a href="index.html">Home</a>
+                    <a href="podcast.html">Podcast</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Connect</h4>
+                    <a href="#">Twitter / X</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">RSS Feed</a>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI Now. Independent publication. Not affiliated with any AI company.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme persistence
+        const saved = localStorage.getItem('ainow-settings');
+        if (saved) {
+            try {
+                const s = JSON.parse(saved);
+                if (s.theme === 'dark' || (s.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+                if (s.accentColor) {
+                    document.documentElement.style.setProperty('--accent', s.accentColor);
+                    document.documentElement.style.setProperty('--accent-light', s.accentColor + 'cc');
+                    document.documentElement.style.setProperty('--accent-subtle', s.accentColor + '18');
+                }
+                if (s.fontSize) document.documentElement.setAttribute('data-font-size', s.fontSize);
+            } catch(e) {}
+        }
+
+        // Live clock
+        const clockEl = document.getElementById('liveClock');
+        function tick() {
+            clockEl.textContent = new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+        }
+        tick(); setInterval(tick, 1000);
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 10);
+        }, { passive: true });
+
+        // Mobile menu
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const nav = document.getElementById('mainNav');
+        menuBtn.addEventListener('click', () => { nav.classList.toggle('open'); menuBtn.classList.toggle('active'); });
+
+        // Waveform bars
+        const waveform = document.getElementById('waveformBars');
+        if (waveform) {
+            for (let i = 0; i < 60; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'waveform-bar';
+                bar.style.height = (Math.random() * 80 + 20) + '%';
+                waveform.appendChild(bar);
+            }
+        }
+
+        // Play buttons — toggle playing state
+        let currentlyPlaying = null;
+
+        document.querySelectorAll('.ep-play-btn, .ep-card-play').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const wasPlaying = btn.classList.contains('playing');
+
+                // Reset all
+                document.querySelectorAll('.ep-play-btn, .ep-card-play').forEach(b => {
+                    b.classList.remove('playing');
+                    b.innerHTML = '<svg width="' + (b.classList.contains('ep-play-btn') ? '24' : '18') + '" height="' + (b.classList.contains('ep-play-btn') ? '24' : '18') + '" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+                });
+
+                if (wasPlaying) {
+                    currentlyPlaying = null;
+                    return;
+                }
+
+                btn.classList.add('playing');
+                const size = btn.classList.contains('ep-play-btn') ? '24' : '18';
+                btn.innerHTML = '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+                currentlyPlaying = btn;
+
+                // Animate waveform if it's the featured episode
+                if (btn.classList.contains('ep-play-btn') && waveform) {
+                    waveform.querySelectorAll('.waveform-bar').forEach(bar => {
+                        bar.style.transition = 'height 0.3s ease';
+                        setInterval(() => {
+                            if (btn.classList.contains('playing')) {
+                                bar.style.height = (Math.random() * 80 + 20) + '%';
+                            }
+                        }, 300 + Math.random() * 200);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
