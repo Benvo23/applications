@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoneyMap</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div></div>
+      <div class="header-center">
+        <h1>MoneyMap</h1>
+        <p class="subtitle">See your money in every currency</p>
+      </div>
+      <button id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+        <span class="theme-icon-dark">&#9790;</span>
+        <span class="theme-icon-light">&#9728;</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="input-bar">
+    <div class="input-group">
+      <label for="amount">Amount</label>
+      <input type="number" id="amount" placeholder="100" min="0" step="any" value="100">
+    </div>
+    <div class="input-group">
+      <label for="currency">Currency</label>
+      <select id="currency"></select>
+    </div>
+    <button id="convert-btn">Convert</button>
+  </section>
+
+  <nav class="mode-tabs">
+    <button class="tab active" data-mode="map">Map</button>
+    <button class="tab" data-mode="flags">Flags</button>
+    <button class="tab" data-mode="ranking">Ranking</button>
+  </nav>
+
+  <main id="display">
+    <div id="map-view" class="view active">
+      <div id="map"></div>
+      <div id="locked-panel" class="locked-panel hidden"></div>
+    </div>
+    <div id="flags-view" class="view">
+      <div class="flags-toolbar">
+        <input type="text" id="flags-search" placeholder="Search countries..." autocomplete="off">
+        <button class="region-btn active" data-region="all">All</button>
+        <button class="region-btn" data-region="americas">Americas</button>
+        <button class="region-btn" data-region="europe">Europe</button>
+        <button class="region-btn" data-region="asia">Asia</button>
+        <button class="region-btn" data-region="africa">Africa</button>
+        <button class="region-btn" data-region="oceania">Oceania</button>
+        <button class="region-btn" data-region="middleeast">Middle East</button>
+      </div>
+      <div id="flags-grid"></div>
+    </div>
+    <div id="ranking-view" class="view">
+      <div class="ranking-header">
+        <h2 class="ranking-title">Where your money goes furthest</h2>
+        <div class="ranking-controls">
+          <button class="rank-btn active" data-dir="desc">Most value</button>
+          <button class="rank-btn" data-dir="asc">Least value</button>
+        </div>
+      </div>
+      <div id="ranking-list"></div>
+    </div>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script src="app.js?v=8"></script>
+</body>
+</html>
