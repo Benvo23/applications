@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Vo Aviation Gallery</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <div class="top-bar-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">&#9992;</span>
+                <span class="logo-text">Vo Aviation <span class="logo-accent">Gallery</span></span>
+            </a>
+            <nav class="main-nav">
+                <a href="#" class="nav-link active" data-filter="all">All Photos</a>
+                <a href="#" class="nav-link" data-filter="commercial">Commercial</a>
+                <a href="#" class="nav-link" data-filter="military">Military</a>
+                <a href="#" class="nav-link" data-filter="general">General Aviation</a>
+                <a href="#" class="nav-link" data-filter="helicopter">Helicopters</a>
+            </nav>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by airline, aircraft, reg..." autocomplete="off">
+                <button class="search-btn">&#128269;</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero / Stats Bar -->
+    <section class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat">
+                <span class="stat-number" id="photoCount">0</span>
+                <span class="stat-label">Photos</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="aircraftCount">0</span>
+                <span class="stat-label">Aircraft</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="airlineCount">0</span>
+                <span class="stat-label">Airlines</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="locationCount">0</span>
+                <span class="stat-label">Locations</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sort Bar -->
+    <section class="sort-bar">
+        <div class="sort-inner">
+            <span class="results-text" id="resultsText">Showing all photos</span>
+            <div class="sort-controls">
+                <label for="locationSelect">Location:</label>
+                <select id="locationSelect">
+                    <option value="all">All Locations</option>
+                </select>
+                <label for="sortSelect">Sort by:</label>
+                <select id="sortSelect">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="airline">Airline</option>
+                    <option value="aircraft">Aircraft Type</option>
+                    <option value="location">Location</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Grid -->
+    <main class="gallery">
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Photos are injected by JS -->
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <button class="lightbox-prev" id="lightboxPrev">&#10094;</button>
+        <button class="lightbox-next" id="lightboxNext">&#10095;</button>
+        <div class="lightbox-zoom-controls">
+            <button class="zoom-btn" id="zoomIn">+</button>
+            <button class="zoom-btn" id="zoomReset">&#8634;</button>
+            <button class="zoom-btn" id="zoomOut">&minus;</button>
+        </div>
+        <div class="lightbox-content">
+            <div class="lightbox-image-wrap">
+                <div class="lightbox-image" id="lightboxImage"></div>
+                <div class="lightbox-watermark">VO AVIATION GALLERY</div>
+                <div class="lightbox-shield"></div>
+            </div>
+            <div class="lightbox-info" id="lightboxInfo"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <p>&copy; 2026 Vo Aviation Gallery. All photographs are the exclusive property of the photographer. Unauthorized reproduction, copying, or distribution is strictly prohibited.</p>
+            <p class="footer-sub">All images are protected by copyright law.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Force no caching
+        document.write('<scr' + 'ipt src="js/photos.js?' + Date.now() + '"><\/scr' + 'ipt>');
+        document.write('<scr' + 'ipt src="js/app.js?' + Date.now() + '"><\/scr' + 'ipt>');
+    </script>
+</body>
+</html>
